@@ -50,6 +50,11 @@ public class ShakerScript : MonoBehaviour
     {      
         Grab();
 
+        if (Input.GetMouseButtonUp(0))
+        {
+            velocity = preVelocity;
+        }
+
         //スタートに戻す
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -71,11 +76,6 @@ public class ShakerScript : MonoBehaviour
             transform.rotation = Quaternion.Euler(rotation);
         }
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            velocity = preVelocity;
-        }
-
         if (!isGrabed && !isGrounded)
         {
             if (velocity.y < gravity.y)
@@ -87,7 +87,7 @@ public class ShakerScript : MonoBehaviour
             position += velocity * 45f * Time.deltaTime;
 
             //回転戻す
-            rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 0), 30f * Time.deltaTime);
+            
             transform.rotation = Quaternion.Euler(rotation);
         }
 
