@@ -40,7 +40,6 @@ public class ShakerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (!isGrounded)
         {
             Move();
@@ -55,7 +54,6 @@ public class ShakerScript : MonoBehaviour
             position = transform.position;
             isGrounded = true;
         }
-
     }
 
     void Move()
