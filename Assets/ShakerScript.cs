@@ -79,7 +79,7 @@ public class ShakerScript : MonoBehaviour
             }
 
             velocity += gravity * Time.deltaTime;
-            position += velocity;
+            position += velocity * Time.deltaTime;
         }
 
         transform.position = position;
