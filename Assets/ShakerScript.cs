@@ -31,14 +31,15 @@ public class ShakerScript : MonoBehaviour
         startPosition = position;
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
+        prePosition = transform.position;
+        preVelocity = (Vector2)transform.position - prePosition;
     }
 
     // Update is called once per frame
     void Update()
     {
-        prePosition = transform.position;
 
         if (!isGrounded)
         {
@@ -55,7 +56,6 @@ public class ShakerScript : MonoBehaviour
             isGrounded = true;
         }
 
-        preVelocity = (Vector2)transform.position - prePosition;
     }
 
     void Move()
