@@ -452,7 +452,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
       propertyPath: gravity.y
-      value: -0.1
+      value: -0.38
       objectReference: {fileID: 0}
     - target: {fileID: 5568750494512384720, guid: fd53548159d55474cb51451e19a13538, type: 3}
       propertyPath: m_Name
