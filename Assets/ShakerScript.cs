@@ -47,7 +47,7 @@ public class ShakerScript : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {      
+    {
         Grab();
 
         if (Input.GetMouseButtonUp(0))
@@ -60,6 +60,7 @@ public class ShakerScript : MonoBehaviour
         {
             transform.position = startPosition;
             position = transform.position;
+            transform.rotation = Quaternion.identity;
             isGrounded = true;
         }
     }
@@ -72,7 +73,7 @@ public class ShakerScript : MonoBehaviour
             position = Vector2.Lerp(position, targetPosition, 10f * Time.deltaTime);
 
             //‰ñ“]
-            rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 100f), 15f * Time.deltaTime);
+            rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 100f), 5f * Time.deltaTime);
             transform.rotation = Quaternion.Euler(rotation);
         }
 
@@ -87,8 +88,10 @@ public class ShakerScript : MonoBehaviour
             position += velocity * 45f * Time.deltaTime;
 
             //‰ñ“]–ß‚·
-            
+            float angle = Mathf.Atan2(velocity.normalized.y, velocity.normalized.x) * Mathf.Rad2Deg;
+            rotation = Vector3.Lerp(rotation, new Vector3(0, 0, angle + 90), 5f * Time.deltaTime);
             transform.rotation = Quaternion.Euler(rotation);
+            rotation = transform.rotation.eulerAngles;
         }
 
         transform.position = position;
