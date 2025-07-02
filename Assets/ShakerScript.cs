@@ -70,7 +70,7 @@ public class ShakerScript : MonoBehaviour
         if (isGrabed)
         {
             targetPosition = player.transform.position;
-            position = Vector2.Lerp(position, targetPosition, 10f * Time.deltaTime);
+            position = Vector2.Lerp(position, targetPosition, 30f * Time.deltaTime);
 
             //回転
             rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 100f), 5f * Time.deltaTime);
@@ -106,14 +106,14 @@ public class ShakerScript : MonoBehaviour
                 isGrounded = false;
                 isGrabed = true;
 
-                Debug.Log("つかんだよ");
+                //Debug.Log("つかんだよ");
             }
         }
 
         if (Input.GetMouseButtonUp(0))
         {
             isGrabed = false;
-            Debug.Log("離したよ");
+            //Debug.Log("離したよ");
         }
     }
 
@@ -122,7 +122,7 @@ public class ShakerScript : MonoBehaviour
         if (collision.tag == "Mouse")
         {
             isMouse = true;
-            Debug.Log("マウスオーバーだお");
+           ///Debug.Log("マウスオーバーだお");
         }
     }
 
