@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     Vector2 position;
+    Vector2 targetPosition;
 
     // Start is called before the first frame update
     void Start()
