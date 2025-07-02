@@ -14,6 +14,8 @@ public class ShakerScript : MonoBehaviour
     Vector2 velocity;
     [SerializeField] Vector2 gravity;
 
+    Vector3 rotation;
+
     bool isMouse;
     bool isGrabed;
     bool isGrounded = true;
@@ -34,17 +36,18 @@ public class ShakerScript : MonoBehaviour
     private void FixedUpdate()
     {
         prePosition = transform.position;
-        preVelocity = (Vector2)transform.position - prePosition;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
         if (!isGrounded)
         {
             Move();
         }
 
+        preVelocity = (Vector2)transform.position - prePosition;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {      
         Grab();
 
         //ÉXÉ^Å[ÉgÇ…ñﬂÇ∑
@@ -62,6 +65,10 @@ public class ShakerScript : MonoBehaviour
         {
             targetPosition = player.transform.position;
             position = Vector2.Lerp(position, targetPosition, 10f * Time.deltaTime);
+
+            //âÒì]
+            rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 100f), 15f * Time.deltaTime);
+            transform.rotation = Quaternion.Euler(rotation);
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -78,6 +85,10 @@ public class ShakerScript : MonoBehaviour
 
             velocity += gravity * Time.deltaTime;
             position += velocity * 45f * Time.deltaTime;
+
+            //âÒì]ñﬂÇ∑
+            rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 0), 30f * Time.deltaTime);
+            transform.rotation = Quaternion.Euler(rotation);
         }
 
         transform.position = position;

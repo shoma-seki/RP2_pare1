@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     {
         position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         position = ClampToScreen();
-        position.z = -10f;
+        position.z = -15f;
         transform.position = position;
     }
 
