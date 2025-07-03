@@ -34,6 +34,11 @@ public class ShakerScript : MonoBehaviour
     Vector2 preShakePoint;  //前回シェイクした場所
     public float cocktailProgress; //カクテルの完成度   
     public float cocktailProgressMax;
+    float shakerHeight;     //シェイカーの高さ
+
+    //投げてるときに加算
+    [SerializeField] float rotationSpeed;
+    bool hasTriggered;
 
     //振るときのやつ
     Vector2 direction;      //進んでいる方向
@@ -125,7 +130,7 @@ public class ShakerScript : MonoBehaviour
             position = Vector2.Lerp(position, targetPosition, 30f * Time.deltaTime);
 
             //回転
-            rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 100f), 5f * Time.deltaTime);
+            rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 90f), 5f * Time.deltaTime);
             transform.rotation = Quaternion.Euler(rotation);
         }
 
@@ -139,11 +144,30 @@ public class ShakerScript : MonoBehaviour
             velocity += gravity * Time.deltaTime;
             position += velocity * 45f * Time.deltaTime;
 
-            //回転戻す
-            float angle = Mathf.Atan2(velocity.normalized.y, velocity.normalized.x) * Mathf.Rad2Deg;
-            rotation = Vector3.Lerp(rotation, new Vector3(0, 0, angle + 90), 5f * Time.deltaTime);
+            //回転させる
+            rotation.z += rotationSpeed;
             transform.rotation = Quaternion.Euler(rotation);
             rotation = transform.rotation.eulerAngles;
+
+            //float angle = Mathf.Atan2(velocity.normalized.y, velocity.normalized.x) * Mathf.Rad2Deg;
+            //rotation = Vector3.Lerp(rotation, new Vector3(0, 0, angle + 90), 5f * Time.deltaTime);
+            //transform.rotation = Quaternion.Euler(rotation);
+            //rotation = transform.rotation.eulerAngles;
+
+            //高さで完成度を加算
+            shakerHeight = position.y + 6f;
+            float zAngle = transform.eulerAngles.z;
+
+            if (!hasTriggered && Mathf.Abs(zAngle % 360f) < 1f)
+            {
+                hasTriggered = true;
+                cocktailProgress += shakerHeight / 5f;
+            }
+            else if (Mathf.Abs(zAngle % 360f) >= 1f)
+            {
+                // 次の0度検知に備えてリセット
+                hasTriggered = false;
+            }
         }
 
         transform.position = position;
@@ -192,7 +216,7 @@ public class ShakerScript : MonoBehaviour
 
         if (collision.tag == "Counter")
         {
-            velocity = Vector2.Reflect(velocity.normalized, Vector2.up) / reflection;
+            velocity = Vector2.Reflect(velocity.normalized, Vector2.up) / 5f;
         }
     }
 
