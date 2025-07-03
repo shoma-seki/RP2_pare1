@@ -26,6 +26,20 @@ public class ShakerScript : MonoBehaviour
     //反射係数
     [SerializeField] float reflection;
 
+    //中身
+    float shakeSpeed;       //振ったスピード
+    float shakeDistance;    //振った距離
+    float shakeCount;       //振った回数
+    float cocktailAmount;   //カクテルの量
+    Vector2 preShakePoint;  //前回シェイクした場所
+    float cocktailProgress; //カクテルの完成度   
+    [SerializeField] float cocktailProgressMax;
+
+    //振るときのやつ
+    Vector2 direction;      //進んでいる方向
+    Vector2 previousDirection;
+    float directionChangeThreshold = 140f; // 角度差が45度以上で「急変」と判断
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +57,7 @@ public class ShakerScript : MonoBehaviour
         if (!isGrounded)
         {
             Move();
+            Shake();
         }
 
         preVelocity = (Vector2)transform.position - prePosition;
@@ -66,6 +81,40 @@ public class ShakerScript : MonoBehaviour
             transform.rotation = Quaternion.identity;
             isGrounded = true;
         }
+    }
+
+    void Shake()
+    {
+        //シェイクのスピード
+        shakeSpeed = ((Vector2)transform.position - prePosition).magnitude;
+
+        //シェイクのタイミング
+        direction = ((Vector2)transform.position - prePosition).normalized;
+        Vector2 currentDirection = direction.normalized; // 現在の進行方向（velocityなどを想定）
+
+        if (previousDirection != Vector2.zero)
+        {
+            float angleDiff = Vector2.Angle(previousDirection, currentDirection);
+
+            if (angleDiff > directionChangeThreshold)
+            {
+                shakeCount++;
+                Debug.Log("shakeCount" + shakeCount);
+
+                if (shakeCount >= 2)
+                {
+                    shakeDistance = Vector2.Distance(preShakePoint, transform.position);
+
+                    //カクテルの完成度を変更
+                    cocktailProgress += shakeDistance * shakeSpeed / 10f;
+                    Debug.Log("カクテルの完成度" + cocktailProgress);
+                }
+
+                preShakePoint = transform.position;
+            }
+        }
+
+        previousDirection = currentDirection;
     }
 
     void Move()
