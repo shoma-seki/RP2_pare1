@@ -38,7 +38,7 @@ public class ShakerScript : MonoBehaviour
 
     //投げてるときに加算
     [SerializeField] float rotationSpeed;
-    bool hasTriggered;
+    float triggerRotation;
 
     //振るときのやつ
     Vector2 direction;      //進んでいる方向
@@ -145,7 +145,7 @@ public class ShakerScript : MonoBehaviour
             position += velocity * 45f * Time.deltaTime;
 
             //回転させる
-            rotation.z += rotationSpeed;
+            rotation.z += rotationSpeed * Time.deltaTime;
             transform.rotation = Quaternion.Euler(rotation);
             rotation = transform.rotation.eulerAngles;
 
@@ -156,17 +156,13 @@ public class ShakerScript : MonoBehaviour
 
             //高さで完成度を加算
             shakerHeight = position.y + 6f;
-            float zAngle = transform.eulerAngles.z;
+            triggerRotation += rotationSpeed * Time.deltaTime;
 
-            if (!hasTriggered && Mathf.Abs(zAngle % 360f) < 1f)
+            if (triggerRotation > 360)
             {
-                hasTriggered = true;
                 cocktailProgress += shakerHeight / 5f;
-            }
-            else if (Mathf.Abs(zAngle % 360f) >= 1f)
-            {
-                // 次の0度検知に備えてリセット
-                hasTriggered = false;
+                Debug.Log("カクテルの完成度" + cocktailProgress);
+                triggerRotation = 0;
             }
         }
 
