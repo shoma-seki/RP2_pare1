@@ -23,6 +23,9 @@ public class ShakerScript : MonoBehaviour
     //スタートに戻す
     Vector2 startPosition;
 
+    //反射係数
+    [SerializeField] float reflection;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -122,7 +125,25 @@ public class ShakerScript : MonoBehaviour
         if (collision.tag == "Mouse")
         {
             isMouse = true;
-           ///Debug.Log("マウスオーバーだお");
+            ///Debug.Log("マウスオーバーだお");
+        }
+
+        if (collision.tag == "Wall")
+        {
+            if (transform.position.x < 0)
+            {
+                velocity = new Vector2(1, 1) / reflection;
+            }
+
+            if (transform.position.x > 0)
+            {
+                velocity = new Vector2(-1, 1) / reflection;
+            }
+        }
+
+        if (collision.tag == "Counter")
+        {
+            velocity = Vector2.Reflect(velocity.normalized, Vector2.up) / reflection;
         }
     }
 

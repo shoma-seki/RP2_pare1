@@ -26,7 +26,19 @@ public class CameraScript : MonoBehaviour
 
     void FitCameraToTarget()
     {
+        float length = Vector2.Distance(target.transform.position, new Vector2(-0.02f, -4.4f));
+
+        cam.orthographicSize = length / 2f;
+        if (cam.orthographicSize < 5)
+        {
+            cam.orthographicSize = 5;
+        }
+        if(cam.orthographicSize > 15)
+        {
+            cam.orthographicSize = 15;
+        }
+
         cam.transform.position = Vector3.Lerp(target.transform.position, new Vector2(-0.02f, -4.4f), 0.5f);
-        cam.transform.position +=new Vector3(0, 0, -30f);
+        cam.transform.position += new Vector3(0, 0, -30f);
     }
 }

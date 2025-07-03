@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     void Move()
     {
         position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        position = ClampToScreen();
+        ClampToScreen();
         position.z = -15f;
         transform.position = position;
     }
@@ -43,11 +43,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    Vector2 ClampToScreen()
+    void ClampToScreen()
     {
-        Vector3 viewPos = Camera.main.WorldToViewportPoint(position);
-        viewPos.x = Mathf.Clamp01(viewPos.x);
-        viewPos.y = Mathf.Clamp01(viewPos.y);
-        return Camera.main.ViewportToWorldPoint(viewPos);
+        position.x = Mathf.Clamp(position.x, -11, 11);
+        position.y = Mathf.Clamp(position.y, -3.45f, 10);
     }
 }

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Shaker
   - Mouse
+  - Wall
+  - Counter
   layers:
   - Default
   - TransparentFX
