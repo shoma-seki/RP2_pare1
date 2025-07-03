@@ -32,8 +32,8 @@ public class ShakerScript : MonoBehaviour
     float shakeCount;       //振った回数
     float cocktailAmount;   //カクテルの量
     Vector2 preShakePoint;  //前回シェイクした場所
-    float cocktailProgress; //カクテルの完成度   
-    [SerializeField] float cocktailProgressMax;
+    public float cocktailProgress; //カクテルの完成度   
+    public float cocktailProgressMax;
 
     //振るときのやつ
     Vector2 direction;      //進んでいる方向
