@@ -19,6 +19,7 @@ public class ShakerScript : MonoBehaviour
     bool isMouse;
     bool isGrabed;
     bool isGrounded = true;
+    bool isCollision;
 
     //スタートに戻す
     Vector2 startPosition;
@@ -46,8 +47,14 @@ public class ShakerScript : MonoBehaviour
     float directionChangeThreshold = 140f; // 角度差が45度以上で「急変」と判断
 
     //エフェクト
-    [SerializeField] GameObject catchEffect;
+    [SerializeField] GameObject catchEffect;    //キャッチした時
     [SerializeField] float catchOffset;
+
+    [SerializeField] GameObject shakaEffect;    //振ったとき
+    [SerializeField] float shakaOffset;
+
+    [SerializeField] GameObject gotuEffect;
+    [SerializeField] float gotuOffset;
 
     // Start is called before the first frame update
     void Start()
@@ -101,27 +108,36 @@ public class ShakerScript : MonoBehaviour
         direction = ((Vector2)transform.position - prePosition).normalized;
         Vector2 currentDirection = direction.normalized; // 現在の進行方向（velocityなどを想定）
 
-        if (previousDirection != Vector2.zero)
+        if (!isCollision)
         {
-            float angleDiff = Vector2.Angle(previousDirection, currentDirection);
-
-            if (angleDiff > directionChangeThreshold)
+            if (previousDirection != Vector2.zero)
             {
-                shakeCount++;
-                Debug.Log("shakeCount" + shakeCount);
+                float angleDiff = Vector2.Angle(previousDirection, currentDirection);
 
-                if (shakeCount >= 2)
+                if (angleDiff > directionChangeThreshold)
                 {
-                    shakeDistance = Vector2.Distance(preShakePoint, transform.position);
+                    shakeCount++;
+                    Debug.Log("shakeCount" + shakeCount);
 
-                    //カクテルの完成度を変更
-                    cocktailProgress += shakeDistance * shakeSpeed / 10f;
-                    Debug.Log("カクテルの完成度" + cocktailProgress);
+                    //シャカエフェクト
+                    Vector2 shakaPoint = (Vector2)transform.position + previousDirection * shakaOffset;
+                    Instantiate(shakaEffect, shakaPoint, Quaternion.identity);
+
+                    if (shakeCount >= 2)
+                    {
+                        shakeDistance = Vector2.Distance(preShakePoint, transform.position);
+
+                        //カクテルの完成度を変更
+                        cocktailProgress += shakeDistance * shakeSpeed / 10f;
+                        Debug.Log("カクテルの完成度" + cocktailProgress);
+                    }
+
+                    preShakePoint = transform.position;
                 }
-
-                preShakePoint = transform.position;
             }
         }
+
+        isCollision = false;
 
         previousDirection = currentDirection;
     }
@@ -216,11 +232,19 @@ public class ShakerScript : MonoBehaviour
             {
                 velocity = new Vector2(-1, 1) / reflection;
             }
+
+            isCollision = true;
+
+            //ゴツエフェクト   
+            Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
         }
 
         if (collision.tag == "Counter")
         {
             velocity = Vector2.Reflect(velocity.normalized, Vector2.up) / 5f;
+
+            //ゴツエフェクト
+            Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
         }
     }
 

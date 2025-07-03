@@ -803,8 +803,32 @@ PrefabInstance:
       value: -0.38
       objectReference: {fileID: 0}
     - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
+      propertyPath: gotuEffect
+      value: 
+      objectReference: {fileID: 1510244228590233170, guid: 6cffcf83e3225b54cbf346834bb1e7d3, type: 3}
+    - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
+      propertyPath: gotuOffset
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
       propertyPath: reflection
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
+      propertyPath: catchEffect
+      value: 
+      objectReference: {fileID: 5861019082552183204, guid: d780f5b37171fb74eaf90e9f373553e3, type: 3}
+    - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
+      propertyPath: catchOffset
+      value: 1.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
+      propertyPath: shakaEffect
+      value: 
+      objectReference: {fileID: 4157134647383172948, guid: c1de480e52246b24cba73e717ead7574, type: 3}
+    - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
+      propertyPath: shakaOffset
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
       propertyPath: rotationSpeed
