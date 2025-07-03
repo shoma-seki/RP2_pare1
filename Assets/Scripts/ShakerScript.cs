@@ -45,6 +45,10 @@ public class ShakerScript : MonoBehaviour
     Vector2 previousDirection;
     float directionChangeThreshold = 140f; // 角度差が45度以上で「急変」と判断
 
+    //エフェクト
+    [SerializeField] GameObject catchEffect;
+    [SerializeField] float catchOffset;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -177,6 +181,10 @@ public class ShakerScript : MonoBehaviour
             {
                 isGrounded = false;
                 isGrabed = true;
+
+                //キャッチエフェクト
+                Vector2 catchPoint = (Vector2)transform.position + new Vector2(Random.Range(-100f, 100f) / 100f, Random.Range(-100f, 100f) / 100f) * catchOffset;
+                Instantiate(catchEffect, catchPoint, Quaternion.identity);
 
                 //Debug.Log("つかんだよ");
             }

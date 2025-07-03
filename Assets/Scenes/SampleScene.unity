@@ -599,11 +599,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5736192791236414831, guid: 98e07b3250b82dc4e9304ec3e03f703e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -10.63
       objectReference: {fileID: 0}
     - target: {fileID: 5736192791236414831, guid: 98e07b3250b82dc4e9304ec3e03f703e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 5.36
       objectReference: {fileID: 0}
     - target: {fileID: 5736192791236414831, guid: 98e07b3250b82dc4e9304ec3e03f703e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -808,7 +808,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
       propertyPath: rotationSpeed
-      value: 20
+      value: 720
       objectReference: {fileID: 0}
     - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
       propertyPath: cocktailProgressMax
