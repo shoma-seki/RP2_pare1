@@ -153,7 +153,7 @@ public class ShakerScript : MonoBehaviour
     {
         if (isMouse)
         {
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButtonDown(0))
             {
                 isGrounded = false;
                 isGrabed = true;

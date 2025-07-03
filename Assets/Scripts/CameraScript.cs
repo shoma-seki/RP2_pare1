@@ -10,6 +10,8 @@ public class CameraScript : MonoBehaviour
     public float padding = 0.5f;          // —]”’
 
     private Camera cam;
+    Vector3 position;
+    Vector2 targetPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -26,19 +28,34 @@ public class CameraScript : MonoBehaviour
 
     void FitCameraToTarget()
     {
-        float length = Vector2.Distance(target.transform.position, new Vector2(-0.02f, -4.4f));
+        float length = Vector2.Distance(target.transform.position, new Vector2(0, -6.4f));
 
-        cam.orthographicSize = length / 2f;
-        if (cam.orthographicSize < 5)
+        if (target.transform.position.y > 8f)
         {
-            cam.orthographicSize = 5;
+            cam.orthographicSize = length / 2f;
+            targetPosition = Vector2.Lerp(target.transform.position, new Vector2(0f, -6.4f), 0.3f);
+            position = Vector2.Lerp(position, targetPosition, 5f * Time.deltaTime);
         }
-        if(cam.orthographicSize > 15)
+        else
+        {
+            position = Vector2.Lerp(position, Vector2.zero, 5f * Time.deltaTime);
+        }
+
+        if (cam.orthographicSize < 8)
+        {
+            cam.orthographicSize = 8;
+        }
+        if (cam.orthographicSize > 15)
         {
             cam.orthographicSize = 15;
         }
 
-        cam.transform.position = Vector3.Lerp(target.transform.position, new Vector2(-0.02f, -4.4f), 0.5f);
-        cam.transform.position += new Vector3(0, 0, -30f);
+        position.x = 0;
+        position.z = -30f;
+        if (position.y < 0)
+        {
+            position.y = 0;
+        }
+        cam.transform.position = position;
     }
 }
