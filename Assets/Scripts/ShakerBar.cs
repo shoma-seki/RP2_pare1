@@ -21,10 +21,10 @@ public class ShakerBar : MonoBehaviour {
 
     // UIを動かす処理
     private void BarUpdate() {
-        // testNum(100〜0) → scaleY(1.0〜0.0) に変換
-        float scaleY = Mathf.InverseLerp(0f, 100f, testNum); // testNumが100のとき1、0のとき0になる
+        // testNum(100〜0) → scaleX(1.0〜0.0) に変換
+        float scaleX = Mathf.InverseLerp(0f, 100f, testNum); // testNumが100のとき1、0のとき0になる
         Vector3 scale = shakerBar.transform.localScale;
-        scale.y = scaleY;
+        scale.x = scaleX;
         shakerBar.transform.localScale = scale;
     }
 }

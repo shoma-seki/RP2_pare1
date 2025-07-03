@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 270488425}
   - component: {fileID: 270488426}
   m_Layer: 0
-  m_Name: Square (1)
+  m_Name: BarUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -217,8 +217,8 @@ Transform:
   m_GameObject: {fileID: 270488424}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -4.5, z: 0}
-  m_LocalScale: {x: 1, y: 9, z: 1}
+  m_LocalPosition: {x: 7, y: 0, z: 0}
+  m_LocalScale: {x: 14, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1673532291}
@@ -726,12 +726,12 @@ Transform:
   m_GameObject: {fileID: 1673532290}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -647.97, y: -355.5, z: 0}
+  m_LocalPosition: {x: -7, y: -4.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 270488425}
-  m_Father: {fileID: 2109287081}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1673532292
 MonoBehaviour:
@@ -840,8 +840,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1673532291}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -858,5 +857,6 @@ SceneRoots:
   - {fileID: 554228497}
   - {fileID: 1339574728}
   - {fileID: 391924725}
+  - {fileID: 1673532291}
   - {fileID: 2109287081}
   - {fileID: 146732272}
