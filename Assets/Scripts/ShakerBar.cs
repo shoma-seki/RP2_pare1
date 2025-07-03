@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShakerBar : MonoBehaviour {
-    [SerializeField] GameObject shakerBar;
     [SerializeField] ShakerScript shakerScript;
 
     void Start() {
@@ -21,10 +20,13 @@ public class ShakerBar : MonoBehaviour {
 
     // UIを動かす処理
     private void BarUpdate() {
-        // cocktailProgress(100〜0) → scaleX(1.0〜0.0) に変換
-        float scaleX = Mathf.InverseLerp(0f, 100f, shakerScript.cocktailProgress); // cocktailProgressが100のとき1、0のとき0になる
-        Vector3 scale = shakerBar.transform.localScale;
+        // cocktailProgress(0〜100) → scaleX(0.0〜10.0)
+        float normalized = Mathf.InverseLerp(0f, 100f, shakerScript.cocktailProgress); // 0〜1に正規化
+        float scaleX = Mathf.Lerp(0f, 10f, normalized); // 0〜10に変換
+
+        Vector3 scale = transform.localScale;
         scale.x = scaleX;
-        shakerBar.transform.localScale = scale;
+        transform.localScale = scale;
     }
+
 }
