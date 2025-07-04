@@ -17,9 +17,11 @@ public class ShakerScript : MonoBehaviour
     Vector3 rotation;
 
     bool isMouse;
-    bool isGrabed;
+    bool isGrabbed;
     bool isGrounded = true;
     bool isCollision;
+
+    public bool isCompleted;
 
     //スタートに戻す
     Vector2 startPosition;
@@ -97,6 +99,12 @@ public class ShakerScript : MonoBehaviour
             transform.rotation = Quaternion.identity;
             isGrounded = true;
         }
+
+        //完成
+        if (cocktailProgress >= 100)
+        {
+            isCompleted = true;
+        }
     }
 
     void Shake()
@@ -144,7 +152,7 @@ public class ShakerScript : MonoBehaviour
 
     void Move()
     {
-        if (isGrabed)
+        if (isGrabbed)
         {
             targetPosition = player.transform.position;
             position = Vector2.Lerp(position, targetPosition, 30f * Time.deltaTime);
@@ -154,7 +162,7 @@ public class ShakerScript : MonoBehaviour
             transform.rotation = Quaternion.Euler(rotation);
         }
 
-        if (!isGrabed && !isGrounded)
+        if (!isGrabbed && !isGrounded)
         {
             if (velocity.y < gravity.y)
             {
@@ -196,7 +204,7 @@ public class ShakerScript : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 isGrounded = false;
-                isGrabed = true;
+                isGrabbed = true;
 
                 //キャッチエフェクト
                 Vector2 catchPoint = (Vector2)transform.position + new Vector2(Random.Range(-100f, 100f) / 100f, Random.Range(-100f, 100f) / 100f) * catchOffset;
@@ -208,7 +216,7 @@ public class ShakerScript : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            isGrabed = false;
+            isGrabbed = false;
             //Debug.Log("離したよ");
         }
     }
