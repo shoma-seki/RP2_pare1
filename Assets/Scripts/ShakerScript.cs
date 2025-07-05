@@ -48,6 +48,11 @@ public class ShakerScript : MonoBehaviour
     Vector2 previousDirection;
     float directionChangeThreshold = 140f; // 角度差が45度以上で「急変」と判断
 
+    //注ぐ
+    [SerializeField] Vector3 pourRotation;
+    [SerializeField] Vector2 pourOffset;
+    bool isPour;
+
     //エフェクト
     [SerializeField] GameObject catchEffect;    //キャッチした時
     [SerializeField] float catchOffset;
@@ -85,6 +90,7 @@ public class ShakerScript : MonoBehaviour
     void Update()
     {
         Grab();
+        Pour();
 
         if (Input.GetMouseButtonUp(0))
         {
@@ -105,6 +111,11 @@ public class ShakerScript : MonoBehaviour
         {
             isCompleted = true;
         }
+
+        //コマンド
+#if UNITY_EDITOR
+        Commands();
+#endif
     }
 
     void Shake()
@@ -221,6 +232,11 @@ public class ShakerScript : MonoBehaviour
         }
     }
 
+    void Pour()
+    {
+
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Mouse")
@@ -251,6 +267,8 @@ public class ShakerScript : MonoBehaviour
         {
             velocity = Vector2.Reflect(velocity.normalized, Vector2.up) / 5f;
 
+            isCollision = true;
+
             //ゴツエフェクト
             Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
         }
@@ -261,6 +279,14 @@ public class ShakerScript : MonoBehaviour
         if (collision.tag == "Mouse")
         {
             isMouse = false;
+        }
+    }
+
+    void Commands()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            cocktailProgress = 110f;
         }
     }
 }

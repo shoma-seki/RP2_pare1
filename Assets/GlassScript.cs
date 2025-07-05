@@ -19,6 +19,9 @@ public class GlassScript : MonoBehaviour
     bool isMouse;
     bool isGrabbed;
     bool isGrounded;
+    bool isTouched;
+
+    float releaseHeight;
 
     // Start is called before the first frame update
     void Start()
@@ -39,24 +42,24 @@ public class GlassScript : MonoBehaviour
 
         Grab();
         Move();
+
+
+        Debug.Log("isGrabbed" + isGrabbed);
+        Debug.Log("releaseHeight" + releaseHeight);
     }
 
     void Grab()
     {
-        if (isMouse && shaker.isCompleted)
+        if (isMouse && shaker.isCompleted && !isGrounded)
         {
             if (Input.GetMouseButtonDown(0))
             {
                 isGrabbed = true;
+                isTouched = true;
+                releaseHeight = -10;
 
                 scale = Vector2.one * 0.32f;
                 transform.localScale = scale;
-            }
-
-            if (Input.GetMouseButtonUp(0))
-            {
-                isGrabbed = false;
-                //Debug.Log("—£‚µ‚½‚æ");
             }
         }
     }
@@ -92,6 +95,21 @@ public class GlassScript : MonoBehaviour
                     transform.rotation = Quaternion.Euler(rotation);
                 }
             }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                isGrabbed = false;
+                releaseHeight = transform.position.y;
+            }
+        }
+
+        if (!isGrabbed && !isGrounded && isTouched)
+        {
+            position.y -= 6f * Time.deltaTime;
+            transform.position = position;
+
+            rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 0), 5f * Time.deltaTime);
+            transform.rotation = Quaternion.Euler(rotation);
         }
     }
 
@@ -100,6 +118,18 @@ public class GlassScript : MonoBehaviour
         if (collision.tag == "Mouse")
         {
             isMouse = true;
+        }
+
+        if (collision.tag == "Counter")
+        {
+            if (releaseHeight < -4)
+            {
+                isGrounded = true;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

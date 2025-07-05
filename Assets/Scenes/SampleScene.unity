@@ -593,6 +593,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 186092134517178655, guid: 98e07b3250b82dc4e9304ec3e03f703e, type: 3}
+      propertyPath: gravity.y
+      value: -0.38
+      objectReference: {fileID: 0}
     - target: {fileID: 4878782384951165136, guid: 98e07b3250b82dc4e9304ec3e03f703e, type: 3}
       propertyPath: m_Name
       value: Ojama
