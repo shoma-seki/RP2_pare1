@@ -807,6 +807,10 @@ PrefabInstance:
       value: -0.38
       objectReference: {fileID: 0}
     - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
+      propertyPath: kPourTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
       propertyPath: gotuEffect
       value: 
       objectReference: {fileID: 1510244228590233170, guid: 6cffcf83e3225b54cbf346834bb1e7d3, type: 3}
@@ -833,6 +837,14 @@ PrefabInstance:
     - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
       propertyPath: shakaOffset
       value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
+      propertyPath: pourOffset.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
+      propertyPath: pourOffset.y
+      value: 3.6
       objectReference: {fileID: 0}
     - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
       propertyPath: rotationSpeed
@@ -1266,6 +1278,14 @@ PrefabInstance:
     - target: {fileID: -3994553356452738982, guid: 02e34c76d57b4f84dae4b1d32656d84e, type: 3}
       propertyPath: t
       value: 124
+      objectReference: {fileID: 0}
+    - target: {fileID: -3994553356452738982, guid: 02e34c76d57b4f84dae4b1d32656d84e, type: 3}
+      propertyPath: pourOffset.x
+      value: -2.38
+      objectReference: {fileID: 0}
+    - target: {fileID: -3994553356452738982, guid: 02e34c76d57b4f84dae4b1d32656d84e, type: 3}
+      propertyPath: pourOffset.y
+      value: 0.96
       objectReference: {fileID: 0}
     - target: {fileID: 1448096685463024526, guid: 02e34c76d57b4f84dae4b1d32656d84e, type: 3}
       propertyPath: m_LocalPosition.x

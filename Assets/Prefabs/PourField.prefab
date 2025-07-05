@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1113625006355473805}
   - component: {fileID: 2529986609206961720}
   - component: {fileID: 6111264207832053314}
+  - component: {fileID: 919021240627982398}
   m_Layer: 0
   m_Name: PourField
   m_TagString: PourField
@@ -76,7 +77,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 4, y: 4}
   m_EdgeRadius: 0
 --- !u!50 &6111264207832053314
 Rigidbody2D:
@@ -105,3 +106,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &919021240627982398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7009915811524454143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4240416a59fa4ce47ae97441a7ebabfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

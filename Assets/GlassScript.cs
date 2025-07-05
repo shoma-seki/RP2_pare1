@@ -23,6 +23,9 @@ public class GlassScript : MonoBehaviour
 
     float releaseHeight;
 
+    //注ぎ判定フィールド
+    [SerializeField] GameObject pourField;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,8 +47,8 @@ public class GlassScript : MonoBehaviour
         Move();
 
 
-        Debug.Log("isGrabbed" + isGrabbed);
-        Debug.Log("releaseHeight" + releaseHeight);
+        //Debug.Log("isGrabbed" + isGrabbed);
+        //Debug.Log("releaseHeight" + releaseHeight);
     }
 
     void Grab()
@@ -125,6 +128,7 @@ public class GlassScript : MonoBehaviour
             if (releaseHeight < -4)
             {
                 isGrounded = true;
+                Instantiate(pourField, transform.position, Quaternion.identity);
             }
             else
             {

@@ -18,7 +18,7 @@ public class ShakerScript : MonoBehaviour
 
     bool isMouse;
     bool isGrabbed;
-    bool isGrounded = true;
+    public bool isGrounded = true;
     bool isCollision;
 
     public bool isCompleted;
@@ -49,9 +49,13 @@ public class ShakerScript : MonoBehaviour
     float directionChangeThreshold = 140f; // 角度差が45度以上で「急変」と判断
 
     //注ぐ
-    [SerializeField] Vector3 pourRotation;
     [SerializeField] Vector2 pourOffset;
-    bool isPour;
+    Vector2 pourCenter;
+    public bool isPour;
+
+    //Reset用
+    float pourTime;
+    [SerializeField] float kPourTime;
 
     //エフェクト
     [SerializeField] GameObject catchEffect;    //キャッチした時
@@ -70,14 +74,17 @@ public class ShakerScript : MonoBehaviour
         position = transform.position;
 
         //スタートに戻すポジション
-        startPosition = position;
+        startPosition = transform.position;
+        targetPosition = startPosition;
+
+        pourTime = kPourTime;
     }
 
     private void FixedUpdate()
     {
         prePosition = transform.position;
 
-        if (!isGrounded)
+        if (!isGrounded && !isPour)
         {
             Move();
             Shake();
@@ -91,6 +98,7 @@ public class ShakerScript : MonoBehaviour
     {
         Grab();
         Pour();
+        ResetToStart();
 
         if (Input.GetMouseButtonUp(0))
         {
@@ -210,7 +218,7 @@ public class ShakerScript : MonoBehaviour
 
     void Grab()
     {
-        if (isMouse)
+        if (isMouse && !isPour)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -234,7 +242,41 @@ public class ShakerScript : MonoBehaviour
 
     void Pour()
     {
+        if (isPour)
+        {
+            targetPosition = pourCenter + pourOffset;
+            position = Vector2.Lerp(position, targetPosition, 1f * Time.deltaTime);
+            transform.position = position;
 
+            //回転
+            rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 100f), 1f * Time.deltaTime);
+            transform.rotation = Quaternion.Euler(rotation);
+        }
+    }
+
+    void ResetToStart()
+    {
+        if (isPour)
+        {
+            pourTime -= Time.deltaTime;
+            if (pourTime < 0)
+            {
+                isPour = false;
+                targetPosition = startPosition;
+                pourTime = kPourTime;
+                isGrounded = true;
+            }
+        }
+
+        if (isGrounded)
+        {
+            position = Vector2.Lerp(position, targetPosition, 30f * Time.deltaTime);
+            transform.position = position;
+
+            //回転
+            rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 0), 5f * Time.deltaTime);
+            transform.rotation = Quaternion.Euler(rotation);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -260,7 +302,7 @@ public class ShakerScript : MonoBehaviour
             isCollision = true;
 
             //ゴツエフェクト   
-            Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
+            if (!isGrounded) { Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity); }
         }
 
         if (collision.tag == "Counter")
@@ -270,7 +312,13 @@ public class ShakerScript : MonoBehaviour
             isCollision = true;
 
             //ゴツエフェクト
-            Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
+            if (!isGrounded) { Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity); }
+        }
+
+        if (collision.tag == "PourField")
+        {
+            isPour = true;
+            pourCenter = collision.transform.position;
         }
     }
 
