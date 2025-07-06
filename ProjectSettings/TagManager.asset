@@ -8,6 +8,8 @@ TagManager:
   - Mouse
   - Wall
   - Counter
+  - PourField
+  - Ojama
   layers:
   - Default
   - TransparentFX

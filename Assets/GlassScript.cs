@@ -18,8 +18,12 @@ public class GlassScript : MonoBehaviour
 
     bool isMouse;
     bool isGrabbed;
-    bool isGrounded;
+    public bool isGrounded;
     bool isTouched;
+
+    public bool isFull;
+    bool isFullGrabbed;
+    bool isClear;
 
     float releaseHeight;
 
@@ -45,7 +49,7 @@ public class GlassScript : MonoBehaviour
 
         Grab();
         Move();
-
+        Clear();
 
         //Debug.Log("isGrabbed" + isGrabbed);
         //Debug.Log("releaseHeight" + releaseHeight);
@@ -113,6 +117,31 @@ public class GlassScript : MonoBehaviour
 
             rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 0), 5f * Time.deltaTime);
             transform.rotation = Quaternion.Euler(rotation);
+        }
+    }
+
+    void Clear()
+    {
+        if (isGrounded && isFull)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                isFullGrabbed = true;
+            }
+
+            if (isFullGrabbed)
+            {
+                if (Input.GetMouseButtonUp(0))
+                {
+                    isClear = true;
+                }
+            }
+
+            if (isClear)
+            {
+                position.x += 10f * Time.deltaTime;
+                transform.position = position;
+            }
         }
     }
 

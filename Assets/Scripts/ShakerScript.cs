@@ -29,11 +29,16 @@ public class ShakerScript : MonoBehaviour
     //反射係数
     [SerializeField] float reflection;
 
+    //投げる力
+    [SerializeField] float throwPower;
+
     //中身
     float shakeSpeed;       //振ったスピード
     float shakeDistance;    //振った距離
     float shakeCount;       //振った回数
-    float cocktailAmount;   //カクテルの量
+    float cocktailAmount;
+    [SerializeField] float kCocktailAmount;   //カクテルの量
+    [SerializeField] float cocktailAmountMinus; //カクテルの量を減らす係数
     Vector2 preShakePoint;  //前回シェイクした場所
     public float cocktailProgress; //カクテルの完成度   
     public float cocktailProgressMax;
@@ -54,7 +59,7 @@ public class ShakerScript : MonoBehaviour
     public bool isPour;
 
     //Reset用
-    float pourTime;
+    public float pourTime;
     [SerializeField] float kPourTime;
 
     //エフェクト
@@ -64,8 +69,10 @@ public class ShakerScript : MonoBehaviour
     [SerializeField] GameObject shakaEffect;    //振ったとき
     [SerializeField] float shakaOffset;
 
-    [SerializeField] GameObject gotuEffect;
+    [SerializeField] GameObject gotuEffect;     //ぶつかったとき
     [SerializeField] float gotuOffset;
+
+    [SerializeField] GameObject spillParticle;  //ぶつかったときのパーティクル
 
     // Start is called before the first frame update
     void Start()
@@ -78,6 +85,8 @@ public class ShakerScript : MonoBehaviour
         targetPosition = startPosition;
 
         pourTime = kPourTime;
+
+        cocktailAmount = kCocktailAmount;
     }
 
     private void FixedUpdate()
@@ -102,7 +111,7 @@ public class ShakerScript : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            velocity = preVelocity;
+            velocity = preVelocity * throwPower;
         }
 
         //スタートに戻す
@@ -119,6 +128,8 @@ public class ShakerScript : MonoBehaviour
         {
             isCompleted = true;
         }
+
+        Debug.Log("カクテルの量" + cocktailAmount);
 
         //コマンド
 #if UNITY_EDITOR
@@ -144,7 +155,7 @@ public class ShakerScript : MonoBehaviour
                 if (angleDiff > directionChangeThreshold)
                 {
                     shakeCount++;
-                    Debug.Log("shakeCount" + shakeCount);
+                    //Debug.Log("shakeCount" + shakeCount);
 
                     //シャカエフェクト
                     Vector2 shakaPoint = (Vector2)transform.position + previousDirection * shakaOffset;
@@ -156,7 +167,7 @@ public class ShakerScript : MonoBehaviour
 
                         //カクテルの完成度を変更
                         cocktailProgress += shakeDistance * shakeSpeed / 10f;
-                        Debug.Log("カクテルの完成度" + cocktailProgress);
+                        //Debug.Log("カクテルの完成度" + cocktailProgress);
                     }
 
                     preShakePoint = transform.position;
@@ -208,7 +219,7 @@ public class ShakerScript : MonoBehaviour
             if (triggerRotation > 360)
             {
                 cocktailProgress += shakerHeight / 5f;
-                Debug.Log("カクテルの完成度" + cocktailProgress);
+                //Debug.Log("カクテルの完成度" + cocktailProgress);
                 triggerRotation = 0;
             }
         }
@@ -265,6 +276,12 @@ public class ShakerScript : MonoBehaviour
                 targetPosition = startPosition;
                 pourTime = kPourTime;
                 isGrounded = true;
+
+                GlassScript glass = FindAnyObjectByType<GlassScript>();
+                if (glass.isGrounded)
+                {
+                    glass.isFull = true;
+                }
             }
         }
 
@@ -303,6 +320,15 @@ public class ShakerScript : MonoBehaviour
 
             //ゴツエフェクト   
             if (!isGrounded) { Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity); }
+
+            //量を減らす
+            cocktailAmount -= velocity.magnitude * cocktailAmountMinus;
+            if (cocktailAmount < 0)
+            {
+                cocktailAmount = 0;
+            }
+
+            Instantiate(spillParticle, transform.position, Quaternion.identity);
         }
 
         if (collision.tag == "Counter")
@@ -313,12 +339,33 @@ public class ShakerScript : MonoBehaviour
 
             //ゴツエフェクト
             if (!isGrounded) { Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity); }
+
+            //量を減らす
+            cocktailAmount -= velocity.magnitude * cocktailAmountMinus;
+            if (cocktailAmount < 0)
+            {
+                cocktailAmount = 0;
+            }
+
+            Instantiate(spillParticle, transform.position, Quaternion.identity);
         }
 
         if (collision.tag == "PourField")
         {
             isPour = true;
             pourCenter = collision.transform.position;
+        }
+
+        if (collision.tag == "Ojama")
+        {
+            //量を減らす
+            cocktailAmount -= 10f;
+            if (cocktailAmount < 0)
+            {
+                cocktailAmount = 0;
+            }
+
+            Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
         }
     }
 

@@ -823,6 +823,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
+      propertyPath: throwPower
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
       propertyPath: catchEffect
       value: 
       objectReference: {fileID: 5861019082552183204, guid: d780f5b37171fb74eaf90e9f373553e3, type: 3}
@@ -849,6 +853,18 @@ PrefabInstance:
     - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
       propertyPath: rotationSpeed
       value: 720
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
+      propertyPath: spillParticle
+      value: 
+      objectReference: {fileID: 4794758649662420022, guid: 6b3051439400dd3428af978655da3b80, type: 3}
+    - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
+      propertyPath: kCocktailAmount
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
+      propertyPath: cocktailAmountMinus
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
       propertyPath: cocktailProgressMax
