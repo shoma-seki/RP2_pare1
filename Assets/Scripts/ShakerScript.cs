@@ -21,6 +21,8 @@ public class ShakerScript : MonoBehaviour
     public bool isGrounded = true;
     bool isCollision;
 
+    public bool isClear;
+
     public bool isCompleted;
 
     //スタートに戻す
@@ -108,6 +110,7 @@ public class ShakerScript : MonoBehaviour
         Grab();
         Pour();
         ResetToStart();
+        Clear();
 
         if (Input.GetMouseButtonUp(0))
         {
@@ -293,6 +296,18 @@ public class ShakerScript : MonoBehaviour
             //回転
             rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 0), 5f * Time.deltaTime);
             transform.rotation = Quaternion.Euler(rotation);
+        }
+    }
+
+    void Clear()
+    {
+        if (isClear)
+        {
+            isClear = false;
+            isCompleted = false;
+
+            cocktailAmount = kCocktailAmount;
+            cocktailProgress = 0;
         }
     }
 

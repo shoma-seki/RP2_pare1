@@ -141,6 +141,12 @@ public class GlassScript : MonoBehaviour
             {
                 position.x += 10f * Time.deltaTime;
                 transform.position = position;
+
+                if (position.x > 17)
+                {
+                    shaker.isClear = true;
+                    Destroy(gameObject);
+                }
             }
         }
     }
