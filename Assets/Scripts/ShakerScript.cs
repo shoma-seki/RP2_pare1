@@ -334,7 +334,12 @@ public class ShakerScript : MonoBehaviour
             isCollision = true;
 
             //ゴツエフェクト   
-            if (!isGrounded) { Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity); }
+            if (!isGrounded)
+            {
+                Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
+
+                Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
+            }
 
             //量を減らす
             cocktailAmount -= velocity.magnitude * cocktailAmountMinus;
@@ -342,8 +347,6 @@ public class ShakerScript : MonoBehaviour
             {
                 cocktailAmount = 0;
             }
-
-            Instantiate(spillParticle, transform.position, Quaternion.identity);
         }
 
         if (collision.tag == "Counter")
@@ -353,7 +356,12 @@ public class ShakerScript : MonoBehaviour
             isCollision = true;
 
             //ゴツエフェクト
-            if (!isGrounded) { Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity); }
+            if (!isGrounded)
+            {
+                Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
+
+                Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
+            }
 
             //量を減らす
             cocktailAmount -= velocity.magnitude * cocktailAmountMinus;
@@ -361,8 +369,6 @@ public class ShakerScript : MonoBehaviour
             {
                 cocktailAmount = 0;
             }
-
-            Instantiate(spillParticle, transform.position, Quaternion.identity);
         }
 
         if (collision.tag == "PourField")

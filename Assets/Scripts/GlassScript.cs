@@ -163,6 +163,7 @@ public class GlassScript : MonoBehaviour
             if (releaseHeight < -4)
             {
                 isGrounded = true;
+                isGrabbed = false;
                 Instantiate(pourField, transform.position, Quaternion.identity);
             }
             else

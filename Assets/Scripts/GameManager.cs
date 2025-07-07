@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject cockTailGlass;
     [SerializeField] GameObject collinsGlass;
 
+    //ステージ
+    int level;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +19,11 @@ public class GameManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        GenerateGlass();
+    }
+
+    void GenerateGlass()
     {
         if (FindAnyObjectByType<GlassScript>() == null)
         {
@@ -27,6 +35,8 @@ public class GameManager : MonoBehaviour
             {
                 Instantiate(collinsGlass, glassPosition, Quaternion.identity);
             }
+
+            level++;
         }
     }
 }
