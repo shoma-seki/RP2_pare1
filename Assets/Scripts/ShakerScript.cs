@@ -211,7 +211,7 @@ public class ShakerScript : MonoBehaviour
             if (position.y >= 80)
             {
                 velocity.y = 0;
-                position.y = 50;
+                position.y = 80;
             }
 
             //‰ñ“]‚³‚¹‚é
