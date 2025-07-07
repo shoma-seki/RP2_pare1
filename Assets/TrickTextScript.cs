@@ -9,6 +9,9 @@ public class TrickTextScript : MonoBehaviour
     TextMeshProUGUI text;
     string triggerRotation;
     float visibleSecond;
+    Color targetColor;
+
+    float scale;
 
     // Start is called before the first frame update
     void Start()
@@ -20,10 +23,34 @@ public class TrickTextScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //値によってイロイロ変更
+        if (shaker.triggerRotation > 3600)
+        {
+            scale = 2.5f;
+        }
+        else if (shaker.triggerRotation > 2160)
+        {
+            scale = 2f;
+        }
+        else if (shaker.triggerRotation > 720)
+        {
+            scale = 1.5f;
+        }
+        else
+        {
+            targetColor = Color.white;
+            scale = 1f;
+        }
+
+        transform.localScale = new Vector2(scale, scale);
+
+        //テキストを変更
         if (!shaker.isGrabbed && !shaker.isGrounded)
         {
-            triggerRotation = shaker.triggerRotation.ToString("f0");
+            triggerRotation = (Mathf.Floor(shaker.triggerRotation / 360f) * 360f).ToString();
             text.text = triggerRotation;
+            text.color = targetColor;
+            visibleSecond = 0;
         }
         else if (visibleSecond < 2f)
         {
@@ -32,7 +59,8 @@ public class TrickTextScript : MonoBehaviour
         }
         else
         {
-
+            visibleSecond = 10;
+            text.color = Color.Lerp(text.color, Color.clear, 2f * Time.deltaTime);
         }
     }
 }
