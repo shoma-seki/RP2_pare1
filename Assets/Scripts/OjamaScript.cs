@@ -7,12 +7,13 @@ using UnityEngine.UIElements;
 public class OjamaScript : MonoBehaviour
 {
     Player player;
+    ShakerScript shaker;
 
     public enum OjamaType
     {
-        Stone, Poison
+        Stone, Poison, Cannon
     }
-    OjamaType type = OjamaType.Stone;
+    OjamaType type = OjamaType.Cannon;
 
     Vector3 position;
     Vector2 velocity;
@@ -24,6 +25,11 @@ public class OjamaScript : MonoBehaviour
     float degree;
     float rotation;
 
+    //Cannon
+    [SerializeField] float exDistance;
+    [SerializeField] float exPower;
+    Vector3 rotationC;
+
     //Ç¬Ç©ÇÒÇ≈ÇÈÇ∆Ç´
     bool isFree = true;
     bool isGrabbed;
@@ -32,10 +38,14 @@ public class OjamaScript : MonoBehaviour
     Vector2 prePosition;
     [SerializeField] Vector2 gravity;
 
+    //ê∂ë∂éûä‘
+    float aliveTime;
+
     // Start is called before the first frame update
     void Start()
     {
         player = FindAnyObjectByType<Player>();
+        shaker = FindAnyObjectByType<ShakerScript>();
 
         position = transform.position;
         startPosition = transform.position;
@@ -48,6 +58,12 @@ public class OjamaScript : MonoBehaviour
         GrabMove();
 
         prePosition = transform.position;
+
+        aliveTime += Time.deltaTime;
+        if (aliveTime > 5f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void FixedUpdate()
@@ -63,8 +79,12 @@ public class OjamaScript : MonoBehaviour
             {
                 case OjamaType.Stone:
 
+                    speed = 10f;
                     velocity = direction * speed;
                     position += (Vector3)velocity * Time.deltaTime;
+
+                    rotationC.z += 100 * Time.deltaTime;
+                    transform.rotation = Quaternion.Euler(rotationC);
 
                     break;
                 case OjamaType.Poison:
@@ -86,6 +106,35 @@ public class OjamaScript : MonoBehaviour
                         rotation = degree * Mathf.Deg2Rad;
 
                         position.y = startPosition.y + Mathf.Sin(rotation) * 2f;
+                    }
+
+                    rotationC.z += 100 * Time.deltaTime;
+                    transform.rotation = Quaternion.Euler(rotationC);
+
+                    break;
+
+                case OjamaType.Cannon:
+
+                    velocity += gravity * Time.deltaTime;
+
+                    if (velocity.y < gravity.y)
+                    {
+                        velocity.y = gravity.y;
+                    }
+
+                    position += (Vector3)velocity * 45f * Time.deltaTime;
+                    transform.position = position;
+
+                    rotationC.z += 100 * Time.deltaTime;
+                    transform.rotation = Quaternion.Euler(rotationC);
+
+                    if (Vector2.Distance(shaker.transform.position, transform.position) < exDistance)
+                    {
+                        //îöî≠Ç≥ÇπÇÈ
+                        shaker.isGrabbed = false;
+                        shaker.velocity = (shaker.transform.position - transform.position).normalized * exPower;
+
+                        Destroy(gameObject);
                     }
 
                     break;
@@ -152,6 +201,11 @@ public class OjamaScript : MonoBehaviour
         this.type = type;
         this.direction = direction;
         this.speed = speed;
+
+        if (type == OjamaType.Cannon)
+        {
+            velocity = this.direction * this.speed;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

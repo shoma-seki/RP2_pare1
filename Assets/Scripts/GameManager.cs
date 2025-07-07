@@ -9,12 +9,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject collinsGlass;
 
     //ステージ
-    int level;
+    public int level;
+    EnemyGenerateManager enemyGenerateManager;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        enemyGenerateManager = FindAnyObjectByType<EnemyGenerateManager>();
     }
 
     // Update is called once per frame
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
             }
 
             level++;
+            enemyGenerateManager.isGenerate = true;
         }
     }
 }

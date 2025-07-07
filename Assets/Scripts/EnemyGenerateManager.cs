@@ -2,62 +2,92 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyGenerateManager : MonoBehaviour {
-    [SerializeField] private List<GameObject> points = new List<GameObject>();
-    [SerializeField] private List<GameObject> enemies = new List<GameObject>();
+public class EnemyGenerateManager : MonoBehaviour
+{
+    GameManager gameManager;
 
-    [SerializeField] private float baseSpawnInterval = 5f;  // äÓñ{ÇÃê∂ê¨ä‘äu
-    [SerializeField] private float minSpawnInterval = 1f;   // ç≈è¨ÇÃê∂ê¨ä‘äu
+    [SerializeField] private List<GameObject> points = new List<GameObject>();
+    [SerializeField] private OjamaSpawnScript ojamaSpawn;
+
+    //[SerializeField] private float baseSpawnInterval = 5f;  // äÓñ{ÇÃê∂ê¨ä‘äu
+    //SerializeField] private float minSpawnInterval = 1f;   // ç≈è¨ÇÃê∂ê¨ä‘äu
 
     //ÉåÉxÉãÇ…âûÇ∂ÇƒìGÇÃê∂ê¨ä‘äuÇ‚Ç«ÇÃìGÇ™ê∂ê¨ÇµÇ‚Ç∑Ç≠Ç»ÇÈÇÃÇ©í≤êÆÇ≈Ç´ÇÈ
-    [SerializeField] private int level = 1;
+    int level = 1;
+    public bool isGenerate;
 
     private float spawnTimer = 0f;
 
-    void Update() {
-        spawnTimer += Time.deltaTime;
-
-        float currentInterval = Mathf.Max(baseSpawnInterval - level * 0.5f, minSpawnInterval);
-        if (spawnTimer >= currentInterval) {
-            SpawnEnemy();
-            spawnTimer = 0f;
-        }
+    private void Start()
+    {
+        gameManager = FindAnyObjectByType<GameManager>();
     }
 
-    void SpawnEnemy() {
-        if (points.Count == 0 || enemies.Count == 0)
-            return;
+    void Update()
+    {
+        level = gameManager.level;
 
-        GameObject point = points[Random.Range(0, points.Count)];
-        GameObject enemyPrefab = GetWeightedRandomEnemy();
+        if (level == 1)
+        {
+            if (isGenerate)
+            {
+                SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.3f, 1f);
+                SpawnEnemy(1, OjamaScript.OjamaType.Stone, new Vector2(0, -1), 2f, 2f);
 
-        Instantiate(enemyPrefab, point.transform.position, Quaternion.identity);
-    }
-
-    GameObject GetWeightedRandomEnemy() {
-        float[] weights = new float[enemies.Count];
-        float totalWeight = 0f;
-
-        for (int i = 0; i < enemies.Count; i++) {
-            weights[i] = Mathf.Pow((i + 1), level);
-            totalWeight += weights[i];
-        }
-
-        float randomValue = Random.Range(0f, totalWeight);
-        float currentSum = 0f;
-
-        for (int i = 0; i < weights.Length; i++) {
-            currentSum += weights[i];
-            if (randomValue <= currentSum) {
-                return enemies[i];
+                isGenerate = false;
             }
         }
 
-        return enemies[0]; // îOÇÃÇΩÇﬂÇÃÉtÉHÅ[ÉãÉoÉbÉN
+        if (level == 2)
+        {
+            if (isGenerate)
+            {
+                SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.3f, 1f);
+                SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 2f, 2f);
+
+                isGenerate = false;
+            }
+        }
     }
 
+    void SpawnEnemy(int spawnPoint, OjamaScript.OjamaType ojamaType, Vector2 direction, float speed, float levelSpawnTime)
+    {
+        if (points.Count == 0)
+            return;
+
+        OjamaSpawnScript newSpawn = Instantiate(ojamaSpawn, points[spawnPoint].transform.position, Quaternion.identity);
+        newSpawn.Spawn(points[spawnPoint].transform.position, ojamaType, direction, speed, levelSpawnTime);
+    }
+
+    //GameObject GetWeightedRandomEnemy()
+    //{
+    //    float[] weights = new float[enemies.Count];
+    //    float totalWeight = 0f;
+
+    //    for (int i = 0; i < enemies.Count; i++)
+    //    {
+    //        weights[i] = Mathf.Pow((i + 1), level);
+    //        totalWeight += weights[i];
+    //    }
+
+    //    float randomValue = Random.Range(0f, totalWeight);
+    //    float currentSum = 0f;
+
+    //    for (int i = 0; i < weights.Length; i++)
+    //    {
+    //        currentSum += weights[i];
+    //        if (randomValue <= currentSum)
+    //        {
+    //            return enemies[i];
+    //        }
+    //    }
+
+    //    return enemies[0]; // îOÇÃÇΩÇﬂÇÃÉtÉHÅ[ÉãÉoÉbÉN
+    //}
+
     // äOïîÇ©ÇÁÉåÉxÉãÇê›íËÇ∑ÇÈópÅiîCà”Åj
-    public void SetLevel(int newLevel) {
+    public void SetLevel(int newLevel)
+    {
         level = Mathf.Max(1, newLevel);
     }
 }

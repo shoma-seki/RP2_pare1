@@ -11,19 +11,21 @@ public class ShakerScript : MonoBehaviour
 
     Vector2 prePosition;
     Vector2 preVelocity;
-    Vector2 velocity;
+    public Vector2 velocity;
     [SerializeField] Vector2 gravity;
 
     Vector3 rotation;
 
     bool isMouse;
-    bool isGrabbed;
+    public bool isGrabbed;
     public bool isGrounded = true;
     bool isCollision;
 
     public bool isClear;
 
     public bool isCompleted;
+
+    bool isPlusRotate;    //triggerRotationを足すか
 
     //スタートに戻す
     Vector2 startPosition;
@@ -48,7 +50,7 @@ public class ShakerScript : MonoBehaviour
 
     //投げてるときに加算
     [SerializeField] float rotationSpeed;
-    float triggerRotation;
+    public float triggerRotation;
 
     //振るときのやつ
     Vector2 direction;      //進んでいる方向
@@ -223,15 +225,20 @@ public class ShakerScript : MonoBehaviour
             //rotation = transform.rotation.eulerAngles;
 
             //高さで完成度を加算
-            shakerHeight = position.y + 6f;
-            triggerRotation += rotationSpeed * Time.deltaTime;
 
-            if (triggerRotation > 360)
+            if (velocity.y > 0)
             {
-                cocktailProgress += shakerHeight / 5f;
-                //Debug.Log("カクテルの完成度" + cocktailProgress);
-                triggerRotation = 0;
+                shakerHeight = position.y + 6f;
             }
+
+            if (isPlusRotate) { triggerRotation += rotationSpeed * Time.deltaTime; }
+
+            //if (triggerRotation > 360)
+            //{
+            //    cocktailProgress += shakerHeight / 5f;
+            //    //Debug.Log("カクテルの完成度" + cocktailProgress);
+            //    triggerRotation = 0;
+            //}
         }
 
         transform.position = position;
@@ -251,12 +258,19 @@ public class ShakerScript : MonoBehaviour
                 Instantiate(catchEffect, catchPoint, Quaternion.identity);
 
                 //Debug.Log("つかんだよ");
+
+                //投げてキャッチのとき
+                cocktailProgress += (triggerRotation / 1000f) * (shakerHeight / 5f);
+                isPlusRotate = true;
             }
         }
 
         if (Input.GetMouseButtonUp(0))
         {
             isGrabbed = false;
+
+            shakerHeight = 0;
+            triggerRotation = 0;
             //Debug.Log("離したよ");
         }
     }
@@ -328,6 +342,9 @@ public class ShakerScript : MonoBehaviour
 
         if (collision.tag == "Wall")
         {
+            triggerRotation = 0;
+            isPlusRotate = false;
+
             if (transform.position.x < 0)
             {
                 velocity = new Vector2(1, 1) / reflection;
@@ -362,6 +379,9 @@ public class ShakerScript : MonoBehaviour
 
             isCollision = true;
 
+            triggerRotation = 0;
+            isPlusRotate = false;
+
             //ゴツエフェクト
             if (!isGrounded)
             {
@@ -386,6 +406,9 @@ public class ShakerScript : MonoBehaviour
 
         if (collision.tag == "Ojama")
         {
+            triggerRotation = 0;
+            isPlusRotate = false;
+
             //量を減らす
             cocktailAmount -= 10f;
             if (cocktailAmount < 0)

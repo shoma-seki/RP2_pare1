@@ -139,7 +139,7 @@ public class GlassScript : MonoBehaviour
 
             if (isClear)
             {
-                position.x += 10f * Time.deltaTime;
+                position = Vector2.Lerp(position, new Vector2(20, -6f), 3f * Time.deltaTime);
                 transform.position = position;
 
                 if (position.x > 17)
