@@ -13,6 +13,9 @@ public class TrickTextScript : MonoBehaviour
 
     float scale;
 
+    [SerializeField] Texture2D rainbow;
+    [SerializeField] Texture2D white;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,19 +29,33 @@ public class TrickTextScript : MonoBehaviour
         //値によってイロイロ変更
         if (shaker.triggerRotation > 3600)
         {
+            targetColor = Color.white;
+
+            // マテリアルを差し替え
+            Material mat = new Material(text.fontMaterial);
+            mat.SetTexture("_FaceTex", rainbow);
+            text.fontMaterial = mat;
+
             scale = 2.5f;
         }
         else if (shaker.triggerRotation > 2160)
         {
+            targetColor = new Color(0.8510f, 0.2078f, 0.1569f);
             scale = 2f;
         }
         else if (shaker.triggerRotation > 720)
         {
+            targetColor = new Color(0.1686f, 0.8510f, 0.1569f);
             scale = 1.5f;
         }
         else
         {
             targetColor = Color.white;
+
+            Material mat = new Material(text.fontMaterial);
+            mat.SetTexture("_FaceTex", white);
+            text.fontMaterial = mat;
+
             scale = 1f;
         }
 

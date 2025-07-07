@@ -380,7 +380,6 @@ public class ShakerScript : MonoBehaviour
             isCollision = true;
 
             triggerRotation = 0;
-            isPlusRotate = false;
 
             //ゴツエフェクト
             if (!isGrounded)
