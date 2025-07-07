@@ -45,9 +45,9 @@ public class CameraScript : MonoBehaviour
         {
             cam.orthographicSize = 8;
         }
-        if (cam.orthographicSize > 15)
+        if (cam.orthographicSize > 30)
         {
-            cam.orthographicSize = 15;
+            cam.orthographicSize = 30;
         }
 
         position.x = 0;

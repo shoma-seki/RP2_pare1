@@ -205,6 +205,13 @@ public class ShakerScript : MonoBehaviour
             velocity += gravity * Time.deltaTime;
             position += velocity * 45f * Time.deltaTime;
 
+            //80ˆÈã‚Å”½“]
+            if (position.y >= 80)
+            {
+                velocity.y = 0;
+                position.y = 50;
+            }
+
             //‰ñ“]‚³‚¹‚é
             rotation.z += rotationSpeed * Time.deltaTime;
             transform.rotation = Quaternion.Euler(rotation);
