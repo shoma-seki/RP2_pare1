@@ -304,7 +304,7 @@ public class ShakerScript : MonoBehaviour
                 //Debug.Log("縺､縺九ｓ縺繧・);
 
                 //謚輔￡縺ｦ繧ｭ繝｣繝・メ縺ｮ縺ｨ縺・
-                cocktailProgress += (triggerRotation / 100f);
+                cocktailProgress += (triggerRotation / 150f);
                 isPlusRotate = true;
                 if (triggerRotation > 2160)
                 {

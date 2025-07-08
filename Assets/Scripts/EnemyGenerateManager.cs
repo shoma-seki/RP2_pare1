@@ -48,8 +48,10 @@ public class EnemyGenerateManager : MonoBehaviour
             }
         }
 
-        if (level == 3) {
-            if (isGenerate) {
+        if (level == 3)
+        {
+            if (isGenerate)
+            {
                 SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.3f, 1f);
                 SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 2f, 2f);
 
@@ -57,8 +59,10 @@ public class EnemyGenerateManager : MonoBehaviour
             }
         }
 
-        if (level == 4) {
-            if (isGenerate) {
+        if (level == 4)
+        {
+            if (isGenerate)
+            {
                 SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.3f, 1f);
                 SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 2f, 2f);
 
@@ -66,8 +70,10 @@ public class EnemyGenerateManager : MonoBehaviour
             }
         }
 
-        if (level == 5) {
-            if (isGenerate) {
+        if (level == 5)
+        {
+            if (isGenerate)
+            {
                 SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.3f, 1f);
                 SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 2f, 2f);
 
@@ -75,8 +81,10 @@ public class EnemyGenerateManager : MonoBehaviour
             }
         }
 
-        if (level == 6) {
-            if (isGenerate) {
+        if (level == 6)
+        {
+            if (isGenerate)
+            {
                 SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.3f, 1f);
                 SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 2f, 2f);
 
@@ -84,8 +92,10 @@ public class EnemyGenerateManager : MonoBehaviour
             }
         }
 
-        if (level == 7) {
-            if (isGenerate) {
+        if (level == 7)
+        {
+            if (isGenerate)
+            {
                 SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.3f, 1f);
                 SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 2f, 2f);
 
@@ -93,8 +103,10 @@ public class EnemyGenerateManager : MonoBehaviour
             }
         }
 
-        if (level == 8) {
-            if (isGenerate) {
+        if (level == 8)
+        {
+            if (isGenerate)
+            {
                 SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.3f, 1f);
                 SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 2f, 2f);
 
@@ -102,8 +114,10 @@ public class EnemyGenerateManager : MonoBehaviour
             }
         }
 
-        if (level == 9) {
-            if (isGenerate) {
+        if (level == 9)
+        {
+            if (isGenerate)
+            {
                 SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.3f, 1f);
                 SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 2f, 2f);
 
@@ -111,8 +125,10 @@ public class EnemyGenerateManager : MonoBehaviour
             }
         }
 
-        if (level == 10) {
-            if (isGenerate) {
+        if (level == 10)
+        {
+            if (isGenerate)
+            {
                 SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.3f, 1f);
                 SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 2f, 2f);
 

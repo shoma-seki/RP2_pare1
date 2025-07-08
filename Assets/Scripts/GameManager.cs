@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     bool isNextStage;
 
     //ƒ^ƒCƒ€
-    float gameTime;
+    public float gameTime;
     [SerializeField] float kGameTime = 60f;
     public bool isRestart;
     float restartTime;
@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
     {
         GenerateGlass();
 
-        if (!shaker.isGrounded)
+        if (!shaker.isGrounded && shaker.cocktailProgress <= 99)
         {
             gameTime -= Time.deltaTime;
         }
