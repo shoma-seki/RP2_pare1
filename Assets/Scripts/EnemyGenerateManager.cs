@@ -31,8 +31,8 @@ public class EnemyGenerateManager : MonoBehaviour
         {
             if (isGenerate)
             {
-                SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.3f, 1f);
-                SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 2f, 2f);
+                //SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.3f, 1f);
+                //SpawnEnemy(1, OjamaScript.OjamaType.Stone, new Vector2(0, -1), 2f, 2f);
                 isGenerate = false;
             }
         }
@@ -42,16 +42,15 @@ public class EnemyGenerateManager : MonoBehaviour
             if (isGenerate)
             {
                 SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.3f, 1f);
-                SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 2f, 2f);
-
+                SpawnEnemy(2, OjamaScript.OjamaType.Cannon, new Vector2(-1, 1), 0.3f, 3f);
                 isGenerate = false;
             }
         }
 
         if (level == 3) {
             if (isGenerate) {
-                SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.3f, 1f);
-                SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 2f, 2f);
+                SpawnEnemy(0, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 4f, 1f);
+                SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 4f, 3f);
 
                 isGenerate = false;
             }
@@ -59,8 +58,10 @@ public class EnemyGenerateManager : MonoBehaviour
 
         if (level == 4) {
             if (isGenerate) {
-                SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.3f, 1f);
-                SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 2f, 2f);
+                SpawnEnemy(0, OjamaScript.OjamaType.Stone, new Vector2(-1, -1), 1f, 1f);
+                SpawnEnemy(2, OjamaScript.OjamaType.Stone, new Vector2(-1, 0), 1f, 2f);
+                SpawnEnemy(3, OjamaScript.OjamaType.Stone, new Vector2(1, 0), 1f, 3f);
+                SpawnEnemy(1, OjamaScript.OjamaType.Stone, new Vector2(1, -1), 1f, 4f);
 
                 isGenerate = false;
             }
