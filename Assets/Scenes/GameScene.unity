@@ -876,13 +876,16 @@ MonoBehaviour:
   cockTailGlass: {fileID: 2645780345626253062, guid: 8c83b892c310c9f4ebae618fcb5c312e, type: 3}
   collinsGlass: {fileID: 2645780345626253062, guid: a57096958498f3c4081bcdc749944e8e, type: 3}
   level: 0
-  maxLevel: 0
+  maxLevel: 5
   kNextWaitTime: 9
   isWait: 0
+  kGameTime: 10
+  isRestart: 0
   Fure: {fileID: 1994160041230809500, guid: d1b6266c625278143886a4cccab2f68d, type: 3}
   Clear: {fileID: 8925993115829733474, guid: 5fb0e690d23fa1c4e9f037ca6d152eff, type: 3}
   Restart: {fileID: 8925993115829733474, guid: 08537e8ae4da19040b40708db1f4bb51, type: 3}
   Next: {fileID: 4132384093625812675, guid: 2d4b1f94586e4a242bcccba6e885737e, type: 3}
+  TimeUp: {fileID: 8925993115829733474, guid: 3a96c5acd4c19134b99e705da8c8160e, type: 3}
 --- !u!4 &488285063
 Transform:
   m_ObjectHideFlags: 0
