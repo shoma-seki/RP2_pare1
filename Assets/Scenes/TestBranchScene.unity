@@ -774,6 +774,10 @@ PrefabInstance:
       value: 3.6
       objectReference: {fileID: 0}
     - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
+      propertyPath: pourParticle
+      value: 
+      objectReference: {fileID: 2493999100081331486, guid: 6cb3ca0b95c846940bfe959dd1307094, type: 3}
+    - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
       propertyPath: rotationSpeed
       value: 720
       objectReference: {fileID: 0}

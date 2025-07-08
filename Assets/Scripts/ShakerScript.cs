@@ -78,6 +78,8 @@ public class ShakerScript : MonoBehaviour
 
     [SerializeField] GameObject spillParticle;  //ぶつかったときのパーティクル
 
+    [SerializeField] GameObject pourParticle;  //注ぐときのパーティクル
+
     // Start is called before the first frame update
     void Start()
     {
@@ -294,16 +296,14 @@ public class ShakerScript : MonoBehaviour
         if (isPour)
         {
             pourTime -= Time.deltaTime;
-            if (pourTime < 0)
-            {
+            if (pourTime < 0) {
                 isPour = false;
                 targetPosition = startPosition;
                 pourTime = kPourTime;
                 isGrounded = true;
 
                 GlassScript glass = FindAnyObjectByType<GlassScript>();
-                if (glass.isGrounded)
-                {
+                if (glass.isGrounded) {
                     glass.isFull = true;
                 }
             }
@@ -401,6 +401,7 @@ public class ShakerScript : MonoBehaviour
         {
             isPour = true;
             pourCenter = collision.transform.position;
+            Instantiate(pourParticle, new Vector3(transform.position.x, transform.position.y, 10f), pourParticle.transform.rotation);
         }
 
         if (collision.tag == "Ojama")
