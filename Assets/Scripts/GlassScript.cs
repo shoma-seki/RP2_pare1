@@ -22,6 +22,7 @@ public class GlassScript : MonoBehaviour
     bool isTouched;
 
     public bool isFull;
+    bool preIsFull;
     bool isFullGrabbed;
     bool isClear;
 
@@ -37,6 +38,11 @@ public class GlassScript : MonoBehaviour
     RectTransform canvas;
     [SerializeField] GameObject comment_great;
     [SerializeField] GameObject comment_soso;
+    [SerializeField] GameObject comment_bad;
+
+    //やじるし
+    [SerializeField] GameObject arrow;
+    GameObject newArrow;
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +67,13 @@ public class GlassScript : MonoBehaviour
         Move();
         DrinkMove();
         Clear();
+
+        if (isFull && !preIsFull)
+        {
+            newArrow = Instantiate(arrow, transform.position + new Vector3(2f, 0), Quaternion.identity);
+        }
+
+        preIsFull = isFull;
 
         //Debug.Log("isGrabbed" + isGrabbed);
         //Debug.Log("releaseHeight" + releaseHeight);
@@ -131,8 +144,10 @@ public class GlassScript : MonoBehaviour
         }
     }
 
-    void DrinkMove() {
-        if (shaker.isPour) {
+    void DrinkMove()
+    {
+        if (shaker.isPour)
+        {
             drinkSprite.transform.position = Vector2.Lerp(drinkSprite.transform.position, transform.position, 1f * Time.deltaTime);
         }
     }
@@ -163,15 +178,20 @@ public class GlassScript : MonoBehaviour
                 {
                     shaker.isClear = true;
                     Destroy(gameObject);
+                    Destroy(newArrow);
 
                     //クリアコメントを表示
-                    if (shaker.cocktailAmount > 80)
+                    if (shaker.cocktailAmount > 79)
                     {
                         Instantiate(comment_great, canvas);
                     }
-                    else if (shaker.cocktailAmount > 50)
+                    else if (shaker.cocktailAmount > 39)
                     {
                         Instantiate(comment_soso, canvas);
+                    }
+                    else
+                    {
+                        Instantiate(comment_bad, canvas);
                     }
                 }
             }
@@ -187,17 +207,10 @@ public class GlassScript : MonoBehaviour
 
         if (collision.tag == "Counter")
         {
-            if (releaseHeight < -4)
-            {
-                isGrounded = true;
-                isGrabbed = false;
-                Instantiate(pourField, transform.position, Quaternion.identity);
-                transform.rotation = Quaternion.identity;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
+            isGrounded = true;
+            isGrabbed = false;
+            Instantiate(pourField, transform.position, Quaternion.identity);
+            transform.rotation = Quaternion.Euler(Vector3.zero);
         }
     }
 

@@ -176,6 +176,10 @@ MonoBehaviour:
   isFull: 0
   pourField: {fileID: 7009915811524454143, guid: 42b25f82b727ece4296c79327235af0d, type: 3}
   drinkSprite: {fileID: 5894094192729726766}
+  comment_great: {fileID: 8776760783086623326, guid: ed3bd497c84f7154b8d48c5ab88649d8, type: 3}
+  comment_soso: {fileID: 8776760783086623326, guid: 880faa1b9616c9b43a242823d73ad318, type: 3}
+  comment_bad: {fileID: 8776760783086623326, guid: 7b6535293de74654baceb49ab789ca3a, type: 3}
+  arrow: {fileID: 6255835879113976600, guid: a2478b1fa68123244b8bbf1a15f1e0e5, type: 3}
 --- !u!1 &5894094192729726766
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,6 +401,3 @@ SpriteMask:
   m_BackSortingOrder: 0
   m_IsCustomRangeActive: 0
   m_SpriteSortPoint: 0
-  canvas: {fileID: 0}
-  comment_great: {fileID: 8776760783086623326, guid: ed3bd497c84f7154b8d48c5ab88649d8, type: 3}
-  comment_soso: {fileID: 8776760783086623326, guid: 880faa1b9616c9b43a242823d73ad318, type: 3}
