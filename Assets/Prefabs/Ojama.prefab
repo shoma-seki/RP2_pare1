@@ -50,6 +50,9 @@ MonoBehaviour:
   exDistance: 3
   exPower: 1
   gravity: {x: 0, y: -0.44}
+  stone: {fileID: 21300000, guid: 82b5117744e33ae438bf75619fe3c086, type: 3}
+  poison: {fileID: 21300000, guid: 03bb6dc23b29fa549b60072d1596fb41, type: 3}
+  cannon: {fileID: 21300000, guid: d40b0fb8f3d5e0c4281c3c3d0a253236, type: 3}
 --- !u!212 &7699970512112277502
 SpriteRenderer:
   m_ObjectHideFlags: 0

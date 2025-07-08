@@ -25,60 +25,71 @@ public class ShakerScript : MonoBehaviour
 
     public bool isCompleted;
 
-    bool isPlusRotate;    //triggerRotation‚ğ‘«‚·‚©
+    bool isPlusRotate;    //triggerRotationã‚’è¶³ã™ã‹
 
-    //ƒXƒ^[ƒg‚É–ß‚·
+    //ã‚¹ã‚¿ãƒ¼ãƒˆã«æˆ»ã™
     Vector2 startPosition;
 
-    //”½ËŒW”
+    //åå°„ä¿‚æ•°
     [SerializeField] float reflection;
 
-    //“Š‚°‚é—Í
+    //æŠ•ã’ã‚‹åŠ›
     [SerializeField] float throwPower;
 
-    //’†g
-    float shakeSpeed;       //U‚Á‚½ƒXƒs[ƒh
-    float shakeDistance;    //U‚Á‚½‹——£
-    float shakeCount;       //U‚Á‚½‰ñ”
+    //ä¸­èº«
+    float shakeSpeed;       //æŒ¯ã£ãŸã‚¹ãƒ”ãƒ¼ãƒ‰
+    float shakeDistance;    //æŒ¯ã£ãŸè·é›¢
+    float shakeCount;       //æŒ¯ã£ãŸå›æ•°
     float cocktailAmount;
-    [SerializeField] float kCocktailAmount;   //ƒJƒNƒeƒ‹‚Ì—Ê
-    [SerializeField] float cocktailAmountMinus; //ƒJƒNƒeƒ‹‚Ì—Ê‚ğŒ¸‚ç‚·ŒW”
-    Vector2 preShakePoint;  //‘O‰ñƒVƒFƒCƒN‚µ‚½êŠ
-    public float cocktailProgress; //ƒJƒNƒeƒ‹‚ÌŠ®¬“x   
+    [SerializeField] float kCocktailAmount;   //ã‚«ã‚¯ãƒ†ãƒ«ã®é‡
+    [SerializeField] float cocktailAmountMinus; //ã‚«ã‚¯ãƒ†ãƒ«ã®é‡ã‚’æ¸›ã‚‰ã™ä¿‚æ•°
+    Vector2 preShakePoint;  //å‰å›ã‚·ã‚§ã‚¤ã‚¯ã—ãŸå ´æ‰€
+    public float cocktailProgress; //ã‚«ã‚¯ãƒ†ãƒ«ã®å®Œæˆåº¦   
     public float cocktailProgressMax;
-    float shakerHeight;     //ƒVƒFƒCƒJ[‚Ì‚‚³
+    float shakerHeight;     //ã‚·ã‚§ã‚¤ã‚«ãƒ¼ã®é«˜ã•
 
-    //“Š‚°‚Ä‚é‚Æ‚«‚É‰ÁZ
+    //æŠ•ã’ã¦ã‚‹ã¨ãã«åŠ ç®—
     [SerializeField] float rotationSpeed;
     public float triggerRotation;
 
-    //U‚é‚Æ‚«‚Ì‚â‚Â
-    Vector2 direction;      //i‚ñ‚Å‚¢‚é•ûŒü
+    //æŒ¯ã‚‹ã¨ãã®ã‚„ã¤
+    Vector2 direction;      //é€²ã‚“ã§ã„ã‚‹æ–¹å‘
     Vector2 previousDirection;
-    float directionChangeThreshold = 140f; // Šp“x·‚ª45“xˆÈã‚Åu‹}•Ïv‚Æ”»’f
+    float directionChangeThreshold = 140f; // è§’åº¦å·®ãŒ45åº¦ä»¥ä¸Šã§ã€Œæ€¥å¤‰ã€ã¨åˆ¤æ–­
 
-    //’‚®
+    //æ³¨ã
     [SerializeField] Vector2 pourOffset;
     Vector2 pourCenter;
     public bool isPour;
 
-    //Reset—p
+    //Resetç”¨
     public float pourTime;
     [SerializeField] float kPourTime;
 
-    //ƒGƒtƒFƒNƒg
-    [SerializeField] GameObject catchEffect;    //ƒLƒƒƒbƒ`‚µ‚½
+    //ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
+    [SerializeField] GameObject catchEffect;    //ã‚­ãƒ£ãƒƒãƒã—ãŸæ™‚
     [SerializeField] float catchOffset;
 
-    [SerializeField] GameObject shakaEffect;    //U‚Á‚½‚Æ‚«
+    [SerializeField] GameObject shakaEffect;    //æŒ¯ã£ãŸã¨ã
     [SerializeField] float shakaOffset;
 
-    [SerializeField] GameObject gotuEffect;     //‚Ô‚Â‚©‚Á‚½‚Æ‚«
+    [SerializeField] GameObject gotuEffect;     //ã¶ã¤ã‹ã£ãŸã¨ã
     [SerializeField] float gotuOffset;
 
-    [SerializeField] GameObject spillParticle;  //‚Ô‚Â‚©‚Á‚½‚Æ‚«‚Ìƒp[ƒeƒBƒNƒ‹
+    [SerializeField] GameObject spillParticle;  //ã¶ã¤ã‹ã£ãŸã¨ãã®ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 
-    [SerializeField] GameObject pourParticle;  //’‚®‚Æ‚«‚Ìƒp[ƒeƒBƒNƒ‹
+
+    [SerializeField] GameObject pourParticle;  //æ³¨ãã¨ãã®ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
+
+    [SerializeField] GameObject trickEffect;
+    [SerializeField] GameObject trickParticle;
+    float trickEffectRotate;
+
+    //éŸ³
+    [SerializeField] GameObject shakaSound;     //æŒ¯ã£ãŸã¨ãã®éŸ³
+    [SerializeField] GameObject catchSound;     //ã‚­ãƒ£ãƒƒãƒã—ãŸã¨ãã®éŸ³
+    [SerializeField] GameObject trickCatchSound;     //ãƒˆãƒªãƒƒã‚¯ã‚’æ±ºã‚ã¦ã‚­ãƒ£ãƒƒãƒã—ãŸã¨ãã®éŸ³
+    [SerializeField] GameObject gotuSound;      //ã¶ã¤ã‹ã£ãŸã¨ãã®éŸ³
 
     // Start is called before the first frame update
     void Start()
@@ -86,7 +97,7 @@ public class ShakerScript : MonoBehaviour
         player = FindAnyObjectByType<Player>();
         position = transform.position;
 
-        //ƒXƒ^[ƒg‚É–ß‚·ƒ|ƒWƒVƒ‡ƒ“
+        //ã‚¹ã‚¿ãƒ¼ãƒˆã«æˆ»ã™ãƒã‚¸ã‚·ãƒ§ãƒ³
         startPosition = transform.position;
         targetPosition = startPosition;
 
@@ -121,7 +132,7 @@ public class ShakerScript : MonoBehaviour
             velocity = preVelocity * throwPower;
         }
 
-        //ƒXƒ^[ƒg‚É–ß‚·
+        //ã‚¹ã‚¿ãƒ¼ãƒˆã«æˆ»ã™
         if (Input.GetKeyDown(KeyCode.R))
         {
             transform.position = startPosition;
@@ -130,15 +141,15 @@ public class ShakerScript : MonoBehaviour
             isGrounded = true;
         }
 
-        //Š®¬
+        //å®Œæˆ
         if (cocktailProgress >= 100)
         {
             isCompleted = true;
         }
 
-        Debug.Log("ƒJƒNƒeƒ‹‚Ì—Ê" + cocktailAmount);
+        Debug.Log("ã‚«ã‚¯ãƒ†ãƒ«ã®é‡" + cocktailAmount);
 
-        //ƒRƒ}ƒ“ƒh
+        //ã‚³ãƒãƒ³ãƒ‰
 #if UNITY_EDITOR
         Commands();
 #endif
@@ -146,12 +157,12 @@ public class ShakerScript : MonoBehaviour
 
     void Shake()
     {
-        //ƒVƒFƒCƒN‚ÌƒXƒs[ƒh
+        //ã‚·ã‚§ã‚¤ã‚¯ã®ã‚¹ãƒ”ãƒ¼ãƒ‰
         shakeSpeed = ((Vector2)transform.position - prePosition).magnitude;
 
-        //ƒVƒFƒCƒN‚Ìƒ^ƒCƒ~ƒ“ƒO
+        //ã‚·ã‚§ã‚¤ã‚¯ã®ã‚¿ã‚¤ãƒŸãƒ³ã‚°
         direction = ((Vector2)transform.position - prePosition).normalized;
-        Vector2 currentDirection = direction.normalized; // Œ»İ‚Ìis•ûŒüivelocity‚È‚Ç‚ğ‘z’èj
+        Vector2 currentDirection = direction.normalized; // ç¾åœ¨ã®é€²è¡Œæ–¹å‘ï¼ˆvelocityãªã©ã‚’æƒ³å®šï¼‰
 
         if (!isCollision)
         {
@@ -164,17 +175,18 @@ public class ShakerScript : MonoBehaviour
                     shakeCount++;
                     //Debug.Log("shakeCount" + shakeCount);
 
-                    //ƒVƒƒƒJƒGƒtƒFƒNƒg
+                    //ã‚·ãƒ£ã‚«ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
                     Vector2 shakaPoint = (Vector2)transform.position + previousDirection * shakaOffset;
                     Instantiate(shakaEffect, shakaPoint, Quaternion.identity);
+                    Instantiate(shakaSound);
 
                     if (shakeCount >= 2)
                     {
                         shakeDistance = Vector2.Distance(preShakePoint, transform.position);
 
-                        //ƒJƒNƒeƒ‹‚ÌŠ®¬“x‚ğ•ÏX
+                        //ã‚«ã‚¯ãƒ†ãƒ«ã®å®Œæˆåº¦ã‚’å¤‰æ›´
                         cocktailProgress += shakeDistance * shakeSpeed / 10f;
-                        //Debug.Log("ƒJƒNƒeƒ‹‚ÌŠ®¬“x" + cocktailProgress);
+                        //Debug.Log("ã‚«ã‚¯ãƒ†ãƒ«ã®å®Œæˆåº¦" + cocktailProgress);
                     }
 
                     preShakePoint = transform.position;
@@ -194,7 +206,7 @@ public class ShakerScript : MonoBehaviour
             targetPosition = player.transform.position;
             position = Vector2.Lerp(position, targetPosition, 30f * Time.deltaTime);
 
-            //‰ñ“]
+            //å›è»¢
             rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 90f), 5f * Time.deltaTime);
             transform.rotation = Quaternion.Euler(rotation);
         }
@@ -209,14 +221,14 @@ public class ShakerScript : MonoBehaviour
             velocity += gravity * Time.deltaTime;
             position += velocity * 45f * Time.deltaTime;
 
-            //80ˆÈã‚Å”½“]
+            //80ä»¥ä¸Šã§åè»¢
             if (position.y >= 80)
             {
                 velocity.y = 0;
                 position.y = 80;
             }
 
-            //‰ñ“]‚³‚¹‚é
+            //å›è»¢ã•ã›ã‚‹
             rotation.z += rotationSpeed * Time.deltaTime;
             transform.rotation = Quaternion.Euler(rotation);
             rotation = transform.rotation.eulerAngles;
@@ -226,19 +238,31 @@ public class ShakerScript : MonoBehaviour
             //transform.rotation = Quaternion.Euler(rotation);
             //rotation = transform.rotation.eulerAngles;
 
-            //‚‚³‚ÅŠ®¬“x‚ğ‰ÁZ
+            //é«˜ã•ã§å®Œæˆåº¦ã‚’åŠ ç®—
 
             if (velocity.y > 0)
             {
                 shakerHeight = position.y + 6f;
             }
 
-            if (isPlusRotate) { triggerRotation += rotationSpeed * Time.deltaTime; }
+            if (isPlusRotate)
+            {
+                triggerRotation += rotationSpeed * Time.deltaTime;
+
+                trickEffectRotate += rotationSpeed * Time.deltaTime;
+                //ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
+                if (trickEffectRotate > 360)
+                {
+                    trickEffectRotate = 0;
+                    //Instantiate(trickEffect, transform.position, Quaternion.identity);
+                    Instantiate(trickParticle, transform.position, Quaternion.identity);
+                }
+            }
 
             //if (triggerRotation > 360)
             //{
             //    cocktailProgress += shakerHeight / 5f;
-            //    //Debug.Log("ƒJƒNƒeƒ‹‚ÌŠ®¬“x" + cocktailProgress);
+            //    //Debug.Log("ã‚«ã‚¯ãƒ†ãƒ«ã®å®Œæˆåº¦" + cocktailProgress);
             //    triggerRotation = 0;
             //}
         }
@@ -255,15 +279,20 @@ public class ShakerScript : MonoBehaviour
                 isGrounded = false;
                 isGrabbed = true;
 
-                //ƒLƒƒƒbƒ`ƒGƒtƒFƒNƒg
+                //ã‚­ãƒ£ãƒƒãƒã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
                 Vector2 catchPoint = (Vector2)transform.position + new Vector2(Random.Range(-100f, 100f) / 100f, Random.Range(-100f, 100f) / 100f) * catchOffset;
                 Instantiate(catchEffect, catchPoint, Quaternion.identity);
+                Instantiate(catchSound);
 
-                //Debug.Log("‚Â‚©‚ñ‚¾‚æ");
+                //Debug.Log("ã¤ã‹ã‚“ã ã‚ˆ");
 
-                //“Š‚°‚ÄƒLƒƒƒbƒ`‚Ì‚Æ‚«
+                //æŠ•ã’ã¦ã‚­ãƒ£ãƒƒãƒã®ã¨ã
                 cocktailProgress += (triggerRotation / 1000f) * (shakerHeight / 5f);
                 isPlusRotate = true;
+                if (triggerRotation > 2160)
+                {
+                    Instantiate(trickCatchSound);
+                }
             }
         }
 
@@ -273,7 +302,7 @@ public class ShakerScript : MonoBehaviour
 
             shakerHeight = 0;
             triggerRotation = 0;
-            //Debug.Log("—£‚µ‚½‚æ");
+            //Debug.Log("é›¢ã—ãŸã‚ˆ");
         }
     }
 
@@ -285,7 +314,7 @@ public class ShakerScript : MonoBehaviour
             position = Vector2.Lerp(position, targetPosition, 1f * Time.deltaTime);
             transform.position = position;
 
-            //‰ñ“]
+            //å›è»¢
             rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 100f), 1f * Time.deltaTime);
             transform.rotation = Quaternion.Euler(rotation);
         }
@@ -314,7 +343,7 @@ public class ShakerScript : MonoBehaviour
             position = Vector2.Lerp(position, targetPosition, 30f * Time.deltaTime);
             transform.position = position;
 
-            //‰ñ“]
+            //å›è»¢
             rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 0), 5f * Time.deltaTime);
             transform.rotation = Quaternion.Euler(rotation);
         }
@@ -337,7 +366,7 @@ public class ShakerScript : MonoBehaviour
         if (collision.tag == "Mouse")
         {
             isMouse = true;
-            ///Debug.Log("ƒ}ƒEƒXƒI[ƒo[‚¾‚¨");
+            ///Debug.Log("ãƒã‚¦ã‚¹ã‚ªãƒ¼ãƒãƒ¼ã ãŠ");
         }
 
         if (collision.tag == "Wall")
@@ -357,15 +386,16 @@ public class ShakerScript : MonoBehaviour
 
             isCollision = true;
 
-            //ƒSƒcƒGƒtƒFƒNƒg   
+            //ã‚´ãƒ„ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ   
             if (!isGrounded)
             {
                 Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
+                Instantiate(gotuSound);
 
                 Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
             }
 
-            //—Ê‚ğŒ¸‚ç‚·
+            //é‡ã‚’æ¸›ã‚‰ã™
             cocktailAmount -= velocity.magnitude * cocktailAmountMinus;
             if (cocktailAmount < 0)
             {
@@ -381,15 +411,16 @@ public class ShakerScript : MonoBehaviour
 
             triggerRotation = 0;
 
-            //ƒSƒcƒGƒtƒFƒNƒg
+            //ã‚´ãƒ„ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
             if (!isGrounded)
             {
                 Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
+                Instantiate(gotuSound);
 
                 Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
             }
 
-            //—Ê‚ğŒ¸‚ç‚·
+            //é‡ã‚’æ¸›ã‚‰ã™
             cocktailAmount -= velocity.magnitude * cocktailAmountMinus;
             if (cocktailAmount < 0)
             {
@@ -409,7 +440,7 @@ public class ShakerScript : MonoBehaviour
             triggerRotation = 0;
             isPlusRotate = false;
 
-            //—Ê‚ğŒ¸‚ç‚·
+            //é‡ã‚’æ¸›ã‚‰ã™
             cocktailAmount -= 10f;
             if (cocktailAmount < 0)
             {
@@ -417,6 +448,34 @@ public class ShakerScript : MonoBehaviour
             }
 
             Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Counter")
+        {
+            velocity = Vector2.Reflect(velocity.normalized, Vector2.up) / 5f;
+
+            isCollision = true;
+
+            triggerRotation = 0;
+
+            ////ã‚´ãƒ„ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
+            //if (!isGrounded)
+            //{
+            //    Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
+            //    Instantiate(gotuSound);
+
+            //    Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
+            //}
+
+            ////é‡ã‚’æ¸›ã‚‰ã™
+            //cocktailAmount -= velocity.magnitude * cocktailAmountMinus;
+            //if (cocktailAmount < 0)
+            //{
+            //    cocktailAmount = 0;
+            //}
         }
     }
 

@@ -11,7 +11,11 @@ public class TrickTextScript : MonoBehaviour
     float visibleSecond;
     Color targetColor;
 
+    Vector2 startPosition;
+    Vector2 position;
     float scale;
+
+    RectTransform rectTransform;
 
     [SerializeField] Texture2D rainbow;
     [SerializeField] Texture2D white;
@@ -19,6 +23,9 @@ public class TrickTextScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rectTransform = GetComponent<RectTransform>();
+        position = rectTransform.position;
+        startPosition = rectTransform.position;
         shaker = FindAnyObjectByType<ShakerScript>();
         text = GetComponent<TextMeshProUGUI>();
     }
@@ -36,12 +43,22 @@ public class TrickTextScript : MonoBehaviour
             mat.SetTexture("_FaceTex", rainbow);
             text.fontMaterial = mat;
 
+            //シェイク
+            position.x += Random.Range(-8f, 8f);
+            position.y += Random.Range(-8f, 8f);
+
+            rectTransform.rotation = Quaternion.Euler(0, 0, -11);
+
             scale = 2.5f;
         }
         else if (shaker.triggerRotation > 2160)
         {
             targetColor = new Color(0.8510f, 0.2078f, 0.1569f);
             scale = 2f;
+
+            //シェイク
+            position.x += Random.Range(-3f, 3f);
+            position.y += Random.Range(-3f, 3f);
         }
         else if (shaker.triggerRotation > 720)
         {
@@ -57,8 +74,11 @@ public class TrickTextScript : MonoBehaviour
             text.fontMaterial = mat;
 
             scale = 1f;
+            rectTransform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
+        rectTransform.position = position;
+        position = startPosition;
         transform.localScale = new Vector2(scale, scale);
 
         //テキストを変更
