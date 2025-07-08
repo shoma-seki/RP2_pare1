@@ -22,7 +22,11 @@ public class GameManager : MonoBehaviour
     bool isNextStage;
 
     //ƒ^ƒCƒ€
-
+    public float gameTime;
+    [SerializeField] float kGameTime = 60f;
+    public bool isRestart;
+    float restartTime;
+    float preRestartTime;
 
     //HUD
     Transform mainCanvas;
@@ -30,6 +34,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject Clear;
     [SerializeField] GameObject Restart;
     [SerializeField] GameObject Next;
+    [SerializeField] GameObject TimeUp;
 
     // Start is called before the first frame update
     void Start()
@@ -51,12 +56,44 @@ public class GameManager : MonoBehaviour
 
         level++;
         enemyGenerateManager.isGenerate = true;
+
+        gameTime = kGameTime;
     }
 
     // Update is called once per frame
     void Update()
     {
         GenerateGlass();
+
+        if (!shaker.isGrounded && shaker.cocktailProgress <= 99)
+        {
+            gameTime -= Time.deltaTime;
+        }
+
+        if (gameTime < 0 && shaker.cocktailProgress <= 99)
+        {
+            isRestart = true;
+        }
+
+        if (isRestart)
+        {
+            restartTime += Time.deltaTime;
+
+            if (preRestartTime <= 1f && restartTime > 1f)
+            {
+                Instantiate(TimeUp, mainCanvas);
+            }
+
+            if (restartTime > 5f)
+            {
+                RestartAll();
+                isRestart = false;
+            }
+        }
+
+
+        preRestartTime = restartTime;
+        Debug.Log("gameTime  " + gameTime);
     }
 
     void GenerateGlass()
@@ -90,9 +127,10 @@ public class GameManager : MonoBehaviour
                         Instantiate(Next, mainCanvas);
                     }
                 }
-                else
+
+                if (level == maxLevel)
                 {
-                    SceneManager.LoadScene("Clear");
+                    SceneManager.LoadScene("ClearScene");
                 }
             }
 
@@ -104,28 +142,41 @@ public class GameManager : MonoBehaviour
 
             if (isNextStage)
             {
-                if (Random.Range(0, 1000) > 500)
-                {
-                    Instantiate(cockTailGlass, glassPosition, Quaternion.identity);
-                }
-                else
-                {
-                    Instantiate(collinsGlass, glassPosition, Quaternion.identity);
-                }
-
-                Instantiate(Fure, mainCanvas);
-
-                if (shaker.cocktailAmount > 39)
-                {
-                    level++;
-                }
-
-                enemyGenerateManager.isGenerate = true;
-
-                isNextStage = false;
+                RestartAll();
             }
 
             preWaitTime = nextWaitTime;
         }
+    }
+
+    void RestartAll()
+    {
+        if (FindAnyObjectByType<GlassScript>() == null)
+        {
+            if (Random.Range(0, 1000) > 500)
+            {
+                Instantiate(cockTailGlass, glassPosition, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(collinsGlass, glassPosition, Quaternion.identity);
+            }
+        }
+
+        Instantiate(Fure, mainCanvas);
+
+        if (!isRestart)
+        {
+            if (shaker.cocktailAmount > 39)
+            {
+                level++;
+            }
+        }
+
+        gameTime = kGameTime;
+
+        enemyGenerateManager.isGenerate = true;
+
+        isNextStage = false;
     }
 }

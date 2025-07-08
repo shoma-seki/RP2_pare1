@@ -47,6 +47,9 @@ public class OjamaScript : MonoBehaviour
     [SerializeField] Sprite poison;
     [SerializeField] Sprite cannon;
 
+    //エフェクト
+    [SerializeField] GameObject explosion;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -159,6 +162,8 @@ public class OjamaScript : MonoBehaviour
                         shaker.velocity = (shaker.transform.position - transform.position).normalized * exPower;
 
                         Destroy(gameObject);
+
+                        Instantiate(explosion, transform.position, Quaternion.identity);
                     }
 
                     break;
@@ -237,6 +242,12 @@ public class OjamaScript : MonoBehaviour
         if (collision.tag == "Shaker")
         {
             Destroy(gameObject);
+            if (type == OjamaType.Cannon)
+            {
+                //爆発させる
+                shaker.isGrabbed = false;
+                shaker.velocity = (shaker.transform.position - transform.position).normalized * exPower;
+            }
         }
 
         if (collision.tag == "Mouse")
