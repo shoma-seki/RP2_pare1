@@ -78,8 +78,15 @@ public class ShakerScript : MonoBehaviour
 
     [SerializeField] GameObject spillParticle;  //ぶつかったときのパーティクル
 
-    //音
+    [SerializeField] GameObject trickEffect;
+    [SerializeField] GameObject trickParticle;
+    float trickEffectRotate;
 
+    //音
+    [SerializeField] GameObject shakaSound;     //振ったときの音
+    [SerializeField] GameObject catchSound;     //キャッチしたときの音
+    [SerializeField] GameObject trickCatchSound;     //トリックを決めてキャッチしたときの音
+    [SerializeField] GameObject gotuSound;      //ぶつかったときの音
 
     // Start is called before the first frame update
     void Start()
@@ -168,6 +175,7 @@ public class ShakerScript : MonoBehaviour
                     //シャカエフェクト
                     Vector2 shakaPoint = (Vector2)transform.position + previousDirection * shakaOffset;
                     Instantiate(shakaEffect, shakaPoint, Quaternion.identity);
+                    Instantiate(shakaSound);
 
                     if (shakeCount >= 2)
                     {
@@ -234,7 +242,19 @@ public class ShakerScript : MonoBehaviour
                 shakerHeight = position.y + 6f;
             }
 
-            if (isPlusRotate) { triggerRotation += rotationSpeed * Time.deltaTime; }
+            if (isPlusRotate)
+            {
+                triggerRotation += rotationSpeed * Time.deltaTime;
+
+                trickEffectRotate += rotationSpeed * Time.deltaTime;
+                //エフェクト
+                if (trickEffectRotate > 360)
+                {
+                    trickEffectRotate = 0;
+                    //Instantiate(trickEffect, transform.position, Quaternion.identity);
+                    Instantiate(trickParticle, transform.position, Quaternion.identity);
+                }
+            }
 
             //if (triggerRotation > 360)
             //{
@@ -259,12 +279,17 @@ public class ShakerScript : MonoBehaviour
                 //キャッチエフェクト
                 Vector2 catchPoint = (Vector2)transform.position + new Vector2(Random.Range(-100f, 100f) / 100f, Random.Range(-100f, 100f) / 100f) * catchOffset;
                 Instantiate(catchEffect, catchPoint, Quaternion.identity);
+                Instantiate(catchSound);
 
                 //Debug.Log("つかんだよ");
 
                 //投げてキャッチのとき
                 cocktailProgress += (triggerRotation / 1000f) * (shakerHeight / 5f);
                 isPlusRotate = true;
+                if (triggerRotation > 2160)
+                {
+                    Instantiate(trickCatchSound);
+                }
             }
         }
 
@@ -364,6 +389,7 @@ public class ShakerScript : MonoBehaviour
             if (!isGrounded)
             {
                 Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
+                Instantiate(gotuSound);
 
                 Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
             }
@@ -388,6 +414,7 @@ public class ShakerScript : MonoBehaviour
             if (!isGrounded)
             {
                 Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
+                Instantiate(gotuSound);
 
                 Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
             }
@@ -419,6 +446,34 @@ public class ShakerScript : MonoBehaviour
             }
 
             Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Counter")
+        {
+            velocity = Vector2.Reflect(velocity.normalized, Vector2.up) / 5f;
+
+            isCollision = true;
+
+            triggerRotation = 0;
+
+            ////ゴツエフェクト
+            //if (!isGrounded)
+            //{
+            //    Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
+            //    Instantiate(gotuSound);
+
+            //    Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
+            //}
+
+            ////量を減らす
+            //cocktailAmount -= velocity.magnitude * cocktailAmountMinus;
+            //if (cocktailAmount < 0)
+            //{
+            //    cocktailAmount = 0;
+            //}
         }
     }
 

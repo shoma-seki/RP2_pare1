@@ -41,6 +41,12 @@ public class OjamaScript : MonoBehaviour
     //生存時間
     float aliveTime;
 
+    //スプライト
+    SpriteRenderer spriteRenderer;
+    [SerializeField] Sprite stone;
+    [SerializeField] Sprite poison;
+    [SerializeField] Sprite cannon;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +55,24 @@ public class OjamaScript : MonoBehaviour
 
         position = transform.position;
         startPosition = transform.position;
+
+        //スプライト変更
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        switch (type)
+        {
+            case OjamaType.Stone:
+                spriteRenderer.sprite = stone;
+                break;
+
+            case OjamaType.Poison:
+                spriteRenderer.sprite = poison;
+                break;
+
+            case OjamaType.Cannon:
+                spriteRenderer.sprite = cannon;
+                break;
+        }
+
     }
 
     // Update is called once per frame
