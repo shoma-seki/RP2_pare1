@@ -78,6 +78,9 @@ public class ShakerScript : MonoBehaviour
 
     [SerializeField] GameObject spillParticle;  //ぶつかったときのパーティクル
 
+    //音
+
+
     // Start is called before the first frame update
     void Start()
     {
