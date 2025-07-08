@@ -10,6 +10,7 @@ TagManager:
   - Counter
   - PourField
   - Ojama
+  - MainCanvas
   layers:
   - Default
   - TransparentFX

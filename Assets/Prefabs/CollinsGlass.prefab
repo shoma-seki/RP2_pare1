@@ -397,3 +397,6 @@ MonoBehaviour:
   isFull: 0
   pourField: {fileID: 7009915811524454143, guid: 42b25f82b727ece4296c79327235af0d, type: 3}
   drinkSprite: {fileID: 355601043931348895}
+  canvas: {fileID: 0}
+  comment_great: {fileID: 8776760783086623326, guid: ed3bd497c84f7154b8d48c5ab88649d8, type: 3}
+  comment_soso: {fileID: 8776760783086623326, guid: 880faa1b9616c9b43a242823d73ad318, type: 3}

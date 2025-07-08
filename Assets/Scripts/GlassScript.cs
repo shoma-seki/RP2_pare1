@@ -33,6 +33,11 @@ public class GlassScript : MonoBehaviour
     //グラスの中身のゲームオブジェクト
     [SerializeField] GameObject drinkSprite;
 
+    //評価コメント
+    RectTransform canvas;
+    [SerializeField] GameObject comment_great;
+    [SerializeField] GameObject comment_soso;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +48,8 @@ public class GlassScript : MonoBehaviour
         position.z = 30f;
         transform.position = position;
         scale = transform.localScale;
+
+        canvas = GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<RectTransform>();
     }
 
     // Update is called once per frame
@@ -156,6 +163,16 @@ public class GlassScript : MonoBehaviour
                 {
                     shaker.isClear = true;
                     Destroy(gameObject);
+
+                    //クリアコメントを表示
+                    if (shaker.cocktailAmount > 80)
+                    {
+                        Instantiate(comment_great, canvas);
+                    }
+                    else if (shaker.cocktailAmount > 50)
+                    {
+                        Instantiate(comment_soso, canvas);
+                    }
                 }
             }
         }
@@ -175,6 +192,7 @@ public class GlassScript : MonoBehaviour
                 isGrounded = true;
                 isGrabbed = false;
                 Instantiate(pourField, transform.position, Quaternion.identity);
+                transform.rotation = Quaternion.identity;
             }
             else
             {

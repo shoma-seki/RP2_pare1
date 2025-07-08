@@ -25,71 +25,71 @@ public class ShakerScript : MonoBehaviour
 
     public bool isCompleted;
 
-    bool isPlusRotate;    //triggerRotationを足すか
+    bool isPlusRotate;    //triggerRotation�𑫂���
 
-    //スタートに戻す
+    //�X�^�[�g�ɖ߂�
     Vector2 startPosition;
 
-    //反射係数
+    //���ˌW��
     [SerializeField] float reflection;
 
-    //投げる力
+    //�������
     [SerializeField] float throwPower;
 
-    //中身
-    float shakeSpeed;       //振ったスピード
-    float shakeDistance;    //振った距離
-    float shakeCount;       //振った回数
-    float cocktailAmount;
-    [SerializeField] float kCocktailAmount;   //カクテルの量
-    [SerializeField] float cocktailAmountMinus; //カクテルの量を減らす係数
-    Vector2 preShakePoint;  //前回シェイクした場所
-    public float cocktailProgress; //カクテルの完成度   
+    //���g
+    float shakeSpeed;       //�U�����X�s�[�h
+    float shakeDistance;    //�U��������
+    float shakeCount;       //�U������
+    public float cocktailAmount;
+    [SerializeField] float kCocktailAmount;   //�J�N�e���̗�
+    [SerializeField] float cocktailAmountMinus; //�J�N�e���̗ʂ���炷�W��
+    Vector2 preShakePoint;  //�O��V�F�C�N�����ꏊ
+    public float cocktailProgress; //�J�N�e���̊����x   
     public float cocktailProgressMax;
-    float shakerHeight;     //シェイカーの高さ
+    float shakerHeight;     //�V�F�C�J�[�̍���
 
-    //投げてるときに加算
+    //�����Ă�Ƃ��ɉ��Z
     [SerializeField] float rotationSpeed;
     public float triggerRotation;
 
-    //振るときのやつ
-    Vector2 direction;      //進んでいる方向
+    //�U��Ƃ��̂��
+    Vector2 direction;      //�i��ł������
     Vector2 previousDirection;
-    float directionChangeThreshold = 140f; // 角度差が45度以上で「急変」と判断
+    float directionChangeThreshold = 140f; // �p�x����45�x�ȏ�Łu�}�ρv�Ɣ��f
 
-    //注ぐ
+    //����
     [SerializeField] Vector2 pourOffset;
     Vector2 pourCenter;
     public bool isPour;
 
-    //Reset用
+    //Reset�p
     public float pourTime;
     [SerializeField] float kPourTime;
 
-    //エフェクト
-    [SerializeField] GameObject catchEffect;    //キャッチした時
+    //�G�t�F�N�g
+    [SerializeField] GameObject catchEffect;    //�L���b�`������
     [SerializeField] float catchOffset;
 
-    [SerializeField] GameObject shakaEffect;    //振ったとき
+    [SerializeField] GameObject shakaEffect;    //�U�����Ƃ�
     [SerializeField] float shakaOffset;
 
-    [SerializeField] GameObject gotuEffect;     //ぶつかったとき
+    [SerializeField] GameObject gotuEffect;     //�Ԃ������Ƃ�
     [SerializeField] float gotuOffset;
 
-    [SerializeField] GameObject spillParticle;  //ぶつかったときのパーティクル
+    [SerializeField] GameObject spillParticle;  //�Ԃ������Ƃ��̃p�[�e�B�N��
 
 
-    [SerializeField] GameObject pourParticle;  //注ぐときのパーティクル
+    [SerializeField] GameObject pourParticle;  //�����Ƃ��̃p�[�e�B�N��
 
     [SerializeField] GameObject trickEffect;
     [SerializeField] GameObject trickParticle;
     float trickEffectRotate;
 
-    //音
-    [SerializeField] GameObject shakaSound;     //振ったときの音
-    [SerializeField] GameObject catchSound;     //キャッチしたときの音
-    [SerializeField] GameObject trickCatchSound;     //トリックを決めてキャッチしたときの音
-    [SerializeField] GameObject gotuSound;      //ぶつかったときの音
+    //��
+    [SerializeField] GameObject shakaSound;     //�U�����Ƃ��̉�
+    [SerializeField] GameObject catchSound;     //�L���b�`�����Ƃ��̉�
+    [SerializeField] GameObject trickCatchSound;     //�g���b�N����߂ăL���b�`�����Ƃ��̉�
+    [SerializeField] GameObject gotuSound;      //�Ԃ������Ƃ��̉�
 
     // Start is called before the first frame update
     void Start()
@@ -97,7 +97,7 @@ public class ShakerScript : MonoBehaviour
         player = FindAnyObjectByType<Player>();
         position = transform.position;
 
-        //スタートに戻すポジション
+        //�X�^�[�g�ɖ߂��|�W�V����
         startPosition = transform.position;
         targetPosition = startPosition;
 
@@ -132,7 +132,7 @@ public class ShakerScript : MonoBehaviour
             velocity = preVelocity * throwPower;
         }
 
-        //スタートに戻す
+        //�X�^�[�g�ɖ߂�
         if (Input.GetKeyDown(KeyCode.R))
         {
             transform.position = startPosition;
@@ -141,15 +141,15 @@ public class ShakerScript : MonoBehaviour
             isGrounded = true;
         }
 
-        //完成
+        //����
         if (cocktailProgress >= 100)
         {
             isCompleted = true;
         }
 
-        Debug.Log("カクテルの量" + cocktailAmount);
+        Debug.Log("�J�N�e���̗�" + cocktailAmount);
 
-        //コマンド
+        //�R�}���h
 #if UNITY_EDITOR
         Commands();
 #endif
@@ -157,12 +157,12 @@ public class ShakerScript : MonoBehaviour
 
     void Shake()
     {
-        //シェイクのスピード
+        //�V�F�C�N�̃X�s�[�h
         shakeSpeed = ((Vector2)transform.position - prePosition).magnitude;
 
-        //シェイクのタイミング
+        //�V�F�C�N�̃^�C�~���O
         direction = ((Vector2)transform.position - prePosition).normalized;
-        Vector2 currentDirection = direction.normalized; // 現在の進行方向（velocityなどを想定）
+        Vector2 currentDirection = direction.normalized; // ���݂̐i�s�����ivelocity�Ȃǂ�z��j
 
         if (!isCollision)
         {
@@ -175,7 +175,7 @@ public class ShakerScript : MonoBehaviour
                     shakeCount++;
                     //Debug.Log("shakeCount" + shakeCount);
 
-                    //シャカエフェクト
+                    //�V���J�G�t�F�N�g
                     Vector2 shakaPoint = (Vector2)transform.position + previousDirection * shakaOffset;
                     Instantiate(shakaEffect, shakaPoint, Quaternion.identity);
                     Instantiate(shakaSound);
@@ -184,9 +184,9 @@ public class ShakerScript : MonoBehaviour
                     {
                         shakeDistance = Vector2.Distance(preShakePoint, transform.position);
 
-                        //カクテルの完成度を変更
+                        //�J�N�e���̊����x��ύX
                         cocktailProgress += shakeDistance * shakeSpeed / 10f;
-                        //Debug.Log("カクテルの完成度" + cocktailProgress);
+                        //Debug.Log("�J�N�e���̊����x" + cocktailProgress);
                     }
 
                     preShakePoint = transform.position;
@@ -206,7 +206,7 @@ public class ShakerScript : MonoBehaviour
             targetPosition = player.transform.position;
             position = Vector2.Lerp(position, targetPosition, 30f * Time.deltaTime);
 
-            //回転
+            //��]
             rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 90f), 5f * Time.deltaTime);
             transform.rotation = Quaternion.Euler(rotation);
         }
@@ -221,14 +221,14 @@ public class ShakerScript : MonoBehaviour
             velocity += gravity * Time.deltaTime;
             position += velocity * 45f * Time.deltaTime;
 
-            //80以上で反転
+            //80�ȏ�Ŕ��]
             if (position.y >= 80)
             {
                 velocity.y = 0;
                 position.y = 80;
             }
 
-            //回転させる
+            //��]������
             rotation.z += rotationSpeed * Time.deltaTime;
             transform.rotation = Quaternion.Euler(rotation);
             rotation = transform.rotation.eulerAngles;
@@ -238,7 +238,7 @@ public class ShakerScript : MonoBehaviour
             //transform.rotation = Quaternion.Euler(rotation);
             //rotation = transform.rotation.eulerAngles;
 
-            //高さで完成度を加算
+            //�����Ŋ����x����Z
 
             if (velocity.y > 0)
             {
@@ -250,7 +250,7 @@ public class ShakerScript : MonoBehaviour
                 triggerRotation += rotationSpeed * Time.deltaTime;
 
                 trickEffectRotate += rotationSpeed * Time.deltaTime;
-                //エフェクト
+                //�G�t�F�N�g
                 if (trickEffectRotate > 360)
                 {
                     trickEffectRotate = 0;
@@ -262,7 +262,7 @@ public class ShakerScript : MonoBehaviour
             //if (triggerRotation > 360)
             //{
             //    cocktailProgress += shakerHeight / 5f;
-            //    //Debug.Log("カクテルの完成度" + cocktailProgress);
+            //    //Debug.Log("�J�N�e���̊����x" + cocktailProgress);
             //    triggerRotation = 0;
             //}
         }
@@ -279,14 +279,14 @@ public class ShakerScript : MonoBehaviour
                 isGrounded = false;
                 isGrabbed = true;
 
-                //キャッチエフェクト
+                //�L���b�`�G�t�F�N�g
                 Vector2 catchPoint = (Vector2)transform.position + new Vector2(Random.Range(-100f, 100f) / 100f, Random.Range(-100f, 100f) / 100f) * catchOffset;
                 Instantiate(catchEffect, catchPoint, Quaternion.identity);
                 Instantiate(catchSound);
 
-                //Debug.Log("つかんだよ");
+                //Debug.Log("���񂾂�");
 
-                //投げてキャッチのとき
+                //�����ăL���b�`�̂Ƃ�
                 cocktailProgress += (triggerRotation / 1000f) * (shakerHeight / 5f);
                 isPlusRotate = true;
                 if (triggerRotation > 2160)
@@ -302,7 +302,7 @@ public class ShakerScript : MonoBehaviour
 
             shakerHeight = 0;
             triggerRotation = 0;
-            //Debug.Log("離したよ");
+            //Debug.Log("��������");
         }
     }
 
@@ -314,7 +314,7 @@ public class ShakerScript : MonoBehaviour
             position = Vector2.Lerp(position, targetPosition, 1f * Time.deltaTime);
             transform.position = position;
 
-            //回転
+            //��]
             rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 100f), 1f * Time.deltaTime);
             transform.rotation = Quaternion.Euler(rotation);
         }
@@ -343,7 +343,7 @@ public class ShakerScript : MonoBehaviour
             position = Vector2.Lerp(position, targetPosition, 30f * Time.deltaTime);
             transform.position = position;
 
-            //回転
+            //��]
             rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 0), 5f * Time.deltaTime);
             transform.rotation = Quaternion.Euler(rotation);
         }
@@ -366,7 +366,7 @@ public class ShakerScript : MonoBehaviour
         if (collision.tag == "Mouse")
         {
             isMouse = true;
-            ///Debug.Log("マウスオーバーだお");
+            ///Debug.Log("�}�E�X�I�[�o�[����");
         }
 
         if (collision.tag == "Wall")
@@ -386,7 +386,7 @@ public class ShakerScript : MonoBehaviour
 
             isCollision = true;
 
-            //ゴツエフェクト   
+            //�S�c�G�t�F�N�g   
             if (!isGrounded)
             {
                 Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
@@ -395,8 +395,8 @@ public class ShakerScript : MonoBehaviour
                 Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
             }
 
-            //量を減らす
-            cocktailAmount -= velocity.magnitude * cocktailAmountMinus;
+            //�ʂ���炷
+            cocktailAmount -= cocktailAmountMinus;
             if (cocktailAmount < 0)
             {
                 cocktailAmount = 0;
@@ -411,7 +411,7 @@ public class ShakerScript : MonoBehaviour
 
             triggerRotation = 0;
 
-            //ゴツエフェクト
+            //�S�c�G�t�F�N�g
             if (!isGrounded)
             {
                 Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
@@ -420,8 +420,8 @@ public class ShakerScript : MonoBehaviour
                 Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
             }
 
-            //量を減らす
-            cocktailAmount -= velocity.magnitude * cocktailAmountMinus;
+            //�ʂ���炷
+            cocktailAmount -= cocktailAmountMinus;
             if (cocktailAmount < 0)
             {
                 cocktailAmount = 0;
@@ -440,7 +440,7 @@ public class ShakerScript : MonoBehaviour
             triggerRotation = 0;
             isPlusRotate = false;
 
-            //量を減らす
+            //�ʂ���炷
             cocktailAmount -= 10f;
             if (cocktailAmount < 0)
             {
@@ -455,27 +455,11 @@ public class ShakerScript : MonoBehaviour
     {
         if (collision.tag == "Counter")
         {
-            velocity = Vector2.Reflect(velocity.normalized, Vector2.up) / 5f;
+            velocity.y = 0.15f;
 
             isCollision = true;
 
             triggerRotation = 0;
-
-            ////ゴツエフェクト
-            //if (!isGrounded)
-            //{
-            //    Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
-            //    Instantiate(gotuSound);
-
-            //    Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
-            //}
-
-            ////量を減らす
-            //cocktailAmount -= velocity.magnitude * cocktailAmountMinus;
-            //if (cocktailAmount < 0)
-            //{
-            //    cocktailAmount = 0;
-            //}
         }
     }
 

@@ -397,3 +397,6 @@ SpriteMask:
   m_BackSortingOrder: 0
   m_IsCustomRangeActive: 0
   m_SpriteSortPoint: 0
+  canvas: {fileID: 0}
+  comment_great: {fileID: 8776760783086623326, guid: ed3bd497c84f7154b8d48c5ab88649d8, type: 3}
+  comment_soso: {fileID: 8776760783086623326, guid: 880faa1b9616c9b43a242823d73ad318, type: 3}
