@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] float kGameTime = 60f;
     public bool isRestart;
     float restartTime;
+    float preRestartTime;
 
     //HUD
     Transform mainCanvas;
@@ -78,7 +79,7 @@ public class GameManager : MonoBehaviour
         {
             restartTime += Time.deltaTime;
 
-            if (restartTime > 1f)
+            if (preRestartTime <= 1f && restartTime > 1f)
             {
                 Instantiate(TimeUp, mainCanvas);
             }
@@ -90,6 +91,8 @@ public class GameManager : MonoBehaviour
             }
         }
 
+
+        preRestartTime = restartTime;
         Debug.Log("gameTime  " + gameTime);
     }
 
