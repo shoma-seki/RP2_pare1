@@ -38,6 +38,7 @@ public class GlassScript : MonoBehaviour
     [SerializeField] GameObject comment_great;
     [SerializeField] GameObject comment_soso;
 
+
     // Start is called before the first frame update
     void Start()
     {
