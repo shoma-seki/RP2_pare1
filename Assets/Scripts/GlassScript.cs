@@ -30,6 +30,9 @@ public class GlassScript : MonoBehaviour
     //注ぎ判定フィールド
     [SerializeField] GameObject pourField;
 
+    //グラスの中身のゲームオブジェクト
+    [SerializeField] GameObject drinkSprite;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +52,7 @@ public class GlassScript : MonoBehaviour
 
         Grab();
         Move();
+        DrinkMove();
         Clear();
 
         //Debug.Log("isGrabbed" + isGrabbed);
@@ -117,6 +121,12 @@ public class GlassScript : MonoBehaviour
 
             rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 0), 5f * Time.deltaTime);
             transform.rotation = Quaternion.Euler(rotation);
+        }
+    }
+
+    void DrinkMove() {
+        if (shaker.isPour) {
+            drinkSprite.transform.position = Vector2.Lerp(drinkSprite.transform.position, transform.position, 1f * Time.deltaTime);
         }
     }
 
