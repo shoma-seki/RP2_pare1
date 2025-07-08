@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    SceneManager.LoadScene("Clear");
+                    SceneManager.LoadScene("ClearScene");
                 }
             }
 
