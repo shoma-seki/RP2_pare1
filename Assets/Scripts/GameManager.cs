@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     //ƒ^ƒCƒ€
     public float gameTime;
-    [SerializeField] float kGameTime = 60f;
+    [SerializeField] readonly float kGameTime = 60f;
     public bool isRestart;
     float restartTime;
     float preRestartTime;
@@ -91,6 +91,15 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            SceneManager.LoadScene("TitleScene");
+        }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            SceneManager.LoadScene("GameScene");
+        }
 
         preRestartTime = restartTime;
         Debug.Log("gameTime  " + gameTime);
@@ -143,6 +152,7 @@ public class GameManager : MonoBehaviour
             if (isNextStage)
             {
                 RestartAll();
+                nextWaitTime = 0;
             }
 
             preWaitTime = nextWaitTime;
