@@ -12,14 +12,7 @@ public class GlassScript : MonoBehaviour
     Vector2 targetPosition;
     Vector2 prePosition;
 
-    Vector2 scale;
-
     Vector3 rotation;
-
-    bool isMouse;
-    bool isGrabbed;
-    public bool isGrounded;
-    bool isTouched;
 
     public bool isFull;
     bool preIsFull;
@@ -53,7 +46,6 @@ public class GlassScript : MonoBehaviour
         position = transform.position;
         position.z = 30f;
         transform.position = position;
-        scale = transform.localScale;
 
         canvas = GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<RectTransform>();
     }
@@ -63,7 +55,6 @@ public class GlassScript : MonoBehaviour
     {
         prePosition = transform.position;
 
-        Grab();
         Move();
         DrinkMove();
         Clear();
@@ -79,69 +70,13 @@ public class GlassScript : MonoBehaviour
         //Debug.Log("releaseHeight" + releaseHeight);
     }
 
-    void Grab()
-    {
-        if (isMouse && shaker.isCompleted && !isGrounded)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                isGrabbed = true;
-                isTouched = true;
-                releaseHeight = -10;
-
-                scale = Vector2.one * 0.32f;
-                transform.localScale = scale;
-            }
-        }
-    }
-
     void Move()
     {
-        if (isGrabbed)
-        {
-            targetPosition = player.transform.position - new Vector3(0, 0.5f);
-            position = Vector2.Lerp(position, targetPosition, 30f * Time.deltaTime);
-            position.z = -5f;
-            transform.position = position;
+        position.y -= 6f * Time.deltaTime;
+        transform.position = position;
 
-            Vector2 velocity = (Vector2)position - prePosition;
-
-            //回転        
-            if (velocity.magnitude < 0.1f)
-            {
-                rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 0), 5f * Time.deltaTime);
-                transform.rotation = Quaternion.Euler(rotation);
-            }
-            else
-            {
-                if (velocity.x < 0)
-                {
-                    rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 40f), 5f * Time.deltaTime);
-                    transform.rotation = Quaternion.Euler(rotation);
-                }
-
-                if (velocity.x > 0)
-                {
-                    rotation = Vector3.Lerp(rotation, new Vector3(0, 0, -40f), 5f * Time.deltaTime);
-                    transform.rotation = Quaternion.Euler(rotation);
-                }
-            }
-
-            if (Input.GetMouseButtonUp(0))
-            {
-                isGrabbed = false;
-                releaseHeight = transform.position.y;
-            }
-        }
-
-        if (!isGrabbed && !isGrounded && isTouched)
-        {
-            position.y -= 6f * Time.deltaTime;
-            transform.position = position;
-
-            rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 0), 5f * Time.deltaTime);
-            transform.rotation = Quaternion.Euler(rotation);
-        }
+        rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 0), 5f * Time.deltaTime);
+        transform.rotation = Quaternion.Euler(rotation);
     }
 
     void DrinkMove()
@@ -154,7 +89,7 @@ public class GlassScript : MonoBehaviour
 
     void Clear()
     {
-        if (isGrounded && isFull)
+        if (isFull)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -181,11 +116,11 @@ public class GlassScript : MonoBehaviour
                     Destroy(newArrow);
 
                     //クリアコメントを表示
-                    if (shaker.cocktailAmount > 79)
+                    if (shaker.cocktailProgress > 79)
                     {
                         Instantiate(comment_great, canvas);
                     }
-                    else if (shaker.cocktailAmount > 39)
+                    else if (shaker.cocktailProgress > 39)
                     {
                         Instantiate(comment_soso, canvas);
                     }
@@ -200,25 +135,10 @@ public class GlassScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Mouse")
-        {
-            isMouse = true;
-        }
-
         if (collision.tag == "Counter")
         {
-            isGrounded = true;
-            isGrabbed = false;
             Instantiate(pourField, transform.position, Quaternion.identity);
             transform.rotation = Quaternion.Euler(Vector3.zero);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag == "Mouse")
-        {
-            isMouse = false;
         }
     }
 }

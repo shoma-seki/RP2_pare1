@@ -42,9 +42,7 @@ public class ShakerScript : MonoBehaviour
     float shakeSpeed;       //振ったスピード
     float shakeDistance;    //振った距離
     float shakeCount;       //振った回数
-    public float cocktailAmount;
-    [SerializeField] float kCocktailAmount;   //カクテルの量
-    [SerializeField] float cocktailAmountMinus; //カクテルの量を減らす係数
+
     Vector2 preShakePoint;  //前回シェイクした場所
     public float cocktailProgress; //カクテルの完成度   
 
@@ -111,8 +109,6 @@ public class ShakerScript : MonoBehaviour
 
         pourTime = kPourTime;
 
-        cocktailAmount = kCocktailAmount;
-
         mainCanvas = GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<RectTransform>();
     }
 
@@ -163,8 +159,6 @@ public class ShakerScript : MonoBehaviour
             Instantiate(Oke, mainCanvas);
         }
         preIsCompleted = isCompleted;
-
-        Debug.Log("cocktailAmount" + cocktailAmount);
 
         //繧ｳ繝槭Φ繝・
 #if UNITY_EDITOR
@@ -350,10 +344,7 @@ public class ShakerScript : MonoBehaviour
                 isGrounded = true;
 
                 GlassScript glass = FindAnyObjectByType<GlassScript>();
-                if (glass.isGrounded)
-                {
-                    glass.isFull = true;
-                }
+                glass.isFull = true;
             }
         }
 
@@ -381,7 +372,6 @@ public class ShakerScript : MonoBehaviour
             isClear = false;
             isCompleted = false;
 
-            cocktailAmount = kCocktailAmount;
             cocktailProgress = 0;
         }
     }
@@ -419,17 +409,6 @@ public class ShakerScript : MonoBehaviour
 
                 Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
             }
-
-            //驥上ｒ貂帙ｉ縺・
-            cocktailAmount -= velocity.magnitude * cocktailAmountMinus;
-
-            //量を減らす
-            cocktailAmount -= cocktailAmountMinus;
-
-            if (cocktailAmount < 0)
-            {
-                cocktailAmount = 0;
-            }
         }
 
         if (collision.tag == "Counter")
@@ -448,18 +427,6 @@ public class ShakerScript : MonoBehaviour
 
                 Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
             }
-
-
-            //驥上ｒ貂帙ｉ縺・
-            cocktailAmount -= velocity.magnitude * cocktailAmountMinus;
-
-            //量を減らす
-            cocktailAmount -= cocktailAmountMinus;
-
-            if (cocktailAmount < 0)
-            {
-                cocktailAmount = 0;
-            }
         }
 
         if (collision.tag == "PourField")
@@ -474,13 +441,6 @@ public class ShakerScript : MonoBehaviour
             triggerRotation = 0;
             isPlusRotate = false;
 
-            //驥上ｒ貂帙ｉ縺・
-            cocktailAmount -= 10f;
-            if (cocktailAmount < 0)
-            {
-                cocktailAmount = 0;
-            }
-
             Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
         }
     }
@@ -494,24 +454,6 @@ public class ShakerScript : MonoBehaviour
             isCollision = true;
 
             triggerRotation = 0;
-
-
-            ////繧ｴ繝・お繝輔ぉ繧ｯ繝・
-            //if (!isGrounded)
-            //{
-            //    Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
-            //    Instantiate(gotuSound);
-
-            //    Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
-            //}
-
-            ////驥上ｒ貂帙ｉ縺・
-            //cocktailAmount -= velocity.magnitude * cocktailAmountMinus;
-            //if (cocktailAmount < 0)
-            //{
-            //    cocktailAmount = 0;
-            //}
-
         }
     }
 

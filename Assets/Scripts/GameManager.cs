@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     ShakerScript shaker;
 
-    Vector2 glassPosition = new Vector2(-6.69f, -2f);
+    Vector2 glassPosition = new Vector2(-4.97f, -6.03f);
     [SerializeField] GameObject cockTailGlass;
     [SerializeField] GameObject collinsGlass;
 
@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
             {
                 if (preWaitTime < 4.5f)
                 {
-                    if (shaker.cocktailAmount > 39)
+                    if (shaker.cocktailProgress > 39)
                     {
                         Instantiate(Clear, mainCanvas);
                     }
@@ -177,7 +177,7 @@ public class GameManager : MonoBehaviour
 
         if (!isRestart)
         {
-            if (shaker.cocktailAmount > 39)
+            if (shaker.cocktailProgress > 39)
             {
                 level++;
             }
