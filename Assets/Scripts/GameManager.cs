@@ -11,30 +11,24 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject cockTailGlass;
     [SerializeField] GameObject collinsGlass;
 
-    //ステージ
-    public int level;
-    [SerializeField] int maxLevel;
     EnemyGenerateManager enemyGenerateManager;
-    float nextWaitTime;
-    float preWaitTime;
-    [SerializeField] float kNextWaitTime;
-    public bool isWait;
-    bool isNextStage;
 
     //タイム
     public float gameTime;
     [SerializeField] readonly float kGameTime = 60f;
-    public bool isRestart;
-    float restartTime;
-    float preRestartTime;
+
+    bool isEnd;
+
+    [SerializeField] float kEndWaitTime;
+    float endWaitTime;
+
 
     //HUD
     Transform mainCanvas;
     [SerializeField] GameObject Fure;
     [SerializeField] GameObject Clear;
-    [SerializeField] GameObject Restart;
-    [SerializeField] GameObject Next;
-    [SerializeField] GameObject TimeUp;
+
+    ChangeScene changeScene;
 
     // Start is called before the first frame update
     void Start()
@@ -54,40 +48,32 @@ public class GameManager : MonoBehaviour
 
         Instantiate(Fure, mainCanvas);
 
-        level++;
         enemyGenerateManager.isGenerate = true;
 
         gameTime = kGameTime;
+
+        changeScene = FindAnyObjectByType<ChangeScene>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        GenerateGlass();
-
         if (!shaker.isGrounded && shaker.cocktailProgress <= 99)
         {
             gameTime -= Time.deltaTime;
         }
 
-        if (gameTime < 0 && shaker.cocktailProgress <= 99)
+        if (gameTime < 0)
         {
-            isRestart = true;
+            isEnd = true;
         }
 
-        if (isRestart)
+        if (isEnd)
         {
-            restartTime += Time.deltaTime;
-
-            if (preRestartTime <= 1f && restartTime > 1f)
+            endWaitTime += Time.deltaTime;
+            if (endWaitTime > kEndWaitTime)
             {
-                Instantiate(TimeUp, mainCanvas);
-            }
-
-            if (restartTime > 5f)
-            {
-                RestartAll();
-                isRestart = false;
+                changeScene.SceneChange("ClearScene");
             }
         }
 
@@ -101,92 +87,7 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("GameScene");
         }
 
-        preRestartTime = restartTime;
+        //preRestartTime = restartTime;
         Debug.Log("gameTime  " + gameTime);
-    }
-
-    void GenerateGlass()
-    {
-        if (FindAnyObjectByType<GlassScript>() == null)
-        {
-            nextWaitTime += Time.deltaTime;
-            isWait = true;
-
-            if (nextWaitTime > 4.5f)
-            {
-                if (preWaitTime < 4.5f)
-                {
-                    if (shaker.cocktailProgress > 39)
-                    {
-                        Instantiate(Clear, mainCanvas);
-                    }
-                    else
-                    {
-                        Instantiate(Restart, mainCanvas);
-                    }
-                }
-            }
-
-            if (nextWaitTime > 7f)
-            {
-                if (level < maxLevel)
-                {
-                    if (preWaitTime < 7f)
-                    {
-                        Instantiate(Next, mainCanvas);
-                    }
-                }
-
-                if (level == maxLevel)
-                {
-                    SceneManager.LoadScene("ClearScene");
-                }
-            }
-
-            if (nextWaitTime > kNextWaitTime)
-            {
-                isNextStage = true;
-                isWait = false;
-            }
-
-            if (isNextStage)
-            {
-                RestartAll();
-                nextWaitTime = 0;
-            }
-
-            preWaitTime = nextWaitTime;
-        }
-    }
-
-    void RestartAll()
-    {
-        if (FindAnyObjectByType<GlassScript>() == null)
-        {
-            if (Random.Range(0, 1000) > 500)
-            {
-                Instantiate(cockTailGlass, glassPosition, Quaternion.identity);
-            }
-            else
-            {
-                Instantiate(collinsGlass, glassPosition, Quaternion.identity);
-            }
-        }
-
-        Instantiate(Fure, mainCanvas);
-
-        if (!isRestart)
-        {
-            if (shaker.cocktailProgress > 39)
-            {
-                level++;
-            }
-        }
-
-        gameTime = kGameTime;
-
-        enemyGenerateManager.isGenerate = true;
-
-        isNextStage = false;
     }
 }

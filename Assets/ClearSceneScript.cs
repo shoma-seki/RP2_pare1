@@ -5,12 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class ClearSceneScript : MonoBehaviour
 {
+    ChangeScene changeScene;
+
+    private void Start()
+    {
+        changeScene = FindAnyObjectByType<ChangeScene>();
+    }
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            SceneManager.LoadScene("TitleScene");
+            changeScene.SceneChange("TitleScene");
         }
     }
 }

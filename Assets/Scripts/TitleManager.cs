@@ -35,6 +35,8 @@ public class TitleManager : MonoBehaviour
     private float progressTimer = 0f;
     private float resetDelay = 3f; // 3秒間進捗がなければリセット
 
+    ChangeScene changeScene;
+
     void Start()
     {
         titleShake = FindAnyObjectByType<TitleShake>();
@@ -46,6 +48,8 @@ public class TitleManager : MonoBehaviour
         }
 
         lastProgress = titleShake?.cocktailProgress ?? 0f;
+
+        changeScene = FindAnyObjectByType<ChangeScene>();
     }
 
     void Update()
@@ -89,8 +93,8 @@ public class TitleManager : MonoBehaviour
 
         if (titleShake.cocktailProgress >= cocktailProgressMax)
         {
-            SceneManager.LoadScene("GameScene");
-            Debug.Log("NiceShake");
+            changeScene.SceneChange("GameScene");
+            //Debug.Log("NiceShake");
         }
     }
 }

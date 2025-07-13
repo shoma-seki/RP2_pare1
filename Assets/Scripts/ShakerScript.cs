@@ -348,12 +348,6 @@ public class ShakerScript : MonoBehaviour
             }
         }
 
-        if (gameManager.isRestart)
-        {
-            isGrounded = true;
-            targetPosition = startPosition;
-        }
-
         if (isGrounded)
         {
             position = Vector2.Lerp(position, targetPosition, 30f * Time.deltaTime);
