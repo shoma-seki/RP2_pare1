@@ -56,7 +56,7 @@ public class ShakerScript : MonoBehaviour
     //謖ｯ繧九→縺阪・繧・▽
     Vector2 direction;      //騾ｲ繧薙〒縺・ｋ譁ｹ蜷・
     Vector2 previousDirection;
-    float directionChangeThreshold = 140f; // 隗貞ｺｦ蟾ｮ縺・5蠎ｦ莉･荳翫〒縲梧･螟峨阪→蛻､譁ｭ
+    float directionChangeThreshold = 100f; //振る判定の閾値
 
     //豕ｨ縺・
     [SerializeField] Vector2 pourOffset;
@@ -380,8 +380,8 @@ public class ShakerScript : MonoBehaviour
 
         if (collision.tag == "Wall")
         {
-            triggerRotation = 0;
-            isPlusRotate = false;
+            triggerRotation -= 360f;
+            //isPlusRotate = false;
 
             if (transform.position.x < 0)
             {
@@ -411,7 +411,7 @@ public class ShakerScript : MonoBehaviour
 
             isCollision = true;
 
-            triggerRotation = 0;
+            triggerRotation -= 360f;
 
             //繧ｴ繝・お繝輔ぉ繧ｯ繝・
             if (!isGrounded)
@@ -432,8 +432,8 @@ public class ShakerScript : MonoBehaviour
 
         if (collision.tag == "Ojama")
         {
-            triggerRotation = 0;
-            isPlusRotate = false;
+            triggerRotation -= 360f;
+            //isPlusRotate = false;
 
             Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
         }
