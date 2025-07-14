@@ -43,10 +43,6 @@ public class ShakerScript : MonoBehaviour
     Vector2 preShakePoint;  //前回シェイクした場所
     public float cocktailProgress; //カクテルの完成度   
 
-    //大きく振ったときのエフェクト
-    [SerializeField] GameObject fireParticle;
-
-
     public float cocktailProgressMax;
     float shakerHeight;     //繧ｷ繧ｧ繧､繧ｫ繝ｼ縺ｮ鬮倥＆
 
@@ -80,6 +76,12 @@ public class ShakerScript : MonoBehaviour
 
     [SerializeField] GameObject spillParticle;  //縺ｶ縺､縺九▲縺溘→縺阪・繝代・繝・ぅ繧ｯ繝ｫ
 
+    //大きく振ったときのエフェクト
+    [SerializeField] GameObject fireParticle;
+    ParticleSystem fire;
+    int fireCount;
+    int preFireCount;
+    int notFireCount;
 
     [SerializeField] GameObject pourParticle;  //豕ｨ縺舌→縺阪・繝代・繝・ぅ繧ｯ繝ｫ
 
@@ -105,6 +107,9 @@ public class ShakerScript : MonoBehaviour
         targetPosition = startPosition;
 
         pourTime = kPourTime;
+
+        fire = fireParticle.GetComponent<ParticleSystem>();
+        DeleteFire();
     }
 
     private void FixedUpdate()
@@ -146,6 +151,17 @@ public class ShakerScript : MonoBehaviour
         //Debug
         Debug.Log("cocktailProgress" + cocktailProgress);
 
+        if (!isGrabbed)
+        {
+            var emission = fire.emission;
+            emission.rateOverTime = 0;
+        }
+        else
+        {
+            var emission = fire.emission;
+            emission.rateOverTime = 16;
+        }
+
 #if UNITY_EDITOR
         Commands();
 #endif
@@ -184,12 +200,28 @@ public class ShakerScript : MonoBehaviour
                         cocktailProgress += shakeDistance * shakeSpeed / 10f;
 
                         float cocktailPlus = shakeDistance * shakeSpeed / 10f;
-                        if (cocktailPlus > 3)
+                        if (cocktailPlus > 2)
                         {
-                            //Instantiate(trickEffect, transform.position, Quaternion.identity);
+                            fireCount++;
+                        }
+                        else
+                        {
+                            notFireCount++;
                         }
                     }
 
+                    if (fireCount >= 1 && preFireCount < 1)
+                    {
+                        var velocityOverLifeTime = fire.velocityOverLifetime;
+                        velocityOverLifeTime.speedModifier = 6.4f;
+                    }
+
+                    if (notFireCount > 5)
+                    {
+                        DeleteFire();
+                    }
+
+                    preFireCount = fireCount;
                     preShakePoint = transform.position;
                 }
             }
@@ -198,6 +230,14 @@ public class ShakerScript : MonoBehaviour
         isCollision = false;
 
         previousDirection = currentDirection;
+    }
+
+    void DeleteFire()
+    {
+        var velocityOverLifeTime = fire.velocityOverLifetime;
+        velocityOverLifeTime.speedModifier = 1f;
+        fireCount = 0;
+        notFireCount = 0;
     }
 
     void Move()
@@ -367,6 +407,7 @@ public class ShakerScript : MonoBehaviour
         {
             triggerRotation -= 360f;
             //isPlusRotate = false;
+            DeleteFire();
 
             if (transform.position.x < 0)
             {
@@ -395,6 +436,7 @@ public class ShakerScript : MonoBehaviour
             velocity = Vector2.Reflect(velocity.normalized, Vector2.up) / 5f;
 
             isCollision = true;
+            DeleteFire();
 
             //落としたら0に
             triggerRotation = 0;
@@ -412,6 +454,7 @@ public class ShakerScript : MonoBehaviour
         if (collision.tag == "PourField")
         {
             isPour = true;
+            DeleteFire();
             pourCenter = collision.transform.position;
             Instantiate(pourParticle, new Vector3(transform.position.x, transform.position.y, 10f), pourParticle.transform.rotation);
         }
@@ -419,6 +462,7 @@ public class ShakerScript : MonoBehaviour
         if (collision.tag == "Ojama")
         {
             triggerRotation -= 360f;
+            DeleteFire();
             //isPlusRotate = false;
 
             Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));

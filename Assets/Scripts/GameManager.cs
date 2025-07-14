@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     ShakerScript shaker;
     GlassScript glass;
 
-    Vector2 glassPosition = new Vector2(-4.97f, -6.03f);
+    Vector2 glassPosition = new Vector3(-2.79f, -5.51f);
     [SerializeField] GameObject cockTailGlass;
     [SerializeField] GameObject collinsGlass;
 
