@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class MemoScript : MonoBehaviour {
@@ -9,32 +10,44 @@ public class MemoScript : MonoBehaviour {
 
     private bool isGrabbed;
     private bool isMouseOver;
+    private bool isDropped;
 
     [SerializeField] private float directionChangeThreshold = 140f;
 
     public float cocktailProgress;
 
-    private float returnSpeed = 5f; // 中央へ戻るスピード
+    private Rigidbody2D rb;
+
+    private bool isAnimating;
 
     void Start() {
         previousPosition = transform.position;
         shakeStartPoint = previousPosition;
+
+        rb = GetComponent<Rigidbody2D>();
+        rb.bodyType = RigidbodyType2D.Kinematic;
+
+        StartCoroutine(AnimateAppear());
     }
 
     void Update() {
+        if (isDropped)
+            return;
+
         if (isMouseOver && Input.GetMouseButtonDown(0)) {
             isGrabbed = true;
         }
 
         if (Input.GetMouseButtonUp(0)) {
-            isGrabbed = false;
+            if (isGrabbed) {
+                isGrabbed = false;
+                StartDrop();
+            }
         }
 
         if (isGrabbed) {
             transform.position = player.transform.position;
             HandleShake();
-        } else {
-            
         }
 
         previousPosition = transform.position;
@@ -53,12 +66,7 @@ public class MemoScript : MonoBehaviour {
             float angleDiff = Vector2.Angle(previousDirection, currentDirection);
 
             if (angleDiff > directionChangeThreshold) {
-                float shakeDistance = Vector2.Distance(shakeStartPoint, currentPosition);
-                float shakeSpeed = moveVector.magnitude;
-
-                float progress = 1f;
-                cocktailProgress += progress;
-
+                cocktailProgress += 1f;
                 shakeStartPoint = currentPosition;
             }
         }
@@ -76,5 +84,34 @@ public class MemoScript : MonoBehaviour {
         if (collision.CompareTag("Mouse")) {
             isMouseOver = false;
         }
+    }
+
+    private void StartDrop() {
+        isDropped = true;
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.gravityScale = 1f;
+
+        Destroy(gameObject, 3f);
+    }
+
+    private IEnumerator AnimateAppear() {
+        isAnimating = true;
+
+        Vector3 startPos = transform.position;
+        Vector3 endPos = startPos + Vector3.up * 7f; // 上に7ユニット
+
+        float duration = 2f;
+        float timer = 0f;
+
+        while (timer < duration) {
+            timer += Time.deltaTime;
+            float t = Mathf.SmoothStep(0f, 1f, timer / duration);
+            transform.position = Vector3.Lerp(startPos, endPos, t);
+            yield return null;
+        }
+
+        transform.position = endPos;
+
+        isAnimating = false;
     }
 }
