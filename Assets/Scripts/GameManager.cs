@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     ShakerScript shaker;
+    GlassScript glass;
 
     Vector2 glassPosition = new Vector2(-4.97f, -6.03f);
     [SerializeField] GameObject cockTailGlass;
@@ -15,18 +16,20 @@ public class GameManager : MonoBehaviour
 
     //ƒ^ƒCƒ€
     public float gameTime;
-    [SerializeField] readonly float kGameTime = 60f;
+    [SerializeField] float kGameTime = 60f;
 
     bool isEnd;
+    bool isClear;
 
     [SerializeField] float kEndWaitTime;
     float endWaitTime;
-
+    float preEndWaitTime;
 
     //HUD
     Transform mainCanvas;
     [SerializeField] GameObject Fure;
     [SerializeField] GameObject Clear;
+    [SerializeField] GameObject Oke;
 
     ChangeScene changeScene;
 
@@ -58,7 +61,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!shaker.isGrounded && shaker.cocktailProgress <= 99)
+        if (!shaker.isGrounded)
         {
             gameTime -= Time.deltaTime;
         }
@@ -66,15 +69,32 @@ public class GameManager : MonoBehaviour
         if (gameTime < 0)
         {
             isEnd = true;
+            glass = FindAnyObjectByType<GlassScript>();
         }
 
         if (isEnd)
         {
+            if (glass == null)
+            {
+                isClear = true;
+            }
+        }
+
+        if (isClear)
+        {
             endWaitTime += Time.deltaTime;
+
+            if (endWaitTime > 0.5f && preEndWaitTime <= 0.5f)
+            {
+                Instantiate(Oke, mainCanvas);
+            }
+
             if (endWaitTime > kEndWaitTime)
             {
                 changeScene.SceneChange("ClearScene");
             }
+
+            preEndWaitTime = endWaitTime;
         }
 
         if (Input.GetKeyDown(KeyCode.T))
@@ -88,6 +108,6 @@ public class GameManager : MonoBehaviour
         }
 
         //preRestartTime = restartTime;
-        Debug.Log("gameTime  " + gameTime);
+        //Debug.Log("gameTime  " + gameTime);
     }
 }

@@ -7,6 +7,7 @@ public class GlassScript : MonoBehaviour
 {
     Player player;
     ShakerScript shaker;
+    GameManager gameManager;
 
     Vector3 position;
     Vector2 targetPosition;
@@ -42,6 +43,7 @@ public class GlassScript : MonoBehaviour
     {
         player = FindAnyObjectByType<Player>();
         shaker = FindAnyObjectByType<ShakerScript>();
+        gameManager = FindAnyObjectByType<GameManager>();
 
         position = transform.position;
         position.z = 30f;
@@ -55,7 +57,7 @@ public class GlassScript : MonoBehaviour
     {
         prePosition = transform.position;
 
-        Move();
+        //Move();
         DrinkMove();
         Clear();
 
@@ -64,20 +66,25 @@ public class GlassScript : MonoBehaviour
             newArrow = Instantiate(arrow, transform.position + new Vector3(2f, 0), Quaternion.identity);
         }
 
+        if (gameManager.gameTime < 0)
+        {
+            Instantiate(pourField, transform.position, Quaternion.identity);
+        }
+
         preIsFull = isFull;
 
         //Debug.Log("isGrabbed" + isGrabbed);
         //Debug.Log("releaseHeight" + releaseHeight);
     }
 
-    void Move()
-    {
-        position.y -= 6f * Time.deltaTime;
-        transform.position = position;
+    //void Move()
+    //{
+    //    position.y -= 6f * Time.deltaTime;
+    //    transform.position = position;
 
-        rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 0), 5f * Time.deltaTime);
-        transform.rotation = Quaternion.Euler(rotation);
-    }
+    //    rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 0), 5f * Time.deltaTime);
+    //    transform.rotation = Quaternion.Euler(rotation);
+    //}
 
     void DrinkMove()
     {

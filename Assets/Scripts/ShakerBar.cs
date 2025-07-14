@@ -1,16 +1,19 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class ShakerBar : MonoBehaviour {
+public class ShakerBar : MonoBehaviour
+{
     [SerializeField] ShakerScript shakerScript;
     [SerializeField] GameObject tipBar;
 
     private float previousProgress = 0f;
     private bool isWaitingToStretch = false;
 
-    void Update() {
+    void Update()
+    {
         // デバッグ用
-        if (Input.GetKeyDown(KeyCode.P)) {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
             shakerScript.cocktailProgress += 10f;
         }
 
@@ -18,8 +21,9 @@ public class ShakerBar : MonoBehaviour {
         CheckProgressChange();
     }
 
-    private void BarUpdate() {
-        float normalized = Mathf.InverseLerp(0f, 100f, shakerScript.cocktailProgress);
+    private void BarUpdate()
+    {
+        float normalized = Mathf.InverseLerp(0f, shakerScript.cocktailProgressMax, shakerScript.cocktailProgress);
         float scaleX = Mathf.Lerp(0f, 10f, normalized);
 
         Vector3 scale = transform.localScale;
@@ -27,21 +31,25 @@ public class ShakerBar : MonoBehaviour {
         transform.localScale = scale;
     }
 
-    private void CheckProgressChange() {
+    private void CheckProgressChange()
+    {
         float currentProgress = shakerScript.cocktailProgress;
 
-        if (!Mathf.Approximately(currentProgress, previousProgress)) {
+        if (!Mathf.Approximately(currentProgress, previousProgress))
+        {
             previousProgress = currentProgress;
 
             // すでに待機中でなければコルーチンスタート
-            if (!isWaitingToStretch) {
+            if (!isWaitingToStretch)
+            {
                 isWaitingToStretch = true;
                 StartCoroutine(AnimateTipBarAfterDelay(2f, 0.5f)); //目標値は中で取得する
             }
         }
     }
 
-    private IEnumerator AnimateTipBarAfterDelay(float delay, float duration) {
+    private IEnumerator AnimateTipBarAfterDelay(float delay, float duration)
+    {
         yield return new WaitForSeconds(delay);
 
         float fromX = tipBar.transform.localScale.x;
@@ -51,7 +59,8 @@ public class ShakerBar : MonoBehaviour {
         float toX = Mathf.Lerp(0f, 10f, currentBarNormalized);
 
         float timer = 0f;
-        while (timer < duration) {
+        while (timer < duration)
+        {
             float t = timer / duration;
             float scaleX = Mathf.Lerp(fromX, toX, t);
 
