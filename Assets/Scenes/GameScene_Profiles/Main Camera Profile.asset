@@ -21,7 +21,7 @@ MonoBehaviour:
     value: 0
   color:
     overrideState: 1
-    value: {r: 0.8708172, g: 0, b: 1, a: 1}
+    value: {r: 0.67597055, g: 1, b: 0, a: 1}
   center:
     overrideState: 1
     value: {x: 0.5, y: 0.5}
@@ -32,11 +32,11 @@ MonoBehaviour:
     overrideState: 1
     value: 0.2
   roundness:
-    overrideState: 0
+    overrideState: 1
     value: 1
   rounded:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 1
   mask:
     overrideState: 0
     value: {fileID: 0}
