@@ -8,6 +8,8 @@ public class TImeTextScritpt : MonoBehaviour
     GameManager gameManager;
     TextMeshProUGUI text;
 
+    float gameTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +20,11 @@ public class TImeTextScritpt : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.text = "ÇÃÇ±ÇËÅF" + gameManager.gameTime.ToString("f0") + "ïb";
+        gameTime = gameManager.gameTime;
+        if (gameTime <= 0)
+        {
+            gameTime = 0;
+        }
+        text.text = "ÇÃÇ±ÇËÅF" + gameTime.ToString("f0") + "ïb";
     }
 }

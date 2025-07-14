@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
 
     //ƒ^ƒCƒ€
     public float gameTime;
+    float preGameTime;
     [SerializeField] float kGameTime = 60f;
 
     bool isEnd;
@@ -66,10 +67,11 @@ public class GameManager : MonoBehaviour
             gameTime -= Time.deltaTime;
         }
 
-        if (gameTime < 0)
+        if (gameTime < 0 && preGameTime >= 0)
         {
             isEnd = true;
             glass = FindAnyObjectByType<GlassScript>();
+            Instantiate(Oke, mainCanvas);
         }
 
         if (isEnd)
@@ -84,11 +86,6 @@ public class GameManager : MonoBehaviour
         {
             endWaitTime += Time.deltaTime;
 
-            if (endWaitTime > 0.5f && preEndWaitTime <= 0.5f)
-            {
-                Instantiate(Oke, mainCanvas);
-            }
-
             if (endWaitTime > kEndWaitTime)
             {
                 changeScene.SceneChange("ClearScene");
@@ -96,6 +93,8 @@ public class GameManager : MonoBehaviour
 
             preEndWaitTime = endWaitTime;
         }
+
+        preGameTime = gameTime;
 
         if (Input.GetKeyDown(KeyCode.T))
         {

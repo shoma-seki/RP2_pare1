@@ -38,6 +38,8 @@ public class GlassScript : MonoBehaviour
     [SerializeField] GameObject arrow;
     GameObject newArrow;
 
+    float preGameTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -66,12 +68,13 @@ public class GlassScript : MonoBehaviour
             newArrow = Instantiate(arrow, transform.position + new Vector3(2f, 0), Quaternion.identity);
         }
 
-        if (gameManager.gameTime < 0)
+        if (gameManager.gameTime < 0 && preGameTime >= 0)
         {
             Instantiate(pourField, transform.position, Quaternion.identity);
         }
 
         preIsFull = isFull;
+        preGameTime = gameManager.gameTime;
 
         //Debug.Log("isGrabbed" + isGrabbed);
         //Debug.Log("releaseHeight" + releaseHeight);

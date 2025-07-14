@@ -43,6 +43,10 @@ public class ShakerScript : MonoBehaviour
     Vector2 preShakePoint;  //前回シェイクした場所
     public float cocktailProgress; //カクテルの完成度   
 
+    //大きく振ったときのエフェクト
+    [SerializeField] GameObject fireParticle;
+
+
     public float cocktailProgressMax;
     float shakerHeight;     //繧ｷ繧ｧ繧､繧ｫ繝ｼ縺ｮ鬮倥＆
 
@@ -182,7 +186,7 @@ public class ShakerScript : MonoBehaviour
                         float cocktailPlus = shakeDistance * shakeSpeed / 10f;
                         if (cocktailPlus > 3)
                         {
-                            Instantiate(trickEffect, transform.position, Quaternion.identity);
+                            //Instantiate(trickEffect, transform.position, Quaternion.identity);
                         }
                     }
 

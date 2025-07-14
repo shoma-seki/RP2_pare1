@@ -470,9 +470,11 @@ MonoBehaviour:
   cockTailGlass: {fileID: 2645780345626253062, guid: 8c83b892c310c9f4ebae618fcb5c312e, type: 3}
   collinsGlass: {fileID: 2645780345626253062, guid: a57096958498f3c4081bcdc749944e8e, type: 3}
   gameTime: 60
+  kGameTime: 60
   kEndWaitTime: 0
   Fure: {fileID: 1994160041230809500, guid: d1b6266c625278143886a4cccab2f68d, type: 3}
   Clear: {fileID: 8925993115829733474, guid: 5fb0e690d23fa1c4e9f037ca6d152eff, type: 3}
+  Oke: {fileID: 0}
 --- !u!4 &182493210
 Transform:
   m_ObjectHideFlags: 0
