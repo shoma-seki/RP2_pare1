@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.22, y: 0.22, z: 0.22}
+  m_LocalScale: {x: 0.32, y: 0.32, z: 0.32}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7738698468155702842}
@@ -172,7 +172,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89bccfeee2e951d4a92eefacad4b4bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGrounded: 0
   isFull: 0
   pourField: {fileID: 7009915811524454143, guid: 42b25f82b727ece4296c79327235af0d, type: 3}
   drinkSprite: {fileID: 5894094192729726766}

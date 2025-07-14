@@ -24,9 +24,6 @@ public class ShakerScript : MonoBehaviour
 
     public bool isClear;
 
-    public bool isCompleted;
-    bool preIsCompleted;
-
     bool isPlusRotate;    //triggerRotation繧定ｶｳ縺吶°
 
     //繧ｹ繧ｿ繝ｼ繝医↓謌ｻ縺・
@@ -92,10 +89,6 @@ public class ShakerScript : MonoBehaviour
     [SerializeField] GameObject trickCatchSound;     //繝医Μ繝・け繧呈ｱｺ繧√※繧ｭ繝｣繝・メ縺励◆縺ｨ縺阪・髻ｳ
     [SerializeField] GameObject gotuSound;      //縺ｶ縺､縺九▲縺溘→縺阪・髻ｳ
 
-    //テキスト
-    RectTransform mainCanvas;
-    [SerializeField] GameObject Oke;            //グラスを置け
-
     // Start is called before the first frame update
     void Start()
     {
@@ -108,8 +101,6 @@ public class ShakerScript : MonoBehaviour
         targetPosition = startPosition;
 
         pourTime = kPourTime;
-
-        mainCanvas = GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<RectTransform>();
     }
 
     private void FixedUpdate()
@@ -148,19 +139,9 @@ public class ShakerScript : MonoBehaviour
             isGrounded = true;
         }
 
-        //螳梧・
-        if (cocktailProgress >= 100)
-        {
-            isCompleted = true;
-        }
+        //Debug
+        Debug.Log("cocktailProgress" + cocktailProgress);
 
-        if (isCompleted && !preIsCompleted)
-        {
-            Instantiate(Oke, mainCanvas);
-        }
-        preIsCompleted = isCompleted;
-
-        //繧ｳ繝槭Φ繝・
 #if UNITY_EDITOR
         Commands();
 #endif
@@ -186,7 +167,7 @@ public class ShakerScript : MonoBehaviour
                     shakeCount++;
                     //Debug.Log("shakeCount" + shakeCount);
 
-                    //繧ｷ繝｣繧ｫ繧ｨ繝輔ぉ繧ｯ繝・
+                    //シャカエフェクト
                     Vector2 shakaPoint = (Vector2)transform.position + previousDirection * shakaOffset;
                     Instantiate(shakaEffect, shakaPoint, Quaternion.identity);
                     Instantiate(shakaSound);
@@ -195,9 +176,14 @@ public class ShakerScript : MonoBehaviour
                     {
                         shakeDistance = Vector2.Distance(preShakePoint, transform.position);
 
-                        //繧ｫ繧ｯ繝・Ν縺ｮ螳梧・蠎ｦ繧貞､画峩
+                        //カクテルの完成度を増やす
                         cocktailProgress += shakeDistance * shakeSpeed / 10f;
-                        //Debug.Log("繧ｫ繧ｯ繝・Ν縺ｮ螳梧・蠎ｦ" + cocktailProgress);
+
+                        float cocktailPlus = shakeDistance * shakeSpeed / 10f;
+                        if (cocktailPlus > 3)
+                        {
+                            Instantiate(trickEffect, transform.position, Quaternion.identity);
+                        }
                     }
 
                     preShakePoint = transform.position;
@@ -265,17 +251,13 @@ public class ShakerScript : MonoBehaviour
                 if (trickEffectRotate > 360)
                 {
                     trickEffectRotate = 0;
+
+                    cocktailProgress += 2f;
+
                     //Instantiate(trickEffect, transform.position, Quaternion.identity);
                     Instantiate(trickParticle, transform.position, Quaternion.identity);
                 }
             }
-
-            //if (triggerRotation > 360)
-            //{
-            //    cocktailProgress += shakerHeight / 5f;
-            //    //Debug.Log("繧ｫ繧ｯ繝・Ν縺ｮ螳梧・蠎ｦ" + cocktailProgress);
-            //    triggerRotation = 0;
-            //}
         }
 
         transform.position = position;
@@ -364,7 +346,6 @@ public class ShakerScript : MonoBehaviour
         if (isClear)
         {
             isClear = false;
-            isCompleted = false;
 
             cocktailProgress = 0;
         }
@@ -411,7 +392,8 @@ public class ShakerScript : MonoBehaviour
 
             isCollision = true;
 
-            triggerRotation -= 360f;
+            //落としたら0に
+            triggerRotation = 0;
 
             //繧ｴ繝・お繝輔ぉ繧ｯ繝・
             if (!isGrounded)

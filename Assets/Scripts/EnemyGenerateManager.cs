@@ -26,62 +26,38 @@ public class EnemyGenerateManager : MonoBehaviour
     {
         gameTime = gameManager.gameTime;
 
-        if (isGenerate)
-        {
-            //SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.3f, 1f);
-            //SpawnEnemy(1, OjamaScript.OjamaType.Stone, new Vector2(0, -1), 2f, 2f);
-            isGenerate = false;
-        }
+        //if (isGenerate)
+        //{
+        //    //SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.3f, 1f);
+        //    //SpawnEnemy(1, OjamaScript.OjamaType.Stone, new Vector2(0, -1), 2f, 2f);
+        //    isGenerate = false;
+        //}
 
-        //一気に生成されるのを防ぐため前のフレームと今のフレームのgameTimeを比較し1フレームだけisGenerateがtrueになるようにする。
+        //一気に生成されるのを防ぐため前のフレームと今のフレームのgameTimeを比較しする
         //if(isGenerate)の前には必ずこれを入れること。
         //直下のもので言うとgameTimeが5fを超えたフレームでisGenerateがtureになり、生成された後にisGenerateがfalseになるようになっている。
-        if (preGameTime < 5f && gameTime >= 5f)
-        {
-            isGenerate = true;
-        }
-
-        if (isGenerate)
+        if (preGameTime > 50f && gameTime <= 50f)
         {
             SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.2f, 1f);
             SpawnEnemy(2, OjamaScript.OjamaType.Cannon, new Vector2(-1, 1), 0.2f, 3f);
-            isGenerate = false;
         }
 
-        if (preGameTime < 15f && gameTime >= 15f)
-        {
-            isGenerate = true;
-        }
-
-        if (isGenerate)
+        if (preGameTime > 35f && gameTime <= 35f)
         {
             SpawnEnemy(0, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 4f, 1f);
             SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 4f, 3f);
 
-            isGenerate = false;
         }
 
-        if (preGameTime < 20f && gameTime >= 20f)
-        {
-            isGenerate = true;
-        }
-
-        if (isGenerate)
+        if (preGameTime > 25f && gameTime <= 25f)
         {
             SpawnEnemy(0, OjamaScript.OjamaType.Stone, new Vector2(-1, -1), 0.7f, 1f);
             SpawnEnemy(2, OjamaScript.OjamaType.Stone, new Vector2(-1, 0), 0.7f, 2f);
             SpawnEnemy(3, OjamaScript.OjamaType.Stone, new Vector2(1, 0), 0.7f, 3f);
             SpawnEnemy(1, OjamaScript.OjamaType.Stone, new Vector2(1, -1), 0.7f, 4f);
-
-            isGenerate = false;
         }
 
-        if (preGameTime < 25f && gameTime >= 25f)
-        {
-            isGenerate = true;
-        }
-
-        if (isGenerate)
+        if (preGameTime > 15f && gameTime <= 15f)
         {
             SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.4f, 1f);
             SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 4f, 2f);
@@ -94,16 +70,9 @@ public class EnemyGenerateManager : MonoBehaviour
 
             SpawnEnemy(2, OjamaScript.OjamaType.Cannon, new Vector2(-1, 1), 0.4f, 14f);
             SpawnEnemy(0, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 4f, 15f);
-
-            isGenerate = false;
         }
 
-        if (preGameTime < 50f && gameTime >= 50f)
-        {
-            isGenerate = true;
-        }
-
-        if (isGenerate)
+        if (preGameTime > 5f && gameTime <= 5f)
         {
             SpawnEnemy(0, OjamaScript.OjamaType.Stone, new Vector2(-1, -1), 1f, 1f);
             SpawnEnemy(0, OjamaScript.OjamaType.Stone, new Vector2(0, -1), 1f, 1f);
@@ -119,9 +88,8 @@ public class EnemyGenerateManager : MonoBehaviour
 
             SpawnEnemy(1, OjamaScript.OjamaType.Stone, new Vector2(1, -1), 1f, 13f);
             SpawnEnemy(1, OjamaScript.OjamaType.Stone, new Vector2(0, -1), 1f, 13f);
-
-            isGenerate = false;
         }
+
         //if (isGenerate)
         //{
         //    SpawnEnemy(0, OjamaScript.OjamaType.Cannon, new Vector2(-1, 0), 0.1f, 1f);

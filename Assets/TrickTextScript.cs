@@ -85,13 +85,13 @@ public class TrickTextScript : MonoBehaviour
         if (!shaker.isGrabbed && !shaker.isGrounded)
         {
             triggerRotation = (Mathf.Floor(shaker.triggerRotation / 360f) * 360f).ToString();
-            text.text = triggerRotation;
+            text.text = "キャッチボーナス" + triggerRotation;
             text.color = targetColor;
             visibleSecond = 0;
         }
         else if (visibleSecond < 2f)
         {
-            text.text = triggerRotation;
+            text.text = "キャッチボーナス" + triggerRotation;
             visibleSecond += Time.deltaTime;
         }
         else
