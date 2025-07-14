@@ -1601,6 +1601,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6100dddc69408ea4597447807129570b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &563577507 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7520125191526872800, guid: cb33c5808ae719544bcbfd19bfe30648, type: 3}
+  m_PrefabInstance: {fileID: 2018906240}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c478837d13542246b9cf93947a554c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &589946600
 GameObject:
   m_ObjectHideFlags: 0
@@ -3762,7 +3773,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1632848658}
   - component: {fileID: 1632848657}
+  - component: {fileID: 1632848660}
   - component: {fileID: 1632848659}
+  - component: {fileID: 1632848661}
   m_Layer: 0
   m_Name: memo
   m_TagString: Untagged
@@ -3831,7 +3844,7 @@ Transform:
   m_GameObject: {fileID: 1632848656}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.8705225, y: -3.7436817, z: 0}
+  m_LocalPosition: {x: 9.31, y: -3.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3882,6 +3895,48 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.630629, y: 6.536751}
   m_EdgeRadius: 0
+--- !u!114 &1632848660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632848656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e0b6ec662cb8d479c1ba39e50ccc6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 563577507}
+  directionChangeThreshold: 140
+  cocktailProgress: 0
+--- !u!50 &1632848661
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632848656}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1634406477
 GameObject:
   m_ObjectHideFlags: 0
@@ -5023,6 +5078,7 @@ SceneRoots:
   - {fileID: 639698675}
   - {fileID: 1849412028}
   - {fileID: 487997296}
+  - {fileID: 1632848658}
   - {fileID: 2018906240}
   - {fileID: 980137786}
   - {fileID: 665220423}
@@ -5030,4 +5086,3 @@ SceneRoots:
   - {fileID: 1451397048}
   - {fileID: 505441823}
   - {fileID: 1766153897}
-  - {fileID: 1632848658}
