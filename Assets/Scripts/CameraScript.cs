@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class CameraScript : MonoBehaviour
 {
@@ -16,12 +17,37 @@ public class CameraScript : MonoBehaviour
     //注いでるときのズーム
     ShakerScript shaker;
 
+    //ヴィネット
+    GameManager gameManager;
+    [Range(0f, 1f)][SerializeField] float hueSpeed = 0.1f;
+    [SerializeField] bool clockwise = true;
+    [Range(0f, 1f)][SerializeField] float saturation = 1f;
+    [Range(0f, 1f)][SerializeField] float value = 1f;
+
+    float hue;
+    PostProcessVolume volume;
+    Vignette vignette;
+
+    public Color pColor;
+
     // Start is called before the first frame update
     void Start()
     {
         target = FindAnyObjectByType<ShakerScript>();
         cam = Camera.main;
         shaker = FindAnyObjectByType<ShakerScript>();
+
+        volume = GetComponent<PostProcessVolume>();
+        if (volume != null && volume.profile.TryGetSettings(out vignette))
+        {
+            // 成功
+        }
+        else
+        {
+            Debug.LogError("Vignette が Volume に設定されていません。");
+        }
+
+        gameManager = FindAnyObjectByType<GameManager>();
     }
 
     // Update is called once per frame
@@ -29,6 +55,29 @@ public class CameraScript : MonoBehaviour
     {
         FitCameraToTarget();
         ZoomToGlass();
+        VignetteColorChange();
+    }
+
+    void VignetteColorChange()
+    {
+        if (gameManager.isFever)
+        {
+            vignette.intensity.value = 0.36f;
+            float deltaHue = hueSpeed * Time.deltaTime;
+            if (!clockwise) deltaHue = -deltaHue;
+
+            hue += deltaHue;
+            hue %= 1f;
+            if (hue < 0f) hue += 1f;
+
+            Color color = Color.HSVToRGB(hue, saturation, value);
+            vignette.color.value = color;
+            pColor = color;
+        }
+        else
+        {
+            vignette.intensity.value = 0f;
+        }
     }
 
     void FitCameraToTarget()

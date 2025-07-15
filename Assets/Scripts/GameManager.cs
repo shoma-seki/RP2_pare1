@@ -22,6 +22,13 @@ public class GameManager : MonoBehaviour
     bool isEnd;
     bool isClear;
 
+    //フィーバー関連
+    public bool isFever;
+    float nextFeverTime;
+    [SerializeField] float kNextFeverTime;      //何秒おきにフィーバータイムになるか
+    float feverTime;
+    [SerializeField] float kFeverTime;         //フィーバータイムが続く時間
+
     [SerializeField] float kEndWaitTime;
     float endWaitTime;
     float preEndWaitTime;
@@ -56,12 +63,17 @@ public class GameManager : MonoBehaviour
 
         gameTime = kGameTime;
 
+        feverTime = kFeverTime;
+        nextFeverTime = kNextFeverTime;
+
         changeScene = FindAnyObjectByType<ChangeScene>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        Fever();
+
         if (!shaker.isGrounded)
         {
             gameTime -= Time.deltaTime;
@@ -108,5 +120,28 @@ public class GameManager : MonoBehaviour
 
         //preRestartTime = restartTime;
         //Debug.Log("gameTime  " + gameTime);
+    }
+
+    void Fever()
+    {
+        if (!isFever)
+        {
+            nextFeverTime -= Time.deltaTime;
+            if (nextFeverTime < 0)
+            {
+                isFever = true;
+                feverTime = kFeverTime;
+            }
+        }
+
+        if (isFever)
+        {
+            feverTime -= Time.deltaTime;
+            if (feverTime < 0)
+            {
+                nextFeverTime = kNextFeverTime;
+                isFever = false;
+            }
+        }
     }
 }
