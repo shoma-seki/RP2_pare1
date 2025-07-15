@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ChangeScene : MonoBehaviour
 {
     Image image;
-    bool isChangeScene;
+    bool isChangeScene = false;
     float t;
     [SerializeField] float kChangeTime;
     float changeTime;
@@ -48,6 +48,10 @@ public class ChangeScene : MonoBehaviour
                 t = changeTime / kChangeTime;
 
                 image.color = Color.Lerp(Color.clear, Color.black, t);
+
+                if (t < 0) {
+                    StopSceneChange();
+                }
             }
 
             if (changeTime > kChangeTime)
@@ -68,5 +72,10 @@ public class ChangeScene : MonoBehaviour
         this.changedScene = changedScene;
         isChangeScene = true;
         isChanged = false;
+    }
+
+    public void StopSceneChange() {
+        isChangeScene = false;
+        isChanged = true;
     }
 }
