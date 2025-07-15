@@ -38,7 +38,7 @@ public class CloudScript : MonoBehaviour
             direction = Vector2.left;
         }
 
-        float scale = Random.Range(1, 2.5f);
+        float scale = Random.Range(1.5f, 3f);
         Vector2 scale2 = new Vector2(scale, scale);
         transform.localScale = scale2;
 
