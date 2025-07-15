@@ -1,66 +1,57 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ShakerBar : MonoBehaviour
-{
+public class ShakerBar : MonoBehaviour {
     [SerializeField] ShakerScript shakerScript;
     [SerializeField] GameObject tipBar;
 
     private float previousProgress = 0f;
-    private bool isWaitingToStretch = false;
-
-    void Update()
-    {
+    private Coroutine tipBarCoroutine;
+    private float scaleFactor = 0.05f; // 1 progress あたり 0.1 スケール → 100 progress でスケール10
+    [SerializeField] Text cocktailProgressText;
+    void Update() {
         // デバッグ用
-        if (Input.GetKeyDown(KeyCode.P))
-        {
+        if (Input.GetKeyDown(KeyCode.P)) {
             shakerScript.cocktailProgress += 10f;
         }
 
         BarUpdate();
         CheckProgressChange();
+        UpdateCocktailProgressText();
     }
 
-    private void BarUpdate()
-    {
-        float normalized = Mathf.InverseLerp(0f, shakerScript.cocktailProgressMax, shakerScript.cocktailProgress);
-        float scaleX = Mathf.Lerp(0f, 10f, normalized);
+    private void BarUpdate() {
+        float progress = shakerScript.cocktailProgress;
+        float scaleX = progress * scaleFactor;
 
         Vector3 scale = transform.localScale;
         scale.x = scaleX;
         transform.localScale = scale;
     }
 
-    private void CheckProgressChange()
-    {
+    private void CheckProgressChange() {
         float currentProgress = shakerScript.cocktailProgress;
 
-        if (!Mathf.Approximately(currentProgress, previousProgress))
-        {
+        // 値に変化があったとき
+        if (!Mathf.Approximately(currentProgress, previousProgress)) {
             previousProgress = currentProgress;
 
-            // すでに待機中でなければコルーチンスタート
-            if (!isWaitingToStretch)
-            {
-                isWaitingToStretch = true;
-                StartCoroutine(AnimateTipBarAfterDelay(2f, 0.5f)); //目標値は中で取得する
+            // Coroutineが動いてなければ2秒後に追従を開始
+            if (tipBarCoroutine == null) {
+                tipBarCoroutine = StartCoroutine(AnimateTipBarAfterDelay(2f, 0.5f));
             }
         }
     }
 
-    private IEnumerator AnimateTipBarAfterDelay(float delay, float duration)
-    {
+    private IEnumerator AnimateTipBarAfterDelay(float delay, float duration) {
         yield return new WaitForSeconds(delay);
 
         float fromX = tipBar.transform.localScale.x;
-
-        //ここで改めて "今のBarの長さ" を取得
-        float currentBarNormalized = Mathf.InverseLerp(0f, 100f, shakerScript.cocktailProgress);
-        float toX = Mathf.Lerp(0f, 10f, currentBarNormalized);
+        float toX = shakerScript.cocktailProgress * scaleFactor;
 
         float timer = 0f;
-        while (timer < duration)
-        {
+        while (timer < duration) {
             float t = timer / duration;
             float scaleX = Mathf.Lerp(fromX, toX, t);
 
@@ -72,12 +63,15 @@ public class ShakerBar : MonoBehaviour
             yield return null;
         }
 
-        // 最終反映
         Vector3 finalScale = tipBar.transform.localScale;
         finalScale.x = toX;
         tipBar.transform.localScale = finalScale;
 
-        isWaitingToStretch = false;
+        tipBarCoroutine = null;
     }
 
+    private void UpdateCocktailProgressText() {
+        int percent = Mathf.RoundToInt(shakerScript.cocktailProgress);
+        cocktailProgressText.text = percent.ToString() + "%";
+    }
 }
