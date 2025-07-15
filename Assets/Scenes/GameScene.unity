@@ -1462,10 +1462,10 @@ MonoBehaviour:
   cockTailGlass: {fileID: 2645780345626253062, guid: 8c83b892c310c9f4ebae618fcb5c312e, type: 3}
   collinsGlass: {fileID: 2645780345626253062, guid: a57096958498f3c4081bcdc749944e8e, type: 3}
   gameTime: 0
-  kGameTime: 5
+  kGameTime: 60
   isFever: 0
-  kNextFeverTime: 15
-  kFeverTime: 3
+  kNextFeverTime: 20
+  kFeverTime: 10
   kEndWaitTime: 5
   Fure: {fileID: 1994160041230809500, guid: d1b6266c625278143886a4cccab2f68d, type: 3}
   Clear: {fileID: 8925993115829733474, guid: 5fb0e690d23fa1c4e9f037ca6d152eff, type: 3}
@@ -1928,6 +1928,10 @@ PrefabInstance:
     - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
       propertyPath: shakaGreatOffset
       value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
+      propertyPath: CatchMagnification
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
       propertyPath: cocktailAmountMinus

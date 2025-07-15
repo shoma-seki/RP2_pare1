@@ -34,7 +34,6 @@ public class EnemyGenerateManager : MonoBehaviour
         //}
 
         //一気に生成されるのを防ぐため分けて生成する
-        //if(isGenerate)の前には必ずこれを入れること。
         //直下のもので言うとgameTimeが5fを超えたフレームでお邪魔を生成する。
         if (preGameTime > 55f && gameTime <= 55f)
         {
@@ -49,7 +48,7 @@ public class EnemyGenerateManager : MonoBehaviour
 
         }
 
-        if (preGameTime > 25f && gameTime <= 25f)
+        if (preGameTime > 40f && gameTime <= 40f)
         {
             SpawnEnemy(0, OjamaScript.OjamaType.Ball, new Vector2(-1, -1), 0.7f, 1f);
             SpawnEnemy(2, OjamaScript.OjamaType.Ball, new Vector2(-1, 0), 0.7f, 2f);
@@ -57,7 +56,7 @@ public class EnemyGenerateManager : MonoBehaviour
             SpawnEnemy(1, OjamaScript.OjamaType.Ball, new Vector2(1, -1), 0.7f, 4f);
         }
 
-        if (preGameTime > 15f && gameTime <= 15f)
+        if (preGameTime > 30f && gameTime <= 30f)
         {
             SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.4f, 1f);
             SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 4f, 2f);
@@ -72,7 +71,7 @@ public class EnemyGenerateManager : MonoBehaviour
             SpawnEnemy(0, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 4f, 15f);
         }
 
-        if (preGameTime > 5f && gameTime <= 5f)
+        if (preGameTime > 15f && gameTime <= 15f)
         {
             SpawnEnemy(0, OjamaScript.OjamaType.Ball, new Vector2(-1, -1), 1f, 1f);
             SpawnEnemy(0, OjamaScript.OjamaType.Ball, new Vector2(0, -1), 1f, 1f);
@@ -85,9 +84,6 @@ public class EnemyGenerateManager : MonoBehaviour
 
             SpawnEnemy(0, OjamaScript.OjamaType.Ball, new Vector2(-1, -1), 1f, 11f);
             SpawnEnemy(0, OjamaScript.OjamaType.Ball, new Vector2(0, -1), 1f, 11f);
-
-            SpawnEnemy(1, OjamaScript.OjamaType.Ball, new Vector2(1, -1), 1f, 13f);
-            SpawnEnemy(1, OjamaScript.OjamaType.Ball, new Vector2(0, -1), 1f, 13f);
         }
 
         preGameTime = gameTime;
