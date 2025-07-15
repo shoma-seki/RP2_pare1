@@ -54,11 +54,11 @@ public class ClearSceneScript : MonoBehaviour
 
         if (score >= 1000)
             rankIndex = 0; // S
-        else if (score >= 600)
-            rankIndex = 1; // A
         else if (score >= 400)
-            rankIndex = 2; // B
+            rankIndex = 1; // A
         else if (score >= 200)
+            rankIndex = 2; // B
+        else if (score >= 100)
             rankIndex = 3; // C
         else
             rankIndex = 4; // D
