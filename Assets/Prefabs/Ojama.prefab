@@ -54,6 +54,7 @@ MonoBehaviour:
   poison: {fileID: 21300000, guid: 03bb6dc23b29fa549b60072d1596fb41, type: 3}
   cannon: {fileID: 21300000, guid: d40b0fb8f3d5e0c4281c3c3d0a253236, type: 3}
   explosion: {fileID: 1558364946909213874, guid: ab155ccb73927414da74b4e3ecd42243, type: 3}
+  deathParticle: {fileID: 953542929611681838, guid: ce293d37c107ff14fb3122cba66b127f, type: 3}
 --- !u!212 &7699970512112277502
 SpriteRenderer:
   m_ObjectHideFlags: 0

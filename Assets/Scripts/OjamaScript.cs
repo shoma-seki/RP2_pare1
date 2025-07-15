@@ -49,6 +49,7 @@ public class OjamaScript : MonoBehaviour
 
     //エフェクト
     [SerializeField] GameObject explosion;
+    [SerializeField] GameObject deathParticle;
 
     // Start is called before the first frame update
     void Start()
@@ -242,6 +243,7 @@ public class OjamaScript : MonoBehaviour
         if (collision.tag == "Shaker")
         {
             Destroy(gameObject);
+            Instantiate(deathParticle, transform.position, Quaternion.identity);
 
             shaker.isGrabbed = false;
             shaker.velocity = (shaker.transform.position - transform.position).normalized * 0.3f;
