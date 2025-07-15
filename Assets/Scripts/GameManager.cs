@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
 
     void Fever()
     {
-        if (!shaker.isGrounded)
+        if (!shaker.isGrounded && !isEnd)
         {
             if (!isFever)
             {

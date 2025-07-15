@@ -826,6 +826,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 9.14
       objectReference: {fileID: 0}
+    - target: {fileID: 2043702943476522359, guid: cb08562385c2bc842af3086d9075ebd3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2043702943476522359, guid: cb08562385c2bc842af3086d9075ebd3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.22
+      objectReference: {fileID: 0}
     - target: {fileID: 3785401536922026472, guid: cb08562385c2bc842af3086d9075ebd3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 15
@@ -889,6 +897,14 @@ PrefabInstance:
     - target: {fileID: 5301592261008220687, guid: cb08562385c2bc842af3086d9075ebd3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5992970399186748671, guid: cb08562385c2bc842af3086d9075ebd3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5992970399186748671, guid: cb08562385c2bc842af3086d9075ebd3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.22
       objectReference: {fileID: 0}
     - target: {fileID: 7144400061899852212, guid: cb08562385c2bc842af3086d9075ebd3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1525,8 +1541,8 @@ MonoBehaviour:
   gameTime: 0
   kGameTime: 60
   isFever: 0
-  kNextFeverTime: 3
-  kFeverTime: 15
+  kNextFeverTime: 15
+  kFeverTime: 3
   kEndWaitTime: 5
   Fure: {fileID: 1994160041230809500, guid: d1b6266c625278143886a4cccab2f68d, type: 3}
   Clear: {fileID: 8925993115829733474, guid: 5fb0e690d23fa1c4e9f037ca6d152eff, type: 3}

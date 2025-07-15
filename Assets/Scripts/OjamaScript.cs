@@ -11,7 +11,7 @@ public class OjamaScript : MonoBehaviour
 
     public enum OjamaType
     {
-        Stone, Poison, Cannon
+        Ball, Poison, Cannon
     }
     OjamaType type = OjamaType.Cannon;
 
@@ -63,7 +63,7 @@ public class OjamaScript : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         switch (type)
         {
-            case OjamaType.Stone:
+            case OjamaType.Ball:
                 spriteRenderer.sprite = stone;
                 break;
 
@@ -104,7 +104,7 @@ public class OjamaScript : MonoBehaviour
         {
             switch (type)
             {
-                case OjamaType.Stone:
+                case OjamaType.Ball:
 
                     speed = 10f;
                     velocity = direction * speed;
@@ -155,16 +155,16 @@ public class OjamaScript : MonoBehaviour
                     rotationC.z += 100 * Time.deltaTime;
                     transform.rotation = Quaternion.Euler(rotationC);
 
-                    if (Vector2.Distance(shaker.transform.position, transform.position) < exDistance)
-                    {
-                        //”š”­‚³‚¹‚é
-                        shaker.isGrabbed = false;
-                        shaker.velocity = (shaker.transform.position - transform.position).normalized * exPower;
+                    //if (Vector2.Distance(shaker.transform.position, transform.position) < exDistance)
+                    //{
+                    //    //”š”­‚³‚¹‚é
+                    //    shaker.isGrabbed = false;
+                    //    shaker.velocity = (shaker.transform.position - transform.position).normalized * exPower;
 
-                        Destroy(gameObject);
+                    //    Destroy(gameObject);
 
-                        Instantiate(explosion, transform.position, Quaternion.identity);
-                    }
+                    //    Instantiate(explosion, transform.position, Quaternion.identity);
+                    //}
 
                     break;
             }
@@ -242,11 +242,16 @@ public class OjamaScript : MonoBehaviour
         if (collision.tag == "Shaker")
         {
             Destroy(gameObject);
+
+            shaker.isGrabbed = false;
+            shaker.velocity = (shaker.transform.position - transform.position).normalized * 0.3f;
+
             if (type == OjamaType.Cannon)
             {
                 //”š”­‚³‚¹‚é
                 shaker.isGrabbed = false;
                 shaker.velocity = (shaker.transform.position - transform.position).normalized * exPower;
+                Instantiate(explosion, transform.position, Quaternion.identity);
             }
         }
 
