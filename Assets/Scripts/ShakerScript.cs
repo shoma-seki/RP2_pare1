@@ -424,7 +424,7 @@ public class ShakerScript : MonoBehaviour
         {
             isClear = false;
 
-            cocktailProgress = 0;
+            //cocktailProgress = 0;
         }
     }
 
