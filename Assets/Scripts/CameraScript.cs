@@ -107,7 +107,7 @@ public class CameraScript : MonoBehaviour
             }
 
             position.x = 0;
-            position.z = -30f;
+            position.z = -100f;
             if (position.y < 0)
             {
                 position.y = 0;

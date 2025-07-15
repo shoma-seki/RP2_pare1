@@ -8,12 +8,12 @@ public class CloudScript : MonoBehaviour
     [SerializeField] Sprite cloud1;
     [SerializeField] Sprite cloud2;
 
-    Vector2 position;
+    Vector3 position;
     Vector2 direction;
     Vector2 velocity;
     [SerializeField] float speed;
 
-    float aliveTime = 10;
+    float aliveTime = 30;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +29,19 @@ public class CloudScript : MonoBehaviour
             spriteRenderer.sprite = cloud2;
         }
 
+        if (transform.position.x < 0)
+        {
+            direction = Vector2.right;
+        }
+        else
+        {
+            direction = Vector2.left;
+        }
+
+        float scale = Random.Range(1, 2.5f);
+        Vector2 scale2 = new Vector2(scale, scale);
+        transform.localScale = scale2;
+
         position = transform.position;
     }
 
@@ -36,7 +49,8 @@ public class CloudScript : MonoBehaviour
     void Update()
     {
         velocity = direction * speed * Time.deltaTime;
-        position += velocity;
+        position += (Vector3)velocity;
+        position.z = -30f;
         transform.position = position;
 
         aliveTime -= Time.deltaTime;

@@ -198,7 +198,7 @@ public class ShakerScript : MonoBehaviour
                         if (isGrabbed && shakeDistance > 0.2f)
                         {
                             //カクテルの完成度を増やす
-                            cocktailProgress += shakeDistance * shakeSpeed / 10f;
+                            if (gameManager.gameTime > 0f) cocktailProgress += shakeDistance * shakeSpeed / 10f;
 
                             float cocktailPlus = shakeDistance * shakeSpeed / 10f;
                             if (cocktailPlus < 1.5f)
@@ -310,7 +310,7 @@ public class ShakerScript : MonoBehaviour
                 {
                     trickEffectRotate = 0;
 
-                    cocktailProgress += 2f;
+                    cocktailProgress += 1f;
 
                     //Instantiate(trickEffect, transform.position, Quaternion.identity);
                     Instantiate(trickParticle, transform.position, Quaternion.identity);
@@ -340,13 +340,16 @@ public class ShakerScript : MonoBehaviour
                 //Debug.Log("縺､縺九ｓ縺繧・);
 
                 //謚輔￡縺ｦ繧ｭ繝｣繝・メ縺ｮ縺ｨ縺・
-                if (gameManager.isFever)
+                if (gameManager.gameTime > 0)
                 {
-                    cocktailProgress += (triggerRotation / 150f) * feverCatchMagnification;
-                }
-                else
-                {
-                    cocktailProgress += (triggerRotation / 150f);
+                    if (gameManager.isFever)
+                    {
+                        cocktailProgress += (triggerRotation / 150f) * feverCatchMagnification;
+                    }
+                    else
+                    {
+                        cocktailProgress += (triggerRotation / 150f);
+                    }
                 }
                 isPlusRotate = true;
                 if (triggerRotation > 2160)
@@ -366,7 +369,10 @@ public class ShakerScript : MonoBehaviour
             isGrabbed = false;
 
             shakerHeight = 0;
+        }
 
+        if (!isGrabbed)
+        {
             //画面外で離したら初期位置に戻る
             if (transform.position.x < -17.55f || transform.position.x > 17.55f)
             {

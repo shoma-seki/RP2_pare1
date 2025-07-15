@@ -1551,7 +1551,7 @@ MonoBehaviour:
   cockTailGlass: {fileID: 2645780345626253062, guid: 8c83b892c310c9f4ebae618fcb5c312e, type: 3}
   collinsGlass: {fileID: 2645780345626253062, guid: a57096958498f3c4081bcdc749944e8e, type: 3}
   gameTime: 0
-  kGameTime: 60
+  kGameTime: 5
   isFever: 0
   kNextFeverTime: 15
   kFeverTime: 3
@@ -2095,6 +2095,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a333990205cbed4b8bf79af3dc674ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  kInterval: 3
+  cloud: {fileID: -3469037544156012617, guid: 4ef57b0b1d90ba24193ed2bf5d7a246e, type: 3}
 --- !u!1 &592171167
 GameObject:
   m_ObjectHideFlags: 0
