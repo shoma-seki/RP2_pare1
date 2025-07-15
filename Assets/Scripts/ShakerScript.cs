@@ -54,7 +54,7 @@ public class ShakerScript : MonoBehaviour
     //謖ｯ繧九→縺阪・繧・▽
     Vector2 direction;      //騾ｲ繧薙〒縺・ｋ譁ｹ蜷・
     Vector2 previousDirection;
-    float directionChangeThreshold = 100f; //振る判定の閾値
+    [SerializeField] float directionChangeThreshold = 140f; //振る判定の閾値
 
     //豕ｨ縺・
     [SerializeField] Vector2 pourOffset;

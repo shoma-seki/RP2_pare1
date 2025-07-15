@@ -36,14 +36,14 @@ public class FeverManager : MonoBehaviour
                 {
                     GameObject newLight = Instantiate(feverLightLeft, VFXCanvas);
                     Color color = mainCamera.pColor;
-                    color.a = 0.3f;
+                    color.a = 0.2f;
                     newLight.GetComponent<LightScript>().SetColor(color);
                 }
                 else
                 {
                     GameObject newLight = Instantiate(feverLightRight, VFXCanvas);
                     Color color = mainCamera.pColor;
-                    color.a = 0.3f;
+                    color.a = 0.2f;
                     newLight.GetComponent<LightScript>().SetColor(color);
                 }
 
