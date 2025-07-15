@@ -124,23 +124,26 @@ public class GameManager : MonoBehaviour
 
     void Fever()
     {
-        if (!isFever)
+        if (!shaker.isGrounded)
         {
-            nextFeverTime -= Time.deltaTime;
-            if (nextFeverTime < 0)
+            if (!isFever)
             {
-                isFever = true;
-                feverTime = kFeverTime;
+                nextFeverTime -= Time.deltaTime;
+                if (nextFeverTime < 0)
+                {
+                    isFever = true;
+                    feverTime = kFeverTime;
+                }
             }
-        }
 
-        if (isFever)
-        {
-            feverTime -= Time.deltaTime;
-            if (feverTime < 0)
+            if (isFever)
             {
-                nextFeverTime = kNextFeverTime;
-                isFever = false;
+                feverTime -= Time.deltaTime;
+                if (feverTime < 0)
+                {
+                    nextFeverTime = kNextFeverTime;
+                    isFever = false;
+                }
             }
         }
     }

@@ -42,6 +42,7 @@ public class ShakerScript : MonoBehaviour
 
     Vector2 preShakePoint;  //前回シェイクした場所
     public float cocktailProgress; //カクテルの完成度   
+    [SerializeField] float feverCatchMagnification; //フィーバー中のキャッチボーナス倍率
 
     public float cocktailProgressMax;
     float shakerHeight;     //繧ｷ繧ｧ繧､繧ｫ繝ｼ縺ｮ鬮倥＆
@@ -335,7 +336,14 @@ public class ShakerScript : MonoBehaviour
                 //Debug.Log("縺､縺九ｓ縺繧・);
 
                 //謚輔￡縺ｦ繧ｭ繝｣繝・メ縺ｮ縺ｨ縺・
-                cocktailProgress += (triggerRotation / 150f);
+                if (gameManager.isFever)
+                {
+                    cocktailProgress += (triggerRotation / 150f) * feverCatchMagnification;
+                }
+                else
+                {
+                    cocktailProgress += (triggerRotation / 150f);
+                }
                 isPlusRotate = true;
                 if (triggerRotation > 2160)
                 {
@@ -346,10 +354,14 @@ public class ShakerScript : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
+            if (isGrabbed)
+            {
+                triggerRotation = 0;
+            }
+
             isGrabbed = false;
 
             shakerHeight = 0;
-            triggerRotation = 0;
             //Debug.Log("髮｢縺励◆繧・);
         }
     }
