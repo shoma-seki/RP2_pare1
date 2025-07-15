@@ -5,11 +5,20 @@ using UnityEngine.UI;
 public class ShakerBar : MonoBehaviour {
     [SerializeField] ShakerScript shakerScript;
     [SerializeField] GameObject tipBar;
+    private GameManager gameManager;
 
     private float previousProgress = 0f;
     private Coroutine tipBarCoroutine;
     private float scaleFactor = 0.05f; // 1 progress あたり 0.1 スケール → 100 progress でスケール10
     [SerializeField] Text cocktailProgressText;
+    public static float saveCocktailProgress;
+
+    private bool isFading = false;
+
+    private void Start() {
+        gameManager = FindAnyObjectByType<GameManager>();
+    }
+
     void Update() {
         // デバッグ用
         if (Input.GetKeyDown(KeyCode.P)) {
@@ -19,6 +28,20 @@ public class ShakerBar : MonoBehaviour {
         BarUpdate();
         CheckProgressChange();
         UpdateCocktailProgressText();
+
+        // スコアに変化があった場合だけ保存
+        float currentProgress = shakerScript.cocktailProgress;
+
+        if (!Mathf.Approximately(saveCocktailProgress, currentProgress)) {
+            saveCocktailProgress = currentProgress;
+            PlayerPrefs.SetFloat("CocktailProgress", saveCocktailProgress);
+            PlayerPrefs.Save();
+        }
+
+        if (!isFading && gameManager.gameTime <= 10f) {
+            StartCoroutine(FadeOutText(cocktailProgressText, 2f)); // 2秒でフェード
+            isFading = true;
+        }
     }
 
     private void BarUpdate() {
@@ -73,5 +96,21 @@ public class ShakerBar : MonoBehaviour {
     private void UpdateCocktailProgressText() {
         int percent = Mathf.RoundToInt(shakerScript.cocktailProgress);
         cocktailProgressText.text = percent.ToString() + "%";
+    }
+
+    private IEnumerator FadeOutText(Text targetText, float duration) {
+        Color originalColor = targetText.color;
+        float timer = 0f;
+
+        while (timer < duration) {
+            float alpha = Mathf.Lerp(1f, 0f, timer / duration);
+            targetText.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // 最終的に完全に透明に
+        targetText.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
     }
 }
