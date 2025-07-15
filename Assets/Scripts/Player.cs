@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     [SerializeField] Sprite gu;
     SpriteRenderer spriteRenderer;
 
+    bool isClamp = true;
+
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -20,12 +22,12 @@ public class Player : MonoBehaviour
     {
         Move();
         ChangeSprite();
+        ClampToScreen();
     }
 
     void Move()
     {
         position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        ClampToScreen();
         position.z = -15f;
         transform.position = position;
     }
@@ -47,5 +49,28 @@ public class Player : MonoBehaviour
     {
         position.x = Mathf.Clamp(position.x, -11, 11);
         position.y = Mathf.Clamp(position.y, -5.85f, 80);
+
+        if (position.y < 6.53f)
+        {
+            isClamp = true;
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (position.y > 6.53f)
+            {
+                isClamp = false;
+            }
+        }
+
+        if (isClamp)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                position.y = Mathf.Clamp(position.y, -5.85f, 6.53f);
+            }
+        }
+
+        transform.position = position;
     }
 }
