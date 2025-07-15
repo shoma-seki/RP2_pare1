@@ -206,6 +206,7 @@ public class ShakerScript : MonoBehaviour
                                 fireCount++;
                                 //シャカエフェクト
                                 Vector2 shakaPoint = (Vector2)transform.position + previousDirection * shakaOffset;
+                                shakaPoint = ClampToScreen(shakaPoint, Camera.main, 0.05f, 0.05f, 0.05f, 0.05f);
                                 Instantiate(shakaEffect, shakaPoint, Quaternion.identity);
                                 Instantiate(shakaSound);
                             }
@@ -214,6 +215,7 @@ public class ShakerScript : MonoBehaviour
                                 notFireCount++;
                                 //シャカグレートエフェクト
                                 Vector2 shakaPoint = (Vector2)transform.position + previousDirection * shakaOffset;
+                                shakaPoint = ClampToScreen(shakaPoint, Camera.main, 0.05f, 0.05f, 0.05f, 0.05f);
                                 Instantiate(shakaGreatEffect, shakaPoint, Quaternion.identity);
                                 Instantiate(trickParticle, transform.position, Quaternion.identity);
                                 Instantiate(shakaSound);
@@ -561,5 +563,15 @@ public class ShakerScript : MonoBehaviour
         {
             cocktailProgress = 110f;
         }
+    }
+
+    Vector3 ClampToScreen(Vector3 worldPos, Camera cam, float marginLeft = 0f, float marginRight = 0f, float marginBottom = 0f, float marginTop = 0f)
+    {
+        Vector3 viewportPos = cam.WorldToViewportPoint(worldPos);
+
+        viewportPos.x = Mathf.Clamp(viewportPos.x, marginLeft, 1f - marginRight);
+        viewportPos.y = Mathf.Clamp(viewportPos.y, marginBottom, 1f - marginTop);
+
+        return cam.ViewportToWorldPoint(viewportPos);
     }
 }
