@@ -71,6 +71,9 @@ public class ShakerScript : MonoBehaviour
     [SerializeField] GameObject shakaEffect;    //謖ｯ縺｣縺溘→縺・
     [SerializeField] float shakaOffset;
 
+    [SerializeField] GameObject shakaGreatEffect;
+    [SerializeField] float shakaGreatOffset;
+
     [SerializeField] GameObject gotuEffect;     //縺ｶ縺､縺九▲縺溘→縺・
     [SerializeField] float gotuOffset;
 
@@ -187,26 +190,32 @@ public class ShakerScript : MonoBehaviour
                     shakeCount++;
                     //Debug.Log("shakeCount" + shakeCount);
 
-                    //シャカエフェクト
-                    Vector2 shakaPoint = (Vector2)transform.position + previousDirection * shakaOffset;
-                    Instantiate(shakaEffect, shakaPoint, Quaternion.identity);
-                    Instantiate(shakaSound);
-
                     if (shakeCount >= 2)
                     {
                         shakeDistance = Vector2.Distance(preShakePoint, transform.position);
 
-                        //カクテルの完成度を増やす
-                        cocktailProgress += shakeDistance * shakeSpeed / 10f;
+                        if (isGrabbed && shakeDistance > 0.2f)
+                        {
+                            //カクテルの完成度を増やす
+                            cocktailProgress += shakeDistance * shakeSpeed / 10f;
 
-                        float cocktailPlus = shakeDistance * shakeSpeed / 10f;
-                        if (cocktailPlus > 2)
-                        {
-                            fireCount++;
-                        }
-                        else
-                        {
-                            notFireCount++;
+                            float cocktailPlus = shakeDistance * shakeSpeed / 10f;
+                            if (cocktailPlus > 2)
+                            {
+                                fireCount++;
+                                //シャカエフェクト
+                                Vector2 shakaPoint = (Vector2)transform.position + previousDirection * shakaOffset;
+                                Instantiate(shakaEffect, shakaPoint, Quaternion.identity);
+                                Instantiate(shakaSound);
+                            }
+                            else
+                            {
+                                notFireCount++;
+                                //シャカグレートエフェクト
+                                Vector2 shakaPoint = (Vector2)transform.position + previousDirection * shakaOffset;
+                                Instantiate(shakaGreatEffect, shakaPoint, Quaternion.identity);
+                                Instantiate(shakaSound);
+                            }
                         }
                     }
 
@@ -304,7 +313,9 @@ public class ShakerScript : MonoBehaviour
             }
         }
 
-        transform.position = position;
+        Vector3 nPosition = position;
+        nPosition.z = -12f;
+        transform.position = nPosition;
     }
 
     void Grab()

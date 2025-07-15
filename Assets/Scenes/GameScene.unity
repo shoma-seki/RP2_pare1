@@ -1871,6 +1871,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7405907764876648496, guid: 2700dc878d1d9a9459b239a0f697e340, type: 3}
     - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
+      propertyPath: shakaGreatEffect
+      value: 
+      objectReference: {fileID: 4157134647383172948, guid: 2e2774374ac73ff4d9ec147fb7e9bc68, type: 3}
+    - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
+      propertyPath: shakaGreatOffset
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570321928152680610, guid: fd53548159d55474cb51451e19a13538, type: 3}
       propertyPath: cocktailAmountMinus
       value: 10
       objectReference: {fileID: 0}
