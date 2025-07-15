@@ -35,13 +35,13 @@ public class EnemyGenerateManager : MonoBehaviour
 
         //一気に生成されるのを防ぐため分けて生成する
         //直下のもので言うとgameTimeが5fを超えたフレームでお邪魔を生成する。
-        if (preGameTime > 55f && gameTime <= 55f)
+        if (preGameTime > 50f && gameTime <= 50f)
         {
-            SpawnEnemy(3, OjamaScript.OjamaType.Ball, Vector2.right, 0.4f, 0f);
-            SpawnEnemy(4, OjamaScript.OjamaType.Ball, Vector2.left, 0.4f, 0f);
+            SpawnEnemy(3, OjamaScript.OjamaType.Ball, Vector2.right, 0.3f, 0f);
+            SpawnEnemy(4, OjamaScript.OjamaType.Ball, Vector2.left, 0.3f, 0f);
         }
 
-        if (preGameTime > 50f && gameTime <= 50f)
+        if (preGameTime > 45f && gameTime <= 45f)
         {
             SpawnEnemy(0, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 4f, 1f);
             SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 4f, 3f);
@@ -56,18 +56,29 @@ public class EnemyGenerateManager : MonoBehaviour
             SpawnEnemy(1, OjamaScript.OjamaType.Ball, new Vector2(1, -1), 0.7f, 4f);
         }
 
+        if (preGameTime > 35f && gameTime <= 35f) {
+            SpawnEnemy(3, OjamaScript.OjamaType.Ball, Vector2.right, 0.3f, 1f);
+            SpawnEnemy(4, OjamaScript.OjamaType.Ball, Vector2.left, 0.3f, 1f);
+
+            SpawnEnemy(0, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 4f, 1f);
+            SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 4f, 1f);
+
+            SpawnEnemy(0, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 4f, 4f);
+            SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 4f, 4f);
+        }
+
         if (preGameTime > 30f && gameTime <= 30f)
         {
-            SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.4f, 1f);
+            SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.5f, 1f);
             SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 4f, 2f);
 
-            SpawnEnemy(2, OjamaScript.OjamaType.Cannon, new Vector2(-1, 1), 0.4f, 4f);
+            SpawnEnemy(2, OjamaScript.OjamaType.Cannon, new Vector2(-1, 1), 0.5f, 4f);
             SpawnEnemy(0, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 4f, 5f);
 
-            SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.4f, 11f);
+            SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.5f, 11f);
             SpawnEnemy(1, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 4f, 12f);
 
-            SpawnEnemy(2, OjamaScript.OjamaType.Cannon, new Vector2(-1, 1), 0.4f, 14f);
+            SpawnEnemy(2, OjamaScript.OjamaType.Cannon, new Vector2(-1, 1), 0.5f, 14f);
             SpawnEnemy(0, OjamaScript.OjamaType.Poison, new Vector2(0, -1), 4f, 15f);
         }
 
@@ -79,8 +90,14 @@ public class EnemyGenerateManager : MonoBehaviour
             SpawnEnemy(1, OjamaScript.OjamaType.Ball, new Vector2(1, -1), 1f, 3f);
             SpawnEnemy(1, OjamaScript.OjamaType.Ball, new Vector2(0, -1), 1f, 3f);
 
-            SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.3f, 9f);
-            SpawnEnemy(2, OjamaScript.OjamaType.Cannon, new Vector2(-1, 1), 0.3f, 11f);
+            SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.4f, 8f);
+            SpawnEnemy(2, OjamaScript.OjamaType.Cannon, new Vector2(-1, 1), 0.4f, 8f);
+
+            SpawnEnemy(1, OjamaScript.OjamaType.Ball, new Vector2(1, -1), 1f, 8f);
+            SpawnEnemy(1, OjamaScript.OjamaType.Ball, new Vector2(0, -1), 1f, 8f);
+
+            SpawnEnemy(3, OjamaScript.OjamaType.Cannon, new Vector2(1, 1), 0.4f, 11f);
+            SpawnEnemy(2, OjamaScript.OjamaType.Cannon, new Vector2(-1, 1), 0.4f, 11f);
 
             SpawnEnemy(0, OjamaScript.OjamaType.Ball, new Vector2(-1, -1), 1f, 11f);
             SpawnEnemy(0, OjamaScript.OjamaType.Ball, new Vector2(0, -1), 1f, 11f);
