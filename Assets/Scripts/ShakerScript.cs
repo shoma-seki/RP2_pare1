@@ -153,7 +153,7 @@ public class ShakerScript : MonoBehaviour
         }
 
         //Debug
-        Debug.Log("cocktailProgress" + cocktailProgress);
+        //Debug.Log("cocktailProgress" + cocktailProgress);
 
         if (!isGrabbed)
         {
@@ -201,7 +201,7 @@ public class ShakerScript : MonoBehaviour
                             cocktailProgress += shakeDistance * shakeSpeed / 10f;
 
                             float cocktailPlus = shakeDistance * shakeSpeed / 10f;
-                            if (cocktailPlus > 2)
+                            if (cocktailPlus < 1.5f)
                             {
                                 fireCount++;
                                 //シャカエフェクト
@@ -215,8 +215,11 @@ public class ShakerScript : MonoBehaviour
                                 //シャカグレートエフェクト
                                 Vector2 shakaPoint = (Vector2)transform.position + previousDirection * shakaOffset;
                                 Instantiate(shakaGreatEffect, shakaPoint, Quaternion.identity);
+                                Instantiate(trickParticle, transform.position, Quaternion.identity);
                                 Instantiate(shakaSound);
                             }
+
+                            Debug.Log("cocktailPlus" + cocktailPlus);
                         }
                     }
 
@@ -255,7 +258,8 @@ public class ShakerScript : MonoBehaviour
         if (isGrabbed)
         {
             targetPosition = player.transform.position;
-            position = Vector2.Lerp(position, targetPosition, 30f * Time.deltaTime);
+            //position = Vector2.Lerp(position, targetPosition, 30f * Time.deltaTime);
+            position = targetPosition;
 
             //蝗櫁ｻ｢
             rotation = Vector3.Lerp(rotation, new Vector3(0, 0, 90f), 5f * Time.deltaTime);
@@ -362,7 +366,13 @@ public class ShakerScript : MonoBehaviour
             isGrabbed = false;
 
             shakerHeight = 0;
-            //Debug.Log("髮｢縺励◆繧・);
+
+            //画面外で離したら初期位置に戻る
+            if (transform.position.x < -17.55f || transform.position.x > 17.55f)
+            {
+                targetPosition = startPosition;
+                isGrounded = true;
+            }
         }
     }
 
@@ -428,49 +438,55 @@ public class ShakerScript : MonoBehaviour
 
         if (collision.tag == "Wall")
         {
-            triggerRotation -= 360f;
-            //isPlusRotate = false;
-            DeleteFire();
-
-            if (transform.position.x < 0)
+            if (!isGrabbed)
             {
-                velocity = new Vector2(1, 1) / reflection;
-            }
+                triggerRotation -= 360f;
+                //isPlusRotate = false;
+                DeleteFire();
 
-            if (transform.position.x > 0)
-            {
-                velocity = new Vector2(-1, 1) / reflection;
-            }
+                if (transform.position.x < 0)
+                {
+                    velocity = new Vector2(1, 1) / reflection;
+                }
 
-            isCollision = true;
+                if (transform.position.x > 0)
+                {
+                    velocity = new Vector2(-1, 1) / reflection;
+                }
 
-            //繧ｴ繝・お繝輔ぉ繧ｯ繝・  
-            if (!isGrounded)
-            {
-                Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
-                Instantiate(gotuSound);
+                isCollision = true;
 
-                Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
+                //繧ｴ繝・お繝輔ぉ繧ｯ繝・  
+                if (!isGrounded)
+                {
+                    Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
+                    Instantiate(gotuSound);
+
+                    Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
+                }
             }
         }
 
         if (collision.tag == "Counter")
         {
-            velocity = Vector2.Reflect(velocity.normalized, Vector2.up) / 5f;
-
-            isCollision = true;
-            DeleteFire();
-
-            //落としたら0に
-            triggerRotation = 0;
-
-            //繧ｴ繝・お繝輔ぉ繧ｯ繝・
-            if (!isGrounded)
+            if (!isGrabbed)
             {
-                Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
-                Instantiate(gotuSound);
+                velocity = Vector2.Reflect(velocity.normalized, Vector2.up) / 5f;
 
-                Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
+                isCollision = true;
+                DeleteFire();
+
+                //落としたら0に
+                triggerRotation = 0;
+
+                //繧ｴ繝・お繝輔ぉ繧ｯ繝・
+                if (!isGrounded)
+                {
+                    Instantiate(gotuEffect, transform.position + new Vector3(0, gotuOffset, 0), Quaternion.identity);
+                    Instantiate(gotuSound);
+
+                    Instantiate(spillParticle, transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 1080f))));
+                }
             }
         }
 
@@ -496,11 +512,32 @@ public class ShakerScript : MonoBehaviour
     {
         if (collision.tag == "Counter")
         {
-            velocity.y = 0.15f;
+            if (!isGrabbed)
+            {
+                velocity.y = 0.15f;
 
-            isCollision = true;
+                isCollision = true;
 
-            triggerRotation = 0;
+                triggerRotation = 0;
+            }
+        }
+
+        if (collision.tag == "Wall")
+        {
+            if (!isGrabbed)
+            {
+                if (transform.position.x < 0)
+                {
+                    velocity = new Vector2(1, 1) / reflection;
+                }
+
+                if (transform.position.x > 0)
+                {
+                    velocity = new Vector2(-1, 1) / reflection;
+                }
+
+                isCollision = true;
+            }
         }
     }
 

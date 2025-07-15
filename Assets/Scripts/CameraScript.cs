@@ -54,7 +54,7 @@ public class CameraScript : MonoBehaviour
     void Update()
     {
         FitCameraToTarget();
-        ZoomToGlass();
+        BackStartPosition();
         VignetteColorChange();
     }
 
@@ -116,11 +116,12 @@ public class CameraScript : MonoBehaviour
         }
     }
 
-    void ZoomToGlass()
+    void BackStartPosition()
     {
-        if (shaker.isPour)
+        if (shaker.isGrabbed)
         {
-
+            targetPosition = Vector2.zero;
+            position = Vector2.Lerp(position, targetPosition, 10f * Time.deltaTime);
         }
     }
 }

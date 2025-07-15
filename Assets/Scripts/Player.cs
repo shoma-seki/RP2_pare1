@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
 
     void ClampToScreen()
     {
-        position.x = Mathf.Clamp(position.x, -11, 11);
+        //position.x = Mathf.Clamp(position.x, -11, 11);
         position.y = Mathf.Clamp(position.y, -5.85f, 80);
 
         if (position.y < 6.53f)
